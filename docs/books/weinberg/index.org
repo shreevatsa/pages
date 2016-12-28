@@ -1,0 +1,114 @@
+* Weinberg: Psychology of Computer Programming
+
+** Chapter 1
+
+Language limitations circa 1971:
+#+BEGIN_QUOTE
+Of course, PL/I is noted for its absence of silly little restrictions such as
+abound in many other languages. To take just a few examples among
+many, consider all the extra coding that has been written in FORTRAN
+because DO loops could not be counted backwards, because expressions
+could not appear as increments or bounds of an iteration, or because
+array subscripts had to start with one, or because only a small number
+of subscript expressions were possible. Still, we may not feel these
+limitations until they have been lifted from us, just as we often do not
+know we are sick until we suddenly feel better. Therefore, it is reasonable
+to expect that future languages will make us feel those limitations of
+PL/I that are not detectable today. Notice that this is a psychological
+question—one to which we shall have occasion to return.
+#+END_QUOTE
+
+Historical limitations:
+#+BEGIN_QUOTE
+We often find material in programs that [...] is really present because of the history
+of the development of the program. For example, once the SUM function
+is changed to an arithmetic generic function, there is no longer any
+reason for the program in Figure 1-2 to appear. Nevertheless, things being
+what they are in the programming business, it is unlikely that anyone
+is going to delve into a working program and modify it just because the
+definition of the SUM function has been changed. And so, some years
+later, a novice programmer who is given the job of modifying this pro-
+program will congratulate himself for knowing more about PL/I than the
+person who originally wrote this program. Since that person is probably
+his supervisor, an unhealthy attitude may develop—which, incidentally, is
+another psychological reality of programming life which we shall have to
+face eventually.
+#+END_QUOTE
+
+He proposes that any "why is this piece of code here?" might have reasons like:
+- machine limitations,
+- language limitations,
+- programmer limitations,
+- historical traces,
+- finally, the specification (which may itself be imperfect)
+[These are also the reasons reading code is painful?]
+
+#+BEGIN_QUOTE
+Aside from the
+obvious difficulties in determining a programmer's intentions when he doesn't
+know very much or in producing /efficient/ code from a specification that is
+written without the slightest understanding of what computers can do,
+there will always remain the fact that, in most cases, we do not /know/
+what we want to do until we have taken a flying leap at programming it.
+
+Specifications evolve together with programs and programmers. Writing
+a program is a process of /learning/ —both for the programmer and the
+person who commissions the program. Moreover, this learning takes place
+in the context of a particular machine, a particular programming lan-
+language, a particular programmer or programming team in a particular
+working environment, and a particular set of historical events that deter-
+determine not just the form of the code but also /what the code does/!
+#+END_QUOTE
+
+Super questions:
+
+#+BEGIN_QUOTE
+For Programmers
+
+1. When was the last time you read somebody else's program? Why has
+it been so long? When was the last time somebody else read one of
+your programs and discussed it with you? Was it your manager?
+
+2. Borrow a program from the program library or from one of your friends.
+Try to analyze it into pieces of code that are there for the various
+reasons described in the text. What did you learn from this exercise?
+
+3. Take one of your own programs written over a month ago, and analyze
+it as in Question 2. What did you learn from this exercise?
+#+END_QUOTE
+
+** Chapter 2
+
+Chapter 2, "What is a good program?", makes a very good point: okay, we looked at a particular program and saw that it could be written better. But we figured this out only because we read it. And for a typical program, no one is going to read it!
+
+#+BEGIN_QUOTE
+...the factor of /adaptability/ of a program.
+No doubt there are programs that are used once and then thrown away.
+No doubt there are even more programs that should be thrown away
+before ever being used. Nonetheless, the great majority of programs...
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+SUMMARY
+The question of what makes a good program is not a simple one,
+and may not even be a proper question. Each program has to be
+considered on its own merits and in relation to its own surroundings. Some
+of the important factors are:
+
+1. Does the program meet specifications? Or, rather, how well does it
+meet specifications?
+
+2. Is it produced on schedule, and what is the /variability/ in the schedule
+that we can expect from particular approaches?
+
+3. Will it be possible to change the program when conditions change?
+How much will it cost to make the change?
+4. How efficient is the program, and what do we mean by efficiency?
+Are we trading efficiency in one area for inefficiency in another?
+
+In the future, and particularly in the discussion of this book, we should
+refrain from using the concept "good program" or "good programmer"
+as if it were something universally agreed upon, or something that even
+can be universally agreed upon, or something that even /should/ be
+universally agreed upon.
+#+END_QUOTE
