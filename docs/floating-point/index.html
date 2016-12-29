@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Floating point</title>
+  </head>
+
+<body>
+  <h1>What I would like to know about floating-point numbers</h1>
+
+  This is aimed somewhere between:
+  <ul>
+    <li><a href="http://floating-point-gui.de/basic/">“Basic Answers” at floating-point-gui.de</a></li> and
+    <li><a href="https://ece.uwaterloo.ca/~dwharder/NumericalAnalysis/02Numerics/Double/paper.pdf">What Every Computer Scientist Should Know About Floating-Point Arithmetic</a> (94 pages long)</li>
+  </ul>
+
+  <p>Basically it&rsquo;s the kind of thing I would have liked to read myself.</p>
+
+  <p>The perfect article, for me, has already been written by Andrew Barnert <a href="https://stupidpythonideas.blogspot.com/2015/01/ieee-floats-and-python.html">here: IEEE Floats and Python</a>. So this page just contains some tools for experimenting.</p>
+
+  <p>Enter a number here: <input id="inputNumber" type="text"></p>
+  <div id="inputNumberInfo">(This section will update after you enter a number above.)</div>
+
+    <script type="text/javascript">
+    function assert(condition, object) {
+        if (console && console.assert) {
+            console.assert(condition, object);
+        }
+    }
+
+    function binary(num, numBits) {
+        assert(num >= 0);
+        assert(num.toString().length <= numBits);
+        const ans = ('0'.repeat(numBits) + num.toString(2)).slice(-numBits);
+        assert(ans.length == numBits);
+        return ans;
+    }
+
+    function bits(f) {
+        // Assuming f is a binary64, returns its
+        // 1 sign bit,
+        // 11 exponent bits,
+        // (1+)52 significand bits.
+        const fa = new Float64Array(1);
+        const ia = new Uint8Array(fa.buffer);
+        fa[0] = f;
+        ia.reverse();
+
+        const sign = ia[0] >> 7;               // Keep only first bit
+        const signStr = binary(sign, 1);
+        const exponentFirst = (ia[0] & 0x7f);  // Kill the sign bit, keep 7 bits.
+        const exponentSecond = (ia[1] >> 4);   // Keep only first 4 bits
+        const exponent = (exponentFirst << 4) + exponentSecond;
+        const exponentStr = binary(exponent, 11);
+        let significandFirst = (ia[1] & 0xf); // Kill the first 4 bits
+        let significandStr = binary(significandFirst, 4);
+        for (let i = 2; i < 8; ++i) {
+            significandStr += binary(ia[i], 8);
+        }
+        assert(significandStr.length == 52);
+        return {
+            sign,
+            signStr,
+            exponentStr,
+            exponentIntForMe: 52 - (exponent - 1023),
+            significandStr,
+            significandInt: parseInt('1' + significandStr, 2),
+        };
+    }
+
+    function floatFromDecimalStr(str) {
+        // Takes a string like 'abcd.efgh' and parses it as a float.
+        // Test: floatFromDecimalStr(1234567890.0123456789) === 1234567890.0123458
+
+        // TODO: replace with JS-independent function.
+        // Must match:
+        // abcd
+        // abcd.
+        // abcd.efgh
+        // .abcd
+        // The string Infinity
+        // + or - at the start
+        if (/^(\-|\+)?(\.[0-9]+|[0-9]+(\.[0-9]*)?|Infinity|NaN)$/.test(str)) {
+            // Using parseFloat for now to avoid having to think about 0.1 (errors in conversion).
+            return parseFloat(str);
+        } else {
+            throw 'Could not recognize the string';
+        }
+    }
+
+    function floatToString(f) {
+        const s = f.toString();
+        if (/^[0-9]+$/.test(s)) {
+            return s + '.0';
+        }
+        else {
+            return s;
+        }
+    }
+
+    function updateInfo(input) {
+        const inputNumberInfo = document.getElementById('inputNumberInfo');
+        const f = floatFromDecimalStr(input);
+        inputNumberInfo.textContent = `The string you entered, ${input}, was parsed as the floating-point number ${floatToString(f)}`;
+    }
+
+    const inputNumber = document.getElementById('inputNumber');
+    inputNumber.addEventListener('input', () => updateInfo(inputNumber.value));
+    </script>
+</body>
+</html>
