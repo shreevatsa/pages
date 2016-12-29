@@ -5,3 +5,4 @@ all:
 	rm xii.dvitype.bak
 	sed -i .bak "1d" xii.log
 	rm xii.log.bak
+	git status
