@@ -2,26 +2,24 @@
 \par a partridge in a pear tree.
 
 \def\gifts #1: #2, #3! { % Called like: \gifts third: three french hens, second: two turtle doves, Z!
-\par #2
-\if
-    #3Z
-\else
+  % Typeset current gift from #2 and earlier gifts from #3
+  \par #2
+  \if #3Z
+    \par and a partridge in a pear tree.
+  \else
     \gifts #3!
-\fi
+  \fi
 }
 
 \def\christmas #1: #2, #3! { % Called with #1 = fourth, #2 = four calling birds, #3 = <third: three french hens, second: two turtle doves, Z>
-\if #3Z
-    \bigskip On the #1 day of Christmas my true love gave to me
-    \par #2
-    \par and a partridge in a pear tree.
-\else
+  % Typeset earlier verses: the ones in #3
+  \if #3Z
+  \else
     \christmas #3!
-    \bigskip On the #1 day of Christmas my true love gave to me
-    \par #2
-    \gifts #3!
-    \par and a partridge in a pear tree.
-\fi
+  \fi
+  % Typeset current verse.
+  \bigskip On the #1 day of Christmas my true love gave to me
+  \gifts #1: #2, #3!
 }
 
 \christmas
