@@ -1,11 +1,7 @@
-\bigskip On the first day of Christmas my true love gave to me
-\par a partridge in a pear tree.
-
 \def\gifts #1: #2, #3! {
   % Typeset current gift from #2 and earlier gifts from #3
   \par #2
   \if #3Z
-    \par and a partridge in a pear tree.
   \else
     \gifts #3!
   \fi
@@ -22,6 +18,8 @@
   \gifts #1: #2, #3!
 }
 
+\def\prefix{ }
+
 \christmas
 twelfth: twelve drummers drumming,
 eleventh: eleven pipers piping,
@@ -34,6 +32,7 @@ fifth: five gold rings,
 fourth: four calling birds,
 third: three french hens,
 second: two turtle doves,
+first: \prefix\def\prefix{and }a partridge in a pear tree.,
 Z!
 
 \bye
