@@ -1,102 +1,41 @@
 \bigskip On the first day of Christmas my true love gave to me
 \par a partridge in a pear tree.
 
-\bigskip On the second day of Christmas my true love gave to me
-\par two turtle doves
-\par and a partridge in a pear tree.
+\def\gifts #1: #2, #3! { % Called like: \gifts third: three french hens, second: two turtle doves, Z!
+\par #2
+\if
+    #3Z
+\else
+    \gifts #3!
+\fi
+}
 
-\bigskip On the third day of Christmas my true love gave to me
-\par three french hens
-\par two turtle doves
-\par and a partridge in a pear tree.
+\def\christmas #1: #2, #3! { % Called with #1 = fourth, #2 = four calling birds, #3 = <third: three french hens, second: two turtle doves, Z>
+\if #3Z
+    \bigskip On the #1 day of Christmas my true love gave to me
+    \par #2
+    \par and a partridge in a pear tree.
+\else
+    \christmas #3!
+    \bigskip On the #1 day of Christmas my true love gave to me
+    \par #2
+    \gifts #3!
+    \par and a partridge in a pear tree.
+\fi
+}
 
-\bigskip On the fourth day of Christmas my true love gave to me
-\par four calling birds
-\par three french hens
-\par two turtle doves
-\par and a partridge in a pear tree.
+\christmas %
+twelfth: twelve drummers drumming, %
+eleventh: eleven pipers piping, %
+tenth: ten lords a leaping, %
+ninth: nine ladies dancing, %
+eighth: eight maids a milking, %
+seventh: seven swans a swimming, %
+sixth: six geese a laying, %
+fifth: five gold rings, %
+fourth: four calling birds, %
+third: three french hens, %
+second: two turtle doves, %
+Z!
 
-\bigskip On the fifth day of Christmas my true love gave to me
-\par five gold rings
-\par four calling birds
-\par three french hens
-\par two turtle doves
-\par and a partridge in a pear tree.
-
-\bigskip On the sixth day of Christmas my true love gave to me
-\par six geese a laying
-\par five gold rings
-\par four calling birds
-\par three french hens
-\par two turtle doves
-\par and a partridge in a pear tree.
-
-\bigskip On the seventh day of Christmas my true love gave to me
-\par seven swans a swimming
-\par six geese a laying
-\par five gold rings
-\par four calling birds
-\par three french hens
-\par two turtle doves
-\par and a partridge in a pear tree.
-
-\bigskip On the eighth day of Christmas my true love gave to me
-\par eight maids a milking
-\par seven swans a swimming
-\par six geese a laying
-\par five gold rings
-\par four calling birds
-\par three french hens
-\par two turtle doves
-\par and a partridge in a pear tree.
-
-\bigskip On the ninth day of Christmas my true love gave to me
-\par nine ladies dancing
-\par eight maids a milking
-\par seven swans a swimming
-\par six geese a laying
-\par five gold rings
-\par four calling birds
-\par three french hens
-\par two turtle doves
-\par and a partridge in a pear tree.
-
-\bigskip On the tenth day of Christmas my true love gave to me
-\par ten lords a leaping
-\par nine ladies dancing
-\par eight maids a milking
-\par seven swans a swimming
-\par six geese a laying
-\par five gold rings
-\par four calling birds
-\par three french hens
-\par two turtle doves
-\par and a partridge in a pear tree.
-
-\bigskip On the eleventh day of Christmas my true love gave to me
-\par eleven pipers piping
-\par ten lords a leaping
-\par nine ladies dancing
-\par eight maids a milking
-\par seven swans a swimming
-\par six geese a laying
-\par five gold rings
-\par four calling birds
-\par three french hens
-\par two turtle doves
-\par and a partridge in a pear tree.
-
-\bigskip On the twelfth day of Christmas my true love gave to me
-\par twelve drummers drumming
-\par eleven pipers piping
-\par ten lords a leaping
-\par nine ladies dancing
-\par eight maids a milking
-\par seven swans a swimming
-\par six geese a laying
-\par five gold rings
-\par four calling birds
-\par three french hens
-\par two turtle doves
-\par and a partridge in a pear tree.
 \bye
