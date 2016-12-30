@@ -1,3 +1,5 @@
 **twelve.tex
-(./twelve.tex [1] [2] )
+(./twelve.tex
+\currentGifts=\toks12
+ [1] [2] )
 Output written on twelve.dvi (2 pages, 3756 bytes).
