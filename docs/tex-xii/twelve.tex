@@ -1,9 +1,9 @@
-\def\gifts #1: #2, #3! {
+\def\gifts #1#2#3#4: #5, #6! {
   % Typeset current gift from #2 and earlier gifts from #3
-  \par #2
-  \if #3Z
+  \par #1#2#3#5
+  \if #6Z
   \else
-    \gifts #3!
+    \gifts #6!
   \fi
 }
 
@@ -21,18 +21,18 @@
 \def\prefix{ }
 
 \christmas
-twelfth: twelve drummers drumming,
-eleventh: eleven pipers piping,
-tenth: ten lords a leaping,
-ninth: nine ladies dancing,
-eighth: eight maids a milking,
-seventh: seven swans a swimming,
-sixth: six geese a laying,
-fifth: five gold rings,
-fourth: four calling birds,
-third: three french hens,
-second: two turtle doves,
-first: a\prefix\def\prefix{nd a }partridge in a pear tree.,
+twelfth: lve drummers drumming,
+eleventh: ven pipers piping,
+tenth: {} lords a leaping,
+ninth: e ladies dancing,
+eighth: ht maids a milking,
+seventh: en swans a swimming,
+sixth: {} geese a laying,
+fi{}fth: ve gold rings,
+fourth: r calling birds,
+th{}{}ird: ree french hens,
+{}{}{}second: two turtle doves,
+{}{}{}first: a\prefix\def\prefix{nd a }partridge in a pear tree.,
 Z!
 
 \bye
