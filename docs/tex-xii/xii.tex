@@ -2,7 +2,15 @@
 \defA#1{\catcode`#1=\active\def}
 A;;{}
 A&&#1\fi{\fi#1}
-\def\gifts#1#2#3#4: #5, #6{\par#1#2#3#5{ing}\ifx Z#6\else&\gifts#6\fi}
+\def\gifts#1#2#3#4: #5, #6{
+  % Typeset current gift from #2 and earlier gifts from #3
+  \par #1#2#3#5{ing}
+  \if #6Z
+  \else
+    &\gifts #6
+  \fi
+}
+
 \def\christmas #1: #2, #3!{
   % Typeset earlier verses: the ones in #3
   \if #3Z
