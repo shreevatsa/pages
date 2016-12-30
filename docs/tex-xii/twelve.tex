@@ -1,6 +1,6 @@
 \def\gifts #1#2#3#4: #5, #6 {
   % Typeset current gift from #1#2#3#5 and earlier gifts from #6
-  \par #1#2#3#5{ing}
+  \par #1#2#3#5
   \if #6Z
   \else
     \gifts #6
@@ -19,21 +19,20 @@
 }
 
 \def\prefix{ }
-\def\drop#1{}
 
 \christmas
-twelfth: lve drummers drumm,
-eleventh: ven pipers pip,
-tenth: {} lords a leap,
-ninth: e ladies danc,
-eighth: ht maids a milk,
-seventh: en swans a swimm,
-sixth: {} geese a lay,
-fi{}fth: ve gold rings\drop,
-fourth: r calling birds\drop,
-th{}ird: ree french hens\drop,
-{}{}{}second: two turtle doves\drop,
-{}{}{}first: a\prefix\def\prefix{nd a }partridge in a pear tree.\drop,
+twelfth: lve drummers drumming,
+eleventh: ven pipers piping,
+tenth: {} lords a leaping,
+ninth: e ladies dancing,
+eighth: ht maids a milking,
+seventh: en swans a swimming,
+sixth: {} geese a laying,
+fi{}fth: ve gold rings,
+fourth: r calling birds,
+th{}ird: ree french hens,
+{}{}{}second: two turtle doves,
+{}{}{}first: a\prefix\def\prefix{nd a }partridge in a pear tree.,
 Z!
 
 \bye
