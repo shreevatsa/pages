@@ -3,7 +3,7 @@
 A;;{}
 \def\prefix{ }
 \def\S{th}
-AWW#1{}
+\def\drop#1{}
 A&&#1\fi{\fi#1}
 \def\gifts#1#2#3#4: #5, #6{\par#1#2#3#5{ing}\ifx !#6\else&\gifts#6\fi}
 \def\christmas#1: #2, #3!{\if.#3.\else \christmas#3!\fi \bigskip On the #1\S\ day of Christmas my true love gave to me \gifts#1: #2, #3!}
@@ -16,10 +16,10 @@ nin: e ladies danc,
 eigh: ht maids a milk,
 seven: en swans a swimm,
 six: {} geese a lay,
-fi{}f: ve gold ringsW,
-f{}{our}: { }calling birdsW,
-th{}irdW: ree french hensW,
-;{}{}secondW: two turtle dovesW,
-;;{}firstW: a\prefix\def\prefix{nd a }partridge in a pear tree.W,
+fi{}f: ve gold rings\drop,
+f{}{our}: { }calling birds\drop,
+th{}ird\drop: ree french hens\drop,
+;{}{}second\drop: two turtle doves\drop,
+;;{}first\drop: a\prefix\def\prefix{nd a }partridge in a pear tree.\drop,
 !
 \bye
