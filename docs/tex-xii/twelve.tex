@@ -1,7 +1,7 @@
 \bigskip On the first day of Christmas my true love gave to me
 \par a partridge in a pear tree.
 
-\def\gifts #1: #2, #3! { % Called like: \gifts third: three french hens, second: two turtle doves, Z!
+\def\gifts #1: #2, #3! {
   % Typeset current gift from #2 and earlier gifts from #3
   \par #2
   \if #3Z
@@ -11,7 +11,7 @@
   \fi
 }
 
-\def\christmas #1: #2, #3! { % Called with #1 = fourth, #2 = four calling birds, #3 = <third: three french hens, second: two turtle doves, Z>
+\def\christmas #1: #2, #3! {
   % Typeset earlier verses: the ones in #3
   \if #3Z
   \else
