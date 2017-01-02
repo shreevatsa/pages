@@ -105,7 +105,6 @@ From
 Reference
 - [[https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries][MDN: Using media queries]]
 
-
 * Laying text across multiple columns
 
 From
@@ -118,8 +117,27 @@ Reference:
 
 * Flexbox layout
 
+Specify ~display: flex;~ or ~display: inline-flex;~ on an element, which now becomes the "flex container".
+
+Then, its children ("flex items") are laid out along the main axis (~flex-direction~ property: ~row~ / ~column~) according to the ~justify-content~ property (basically: do you want your hfills/vfills at the start, end, both, between items, etc. (A poor man's hfil: you can't specify the actual stretch and shrink parameters of each glue.) They are laid out along the cross (perpendicular) axis according to the ~align-items~ property.
+
+#+BEGIN_QUOTE
+Many designers will find the flexbox model easier to use. Child elements in a flexbox can be laid out in any direction and can have flexible dimensions to adapt to the display space. Positioning child elements is thus much easier, and complex layouts can be achieved more simply…
+
+The defining aspect of the flex layout is the ability to alter its items' width and/or height to best fit in the available space on any display device. A flex container expands items to fill available free space, or shrinks them to prevent overflow.
+
+The flexbox layout algorithm is direction-agnostic as opposed to the block layout, which is vertically-biased, or the inline layout, which is horizontally-biased. While the block layout works well for pages, it lacks sufficient definition to support application components that have to change orientation, resize, stretch, or shrink as the user agent changes, flips from vertical to horizontal, and so forth.
+#+END_QUOTE
+
 From
 - [[http://learnlayout.com/flexbox.html][learnlayout 18. flexbox]]
+
+More reading:
+- [[https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Using_CSS_flexible_boxes][MDN: Using CSS flexible boxes]]
+- [[http://flexboxfroggy.com/][flexbox froggy]] / [[http://www.flexboxdefense.com/][flexboxdefense]]
+- [[http://the-echoplex.net/flexyboxes/][flexy boxes]]
+- [[https://dev.opera.com/articles/flexbox-basics/][dev.opera.com: Flexbox basics]]
+- [[https://www.w3.org/TR/css-flexbox-1/][Spec]]
 
 * Frameworks
 
@@ -128,6 +146,26 @@ Use an existing framework?
 From
 - [[http://learnlayout.com/frameworks.html][learnlayout 19. css frameworks]]
 
+* Viewport
+
+If you don't specify it, your browser will think that your page is designed for a 980px width on a desktop, and try to cram those many "virtual" pixels on to the page. (In other words, scale its definition of "pixel" so that 980 of them fit in the width.)
+
+If your page will appear fine on a mobile screen (e.g. as if a browser doesn't do anything special and just lays out elements):
+#+BEGIN_SRC html
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+#+END_SRC
+
+Use ~initial-scale=2~ to have it blown up.
+
+But if your page's content lives inside a certain width:
+#+BEGIN_SRC html
+ <meta name="viewport" content="width=500px">
+#+END_SRC
+
+You can set constraints like ~maximum-scale=2~, ~minimum-scale=0.5~, ~user-scalable=no~, ~user-zoom=fixed~ but that just annoys the users.
+
+From
+- [[https://dev.opera.com/articles/an-introduction-to-meta-viewport-and-viewport/][opera introduction to viewport]]
 
 
 * Difference between TeX and CSS models
@@ -153,12 +191,18 @@ See also:
 - https://tex.stackexchange.com/questions/139067/i-have-a-dream-using-css-to-style-a-tex-document
 - https://tex.stackexchange.com/questions/226361/how-to-understand-latex-styling-when-coming-from-a-css-background
 - https://tex.stackexchange.com/questions/78215/what-is-the-difference-between-latex-and-html
+- Absolute positioning with textpos: https://www.tug.org/TUGboat/tb23-3-4/tb75gray.pdf (very nice article and shows the power of TeX's elegantly simple boxes-and-glue model)
+
+#+BEGIN_QUOTE
+CSS, a language for specifying visual appearance on the web, is … so complex that it has never been implemented correctly; yet, successive versions specify even more complexity. At the same time, it is so underpowered that many elementary graphic designs are impossible or prohibitively difficult, and context-sensitivity (or anything computational) must be addressed externally. Most CSS lore is dedicated to describing the tangles of brittle hacks needed to circumvent incompatibilities or approximate a desired appearance.
+
+One cause of the CSS mess is the eschewing of elegant, flexible abstractions for “1000 special cases,” a detrimental approach which precludes simplicity and generality in any domain.
+-- [[http://worrydream.com/MagicInk/#p255][Bret Victor]] (via [[https://pchiusano.github.io/2014-07-02/css-is-unnecessary.html][Paul Chiusano]])
+#+END_QUOTE
 
 Less related:
 - The TeX and LaTeX logos: http://tess.oconnor.cx/2007/08/tex-poshlet (via https://stackoverflow.com/questions/8160514/is-there-css-for-typesetting-the-latex-logo-in-html)
 - Vaguely (un)related: https://news.ycombinator.com/item?id=7986612
-- Absolute positioning with textpos: https://www.tug.org/TUGboat/tb23-3-4/tb75gray.pdf
 
 Totally unrelated:
 - Typesetting on a grid, extreme example (by Jean-luc Doumont, the author of /Trees, Maps and Theorems/): http://principiae.be/pdfs/TUG-X-004-slideshow.pdf
--
