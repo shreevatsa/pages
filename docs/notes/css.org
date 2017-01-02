@@ -1,0 +1,164 @@
+# -*- truncate-lines: nil; -*-
+#+TITLE: Learning CSS
+
+From http://learnlayout.com/
+
+* Flow: ~display: "block";~
+
+An element's ~display~ property can be set to value ~block~ so that it forms a block-level element: starts on a new line and stretches as much to left and right as possible. (As opposed to ~display: inline~.)
+
+From:
+- [[http://learnlayout.com/display.html][learnlayout 2. the "display" property]]
+Reference:
+- [[https://developer.mozilla.org/en-US/docs/Web/CSS/display][MDN: The ~display~ property]]
+- [[https://www.w3.org/TR/css3-box/#the-lsquo][CSS basic box model: The ‘display’ property]]
+
+* Content (inner) width: ~width: 600px;~, (or better for smaller screens: ~max-width: 600px;~)
+
+A block-level element can have a width. IIUC, this will still be a block-level element (use up the full width) but its content will be restricted to that width.
+
+From:
+- [[http://learnlayout.com/margin-auto.html][learnlayout 3. margin: auto;]], [[http://learnlayout.com/max-width.html][learnlayout 4. max-width]]
+
+Reference:
+- [[https://www.w3.org/TR/css3-box/#the-lsquo0][CSS basic box model: The ~width~ property]]
+- [[https://developer.mozilla.org/en-US/docs/Web/CSS/max-width][MDN: max-width]], [[https://developer.mozilla.org/en-US/docs/Web/CSS/width][MDN: width]]
+
+* Actual/total (outer) width
+The space it "appears to take up" (?) is <specified width> + <border> + <padding> by default (corresponds to ~box-sizing: content-box;~). An alternative way is to use
+#+BEGIN_SRC css
+ * {
+  box-sizing: border-box;
+ }
+#+END_SRC
+to change the sizing model.
+
+In either case, there is also ~margin~ which affect where other boxes go.
+
+From
+- [[http://learnlayout.com/box-model.html][learnlayout 5. the box model]], [[http://learnlayout.com/box-sizing.html][learnlayout 6. box-sizing]]
+Reference:
+- [[https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing][MDN: box-sizing]]
+- [[https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Introduction_to_the_CSS_box_model][MDN: Introduction to the CSS box model]]
+- [[https://stackoverflow.com/questions/2189452/when-to-use-margin-vs-padding-in-css/2189462#2189462][StackOverflow answer: margin and padding]]
+
+* Shifting the box position
+
+Elements have a ~position~ property whose default value (called ~static~) is to just lay the box where it would normally appear when layout all boxes in the "flow". In this case, the element is said to be "not positioned".
+
+It can be moved by setting ~position: relative~ and then specifying the properties ~left~, ~right~, ~top~, ~bottom~. (If you say ~position: relaive~ but don't specify any of these, it's just like ~position: static~ except that it counts as positioned.)
+
+It can also be specified to be ~position: absolute~ which means that it is positioned relative (yeah) to its first positioned ancestor (i.e. ~position~ other than ~static~).
+
+It can also be specified to be ~position: fixed~ relative to the viewport (the visible part of the screen). So the user's scroll has no effect: it's like an overlay on top of the screen. Used for headers and footers. ("A fixed element does not leave a gap in the page where it would normally have been located.")
+
+From
+- [[http://learnlayout.com/position.html][learnlayout 7. position]], [[http://learnlayout.com/position-example.html][learnlayout 8. position example]]
+Reference
+- [[https://developer.mozilla.org/en-US/docs/Web/CSS/position][MDN: position]]
+
+* Float
+
+They are
+- like ~position: absolute~ in that they are taken out of the normal flow (when laying out boxes).
+- unlike ~position: absolute~ in that *other* elements will have their content avoiding these floats.
+
+A ~float: left~ or ~float: right~ element "is shifted to the left or right [respectively] until it touches the edge of its containing box or another floated element".
+
+An element (a non-float element!) that has ~clear: left~ or ~clear: right~ will have no floats to its left or right [respectively]. To clear both ends, use ~clear: both~.
+
+~overflow: auto~ -- another way to clear? Not yet clear to me how this bears on floats.
+
+From
+- [[http://learnlayout.com/float.html][learnlayout 9. float]], [[http://learnlayout.com/clear.html][learnlayout 10. clear]], [[http://learnlayout.com/clearfix.html][learnfloat 11. the clearfix hack]], [[http://learnlayout.com/float-layout.html][learnlayout 12. float layout example]]
+Reference:
+- [[https://developer.mozilla.org/en-US/docs/Web/CSS/float][MDN: float]]
+- [[https://developer.mozilla.org/en-US/docs/Web/CSS/overflow][MDN: overflow]] (?)
+- [[https://stackoverflow.com/questions/211383/what-methods-of-clearfix-can-i-use][Linked SO question on "clearfix"]]
+
+* inline-block
+
+No big deal, just inline elements that can have a width and height. Just like having vboxes inside hboxes?
+
+Can set ~vertical-align~ property to either ~top~ or ~bottom~ or ~middle~ (etc.; default is ~baseline~ as in TeX!) to control how different inline blocks get aligned.
+
+From
+- [[http://learnlayout.com/inline-block.html][learnlayout 15. inline-block]], [[http://learnlayout.com/inline-block-layout.html][learnlayout 16. inline-block layout]]
+
+Reference
+- [[https://developer.mozilla.org/en-US/docs/Web/CSS/display][MDN: display]]
+- [[https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align][MDN: vertical-align]]
+
+* Relative widths
+
+Something like ~width: 50%~ means 50% of its containing block.
+
+From
+- [[http://learnlayout.com/percent.html][learnlayout 13. percent width]]
+
+* Media queries
+
+Can specify different styles for, say, ~@media screen and (min-width:600px) { ... }~ and ~@media screen and (max-width:599px) { ... }~.
+
+From
+- [[http://learnlayout.com/media-queries.html][learnlayout 14. media queries]]
+Reference
+- [[https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries][MDN: Using media queries]]
+
+
+* Laying text across multiple columns
+
+From
+- [[http://learnlayout.com/column.html][learnlayout 17. column]]
+Reference:
+- [[https://www.w3.org/TR/css3-multicol/][CSS Multi-column Layout Module]]
+- [[https://dev.opera.com/articles/css3-multi-column-layout/][CSS3 Multi-Column Layout]]
+- [[https://drafts.csswg.org/css-grid/][CSS Grid Layout Module Level 1]]
+- [[https://www.w3.org/TR/css3-multicol/][CSS Multi-column Layout Module]]
+
+* Flexbox layout
+
+From
+- [[http://learnlayout.com/flexbox.html][learnlayout 18. flexbox]]
+
+* Frameworks
+
+Use an existing framework?
+
+From
+- [[http://learnlayout.com/frameworks.html][learnlayout 19. css frameworks]]
+
+
+
+* Difference between TeX and CSS models
+
+- There is only one TeX engine; CSS has to work for multiple browsers at multiple widths and on multiple devices.
+- In TeX you are aware of the renderer and lay out boxes one by one (you work with /lists/ of horizontal and vertical boxes), in CSS you declare properties on the boxes themselves and the browser figures out how to lay them relative to others.
+- TeX has the notion of baselines / reference point of a box, which is used to align adjacent boxes horizontally. (So boxes have "height" and "depth"; their vertical dimension is the sum.) Not sure if there's something similar in CSS. AFAIK so far, boxes only have a height.
+- (Looks like) Every CSS box has margin + border + padding + content; in TeX you'd probably specify them as individual nested boxes. (Not that you have to do it every time; there are macros etc.)
+- TeX is programmable, you write macros etc. and less frequently specify box widths directly.
+- TeX has glue (a better name may have been "springs") which can stretch and shrink proportionally. Glues with different stretchability will stretch according to their relative magnitudes.
+- CSS is of course concerned with a lot more than boxes / layout: backgrounds, colours, shapes.
+- Negative values (for width, height, depth, stretchability, shrinkability, etc.) are allowed in TeX, and can be useful if you know what you're doing. They're not AFAIK allowed in CSS.
+- With TeX, unless you do something odd with negative values, boxes will not overlap (generally) in ways that puts text on top of other text. With CSS, they might very easily overlap, e.g. if you position elements with ~position: absolute~ and don't leave sufficient margin amounts.
+- The other way to say this would be that TeX's box models sort of corresponds to having only ~position: relative~ (and ~position: static~ which just means shifting by 0): you could describe this as more limited, but it can also do everything else, at the cost of more math on the part of the user to calculate exactly what to specify.
+- When writing CSS you have to think about how your page should look at different browser widths and different user font preferences, also possibly what it should look like as the page is scrolled, etc. Your task is to give instructions (more like suggestions) for other people's browsers which you don't control, and hope that it will look good. (Hence you have to test it on different browsers, etc.) With TeX you are thinking about a fixed-size (and not just relative but exact, down to the inches) page with a font size you control. There is only one (device-independent) output. What you see on your machine (printer) is the same as what anyone on any continent with any computer will see.
+- TeX layout is more procedural: you say from the "outside" what boxes to lay where, in what order. With CSS you work "inside-out", declaring properties on the boxes themselves, and then the browser figures out how to satisfy these constraints. This makes things a bit harder to predict (IMO).
+- CSS is growing. It definitely has more ways of specifying someting than TeX does. Some features it got recently (like ~display: inline-block~ or many of the things made possible with CSS flexible boxes aka flexbox) have been in TeX since the start, as a natural consequence of TeX's design (your document is a list of pages each of which is a vertical box, which contains vertical boxes that may contain horizontal boxes that may contain vertical boxes...). TeX seems to start more with a minimal set of features and find elegant ways of expressing anything using those (it's possible!), while CSS is throwing in the kitchen sink.
+
+See also:
+- https://tex.stackexchange.com/questions/14539/isnt-tex-similar-to-htmlcss
+- https://tex.stackexchange.com/questions/6461/why-couldnt-latexs-layout-model-be-as-simple-as-csss-layout-model ("If you read the Ph.D. thesis of Håkon Wium Lie's you will see that a lot of the concepts of CSS were based on TeX and LateX")
+- https://stackoverflow.com/questions/3089125/what-are-the-differences-between-the-css-and-latex-box-models/
+- https://tex.stackexchange.com/questions/139067/i-have-a-dream-using-css-to-style-a-tex-document
+- https://tex.stackexchange.com/questions/226361/how-to-understand-latex-styling-when-coming-from-a-css-background
+- https://tex.stackexchange.com/questions/78215/what-is-the-difference-between-latex-and-html
+
+Less related:
+- The TeX and LaTeX logos: http://tess.oconnor.cx/2007/08/tex-poshlet (via https://stackoverflow.com/questions/8160514/is-there-css-for-typesetting-the-latex-logo-in-html)
+- Vaguely (un)related: https://news.ycombinator.com/item?id=7986612
+- Absolute positioning with textpos: https://www.tug.org/TUGboat/tb23-3-4/tb75gray.pdf
+
+Totally unrelated:
+- Typesetting on a grid, extreme example (by Jean-luc Doumont, the author of /Trees, Maps and Theorems/): http://principiae.be/pdfs/TUG-X-004-slideshow.pdf
+-
