@@ -1,13 +1,15 @@
-# -*- org-html-postamble: nil; org-html-preamble: nil; -*-
 #+TITLE: Understanding ~xii.tex~
 #+HTML_DOCTYPE: html5
 # #+HTML_LINK_HOME: ..
 # #+HTML_LINK_UP: ..
 # #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style1.css" />
 # #+HTML_HEAD_EXTRA: <link rel="alternate stylesheet" type="text/css" href="style2.css" />
-#+OPTIONS: html5-fancy:t
+# #+OPTIONS: html-doctype:html5 # Doesn't work!
+#+OPTIONS: html-html5-fancy:t
 #+OPTIONS: html-style:nil
 #+OPTIONS: html-scripts:nil
+#+OPTIONS: html-preamble:nil
+#+OPTIONS: html-postamble:nil
 #+OPTIONS: timestamp:nil
 
 In 1998, David Carlisle published [[https://tug.org/TUGboat/tb19-4/tb61carl.pdf][A Seasonal Puzzle]] in TUGBoat ([[https://www.tug.org/TUGboat/Contents/contents19-4.html][Volume 19, No. 4 (December)]]). This was a source file named =xii.tex= that contained the following:
