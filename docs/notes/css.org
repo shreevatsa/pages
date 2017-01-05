@@ -322,3 +322,70 @@ Less related:
 
 Totally unrelated:
 - Typesetting on a grid, extreme example (by Jean-luc Doumont, the author of /Trees, Maps and Theorems/): http://principiae.be/pdfs/TUG-X-004-slideshow.pdf
+
+* Styling
+
+Completely unrelated to everything above:
+
+1. http://motherfuckingwebsite.com/ has
+   #+BEGIN_SRC
+       <meta charset="utf-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1">
+   #+END_SRC
+
+2. txti.es (e.g. http://txti.es/m9nd4) has
+   #+BEGIN_SRC css
+     body {
+         font-size: 1.1em;
+         line-height: 1.5em;
+         max-width: 45em;
+         margin: auto;
+         padding: 0 2%;
+     }
+     img {
+         max-width: 100%;
+         display: block;
+         margin: .75em auto;
+     }
+   #+END_SRC
+
+3. http://bettermotherfuckingwebsite.com/ has
+   #+BEGIN_SRC css
+     body{
+         font-size: 18px;
+         line-height: 1.6;
+         max-width: 650px;
+         margin: 40px auto;
+         padding: 0 10px;
+         color: #444;
+     }
+     h1,h2,h3 {
+         line-height: 1.2;
+     }
+   #+END_SRC
+
+4. https://bestmotherfucking.website/ ([[https://github.com/KeenRivals/bestmotherfucking.website][GitHub]]) has
+   - https
+   - gzip
+   - caching
+   - this
+     #+BEGIN_SRC css
+       body {
+           font: 1.2em/1.62em sans-serif;
+           max-width: 40em;
+           padding: 0 .62em;
+           margin: 1em auto;
+       }
+       h1, h2, h3 {
+           line-height: 1.2em;
+       }
+       @media print {
+           body {
+               max-width: none;
+           }
+       }
+     #+END_SRC
+
+5. https://thebestmotherfucking.website/ is (meh), ignore it.
+
+6. So is https://thebestmotherfuckingwebsite.co/ ([[https://github.com/resir014/thebestmotherfuckingwebsite.co][GitHub]])
