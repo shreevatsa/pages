@@ -1,7 +1,93 @@
 # -*- truncate-lines: nil; -*-
 #+TITLE: Learning CSS
 
-From http://learnlayout.com/
+* Spec pass
+Update: I'm reading the actual spec at https://drafts.csswg.org/css-display/ (published version at https://www.w3.org/TR/css-display-3/) and it is so much clearer than any tutorial. Partly I think they have figured out themselves, but wow.
+
+"display: contents;" is like unhbox / unvbox
+
+values for the "display" property:
+
+[ <display-outside> || <display-inside> ] | <display-listitem> | <display-internal> | <display-box> | <display-legacy>
+
+
+| display-box | <display-internal>       | list-item | display-outside | display-inside | short name       |                  |
+|-------------+--------------------------+-----------+-----------------+----------------+------------------+------------------|
+| contents    |                          |           |                 |                |                  | <display-box>    |
+| none        |                          |           |                 |                |                  | <display-box>    |
+|-------------+--------------------------+-----------+-----------------+----------------+------------------+------------------|
+|             |                          |           | block           | flow           | block            |                  |
+|             |                          |           | block           | flow-root      | flow-root        |                  |
+|             |                          |           | block           | table          | table            |                  |
+|             |                          |           | block           | flex           | flex             |                  |
+|             |                          |           | block           | grid           | grid             |                  |
+|             |                          |           | block           | ruby           | block ruby       |                  |
+|-------------+--------------------------+-----------+-----------------+----------------+------------------+------------------|
+|             |                          |           | inline          | flow           | inline           |                  |
+|             |                          |           | inline          | flow-root      | inline-block     | <display-legacy> |
+|             |                          |           | inline          | table          | inline-table     | <display-legacy> |
+|             |                          |           | inline          | flex           | inline-flex      | <display-legacy> |
+|             |                          |           | inline          | grid           | inline-grid      | <display-legacy> |
+|             |                          |           | inline          | ruby           | ruby             |                  |
+|-------------+--------------------------+-----------+-----------------+----------------+------------------+------------------|
+|             |                          |           | run-in          | flow           | run-in           |                  |
+|             |                          |           | run-in          | flow-root      |                  |                  |
+|             |                          |           | run-in          | table          |                  |                  |
+|             |                          |           | run-in          | flex           |                  |                  |
+|             |                          |           | run-in          | grid           |                  |                  |
+|             |                          |           | run-in          | ruby           |                  |                  |
+|-------------+--------------------------+-----------+-----------------+----------------+------------------+------------------|
+|             |                          | list-item | block           | flow           | list-item        |                  |
+|             |                          | list-item | block           | flow-root      |                  |                  |
+|-------------+--------------------------+-----------+-----------------+----------------+------------------+------------------|
+|             |                          | list-item | inline          | flow           | inline-list-item | <display-legacy> |
+|             |                          | list-item | inline          | flow-root      |                  |                  |
+|-------------+--------------------------+-----------+-----------------+----------------+------------------+------------------|
+|             |                          | list-item | run-in          | flow           |                  |                  |
+|             |                          | list-item | run-in          | flow-root      |                  |                  |
+|-------------+--------------------------+-----------+-----------------+----------------+------------------+------------------|
+|             | other <display-internal> |           |                 |                |                  |                  |
+|-------------+--------------------------+-----------+-----------------+----------------+------------------+------------------|
+
+<display-internal> = table-row-group | table-header-group |
+                     table-footer-group | table-row | table-cell |
+                     table-column-group | table-column | table-caption |
+                     ruby-base | ruby-text | ruby-base-container |
+                     ruby-text-container ;
+
+I will ignore Ruby and tables.
+
+
+NOTE!
+
+- Absolute positioning or floating an element blockifies it (sets its box's outer display to 'block').
+- A parent with a grid or flex display value blockifies it.
+
+This part of the reference also mentioned here: https://www.chenhuijing.com/blog/how-well-do-you-know-display/#display-run-in
+Looks like next I'll also have to read https://www.w3.org/TR/CSS2/visuren.html much of which is superseded by later standards randomly. Oh well.
+
+Some examples here: https://staff.washington.edu/fmf/2009/09/01/understanding-css-and-floats/
+
+
+* First pass
+from http://learnlayout.com/
+
+Note that there are many aspects to CSS: as said at [[https://en.wikipedia.org/w/index.php?title=Style_sheet_language&oldid=743194356#Components][Style sheet language#Components]], you may want to learn about selectors, about properties and their values (enums, units), how they propagate (inheritance, initial values, cascading) -- but mostly here I care about layout (the visual formatting model): how to achieve a particular appearance, by instructing the user's browser via CSS syntax.
+
+Some best practices: skim (quickly) through a few of the slides here: http://keithjgrant.com/talks/css-for-engineers (hit the ~<Space>~ key to advance. Probably start [[http://keithjgrant.com/talks/css-for-engineers/#/2/2][here]]).
+
+* TODO Write an "unconventional" CSS tutorial
+
+After reading all the below sections, it occurs to me that most CSS layout tutorials are written in the terms of the CSS specification: they describe the properties you can assign to each element, and what those properties mean. In short, the CSS you write is "declarative".
+
+It might be interesting, as an experiment or as a complementary aid to people who think in certain kinds of ways, to instead write a tutorial that is "procedural": that takes the point of view of the browser doing its layout, and describes how it goes about laying its "boxes". Then your task when writing the CSS would be not to think about the properties each element should have, but instead more closely to match what browsers do.
+
+These seem like good resources:
+
+- [~1 hour read] [[https://www.html5rocks.com/en/tutorials/internals/howbrowserswork/][How Browsers Work: Behind the scenes of modern web browsers]] -- not much about layout though (See below)
+- [~2 hour read] [[http://book.mixu.net/css/][Learn CSS Layout: the pedantic way]]
+
+TODO Make a page that has a bunch of divs and user-editable widths etc., to see how "normal flow" works.
 
 * Flow: ~display: "block";~
 
@@ -167,6 +253,35 @@ You can set constraints like ~maximum-scale=2~, ~minimum-scale=0.5~, ~user-scala
 From
 - [[https://dev.opera.com/articles/an-introduction-to-meta-viewport-and-viewport/][opera introduction to viewport]]
 
+* Notes from "how browsers work"
+
+After parsing the HTML (to create the DOM) and parsing the CSS (to compute styles of the elements in the DOM), the browser computes a "render tree". Each object in this tree (called ~RenderObject~ in WebKit) "represents a rectangular area usually corresponding to a node's CSS box". Based on the element's ~display~ style property, it is either inline or block or list item, etc.
+
+This render tree is loosely related to the DOM tree, but is more the set of visual elements, and can differ a lot from the DOM (see the above section for examples). E.g. when text is broken into lines, each line is a render object.
+
+#+BEGIN_QUOTE
+The root render object corresponds to what the CSS spec calls the containing block: the top most block that contains all other blocks. Its dimensions are the viewport: the browser window display area dimensions. Firefox calls it ViewPortFrame and WebKit calls it RenderView.
+#+END_QUOTE
+
+More importantly, start here: https://www.html5rocks.com/en/tutorials/internals/howbrowserswork/#Layout
+
+#+BEGIN_QUOTE
+Elements later ``in the flow'' typically do not affect the geometry of elements that are earlier ``in the flow'', so layout can proceed left-to-right, top-to-bottom through the document. [...] The position of the root renderer is 0,0 and its dimensions are the viewport–the visible part of the browser window.
+#+END_QUOTE
+
+also here: https://www.html5rocks.com/en/tutorials/internals/howbrowserswork/#The_layout_process
+#+BEGIN_QUOTE
+The layout usually has the following pattern:
+
+1. Parent renderer determines its own width.
+2. Parent goes over children and:
+ a. Place the child renderer (sets its x and y).
+ b. Calls child layout if needed [e.g. they are dirty or we are in a global layout, or for some other reason] which calculates the child's height.
+3. Parent uses children's accumulative heights and the heights of margins and padding to set its own height–this will be used by the parent renderer's parent.
+4. Sets its dirty [needs layout] bit to false.
+#+END_QUOTE
+
+Finally, a little bit more starting here: https://www.html5rocks.com/en/tutorials/internals/howbrowserswork/#css
 
 * Difference between TeX and CSS models
 
@@ -183,6 +298,7 @@ From
 - When writing CSS you have to think about how your page should look at different browser widths and different user font preferences, also possibly what it should look like as the page is scrolled, etc. Your task is to give instructions (more like suggestions) for other people's browsers which you don't control, and hope that it will look good. (Hence you have to test it on different browsers, etc.) With TeX you are thinking about a fixed-size (and not just relative but exact, down to the inches) page with a font size you control. There is only one (device-independent) output. What you see on your machine (printer) is the same as what anyone on any continent with any computer will see.
 - TeX layout is more procedural: you say from the "outside" what boxes to lay where, in what order. With CSS you work "inside-out", declaring properties on the boxes themselves, and then the browser figures out how to satisfy these constraints. This makes things a bit harder to predict (IMO).
 - CSS is growing. It definitely has more ways of specifying someting than TeX does. Some features it got recently (like ~display: inline-block~ or many of the things made possible with CSS flexible boxes aka flexbox) have been in TeX since the start, as a natural consequence of TeX's design (your document is a list of pages each of which is a vertical box, which contains vertical boxes that may contain horizontal boxes that may contain vertical boxes...). TeX seems to start more with a minimal set of features and find elegant ways of expressing anything using those (it's possible!), while CSS is throwing in the kitchen sink.
+- CSS is concerned with a lot more than just laying out boxes: background colours, animations, etc.
 
 See also:
 - https://tex.stackexchange.com/questions/14539/isnt-tex-similar-to-htmlcss
