@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>CSS layout</title>
+</head>
+
+<body>
+<!-- <h1>CSS layout tutorial</h1> -->
+
+<h2>Normal flow</h2>
+<p>Consider how text (a stream of characters, as in this paragraph you are reading) is laid out: on a line each word is laid out from left to right, and when there is insufficient width on a line to fit the next word, a new line is started and again the remaining characters are laid out left-to-right.</p>
+
+<p>By default, CSS lays out elements the way text is laid out.</p>
+
+<p>Click "generate" to generate some sample styling for divs, then click "Lay out the above" to see how they would be laid out. Or click the other button to do both. You can also edit the style and html manually and see the results in the iframe below.</p>
+
+<div id="experiment1">
+<button onclick="generateRandom();">Generate</button>
+<textarea id="styleToInject"></textarea>
+<textarea id="divsToInject"></textarea>
+<button onclick="injectAndLayout();">Lay out the above</button>
+<button onclick="generateRandom(); injectAndLayout();">Generate something random and lay it out</button>
+<iframe id="iframe1"></iframe>
+<script>
+    function generateRandom() {
+        const numDivs = 5;
+        let html = ''; // '<html><body>\n';
+        let css = 'div { border:1px solid red; }\n';
+        for (let i = 0; i < numDivs; ++i) {
+            const width = 10 + Math.floor(Math.random() * 40);
+            const height = 10 + Math.floor(Math.random() * 40);
+            html += `<div id="example${i}"></div>\n`;
+            css += `#example${i} { width: ${width}px; height: ${height}px; }\n`;
+        }
+        // html += '</body></html>';
+        document.getElementById('styleToInject').value = css;
+        document.getElementById('divsToInject').value = html;
+    }
+    function injectAndLayout() {
+        const iframeDocument = document.getElementById('iframe1').contentWindow.document;
+        iframeDocument.open();
+        iframeDocument.write('<html>\n' +
+                             '<head><style>' + document.getElementById('styleToInject').value + '</style></head>\n' +
+                             '<body>' + document.getElementById('divsToInject').value + '</body>');
+        iframeDocument.close();
+    }
+</script>
+<style>
+  #experiment1 {
+    max-width: 80%;
+    margin: auto;
+  }
+  #experiment1 textarea {
+      width: 25em;
+      height: 9em;
+      display: block;
+  }
+  #experiment1 button {
+      display: block;
+  }
+  #experiment1 #iframe1 {
+      width: 100%;
+      resize: both;
+      height: 250px;
+  }
+</style>
+</div>
+
+As you can see, ...
+
+</body> </html>
