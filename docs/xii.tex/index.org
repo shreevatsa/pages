@@ -12,10 +12,9 @@
 #+OPTIONS: html-postamble:nil
 #+OPTIONS: timestamp:nil
 
-In 1998, David Carlisle published [[https://tug.org/TUGboat/tb19-4/tb61carl.pdf][A Seasonal Puzzle]] in TUGBoat ([[https://www.tug.org/TUGboat/Contents/contents19-4.html][Volume 19, No. 4 (December)]]). This was a source file named =xii.tex= that contained the following:
+* Introduction
+In 1998, David Carlisle published [[https://tug.org/TUGboat/tb19-4/tb61carl.pdf][A Seasonal Puzzle]] in [[https://www.tug.org/tugboat/][TUGBoat]], the journal of the [[https://www.tug.org/][TeX Users Group]] ([[https://www.tug.org/TUGboat/Contents/contents19-4.html][Volume 19, No. 4 (December)]]). This was a source file named [[http://www.tug.org/TUGboat/Articles/tb61/xii.tex][=xii.tex=]] that contained the following:
 
-# The line below (setting width of a <pre> block) has no effect: need to figure out the CSS for it.
-#+ATTR_HTML: :width 80
 #+BEGIN_SRC
 \let~\catcode~`76~`A13~`F1~`j00~`P2jdefA71F~`7113jdefPALLF
 PA''FwPA;;FPAZZFLaLPA//71F71iPAHHFLPAzzFenPASSFthP;A$$FevP
@@ -32,12 +31,64 @@ LcYlaDLbJsW,SWXJW ree @rzchLhzsW,;WERcesInW qt.'oL.Rtrul;e
 doTsW,Wk;Rri@stW aHAHHFndZPpqar.tridgeLinZpe.LtYer.W,:jbye
 #+END_SRC
 
-This source file,[fn::This source file has 13 lines of 58 characters each (so 13\times59 = 767 bytes)] when passed to plain TeX (that is, when you run ~tex xii.tex~), produces the following
+This source file (neatly laid out as 13 lines of 58 characters each), when passed to plain TeX (that is, when you run ~tex xii.tex~), produces the following pages as output (images below, or see: [[file:xii.pdf][PDF]]/[[file:xii.dvi][DVI]].)
+
+#+ATTR_HTML: :width 90%
+[[file:xii-pages.png][file:xii-pages.png]]
+
+How does it do that?
+
+Here I describe my process of understanding it. In the process we learn some suprising things about TeX, and see some clever tricks used by Carlisle to obfuscate the above text.
+
+* My story
+
+I had used LaTeX a bit, and had even seen this example (=xii.tex=) a while ago but didn't feel I was equipped to understand it at the time.
+
+Recently I read (most of) the excellent book /A Beginner's Book of TeX/ by Seroul and Levy (1991, corrected third printing 1995, based on the French /Le petit livre de TeX/ (1989) by Raymond Seroul, with the translator-turned-coauthor Silvio Levy). This book comes highly recommended by Hans Hagen in his Preface to [[http://www.pragma-ade.com/general/manuals/cont-eni.pdf][the ConTeXt manual]] (also available [[http://pmrb.free.fr/contextref.pdf][here]] and [[http://www.ctex.org/documents/context/cont-enp.pdf][here]]):
+
+#+BEGIN_QUOTE
+In this manual we will not discuss TeX in depth because highly recommended books on TeX already exist. We would like to mention:
+
+1. the unsurpassed /The TeXBook/ by Donald E. Knuth, the source of all knowledge and TEXnical inspiration,
+2. the convenient /TeX by Topic/ by Victor Eijkhout, the reference manual for TeX programmers,
+   and
+3. the recommended /The Beginners Book of TeX/ by Silvio Levy and Raymond Seroul, the book that turns every beginner into an expert
+
+For newcomers we advise (3), for the curious (1), and for the impatient (2). ConTeXt users will not necessarly need this literature, unless one wants to program in TeX, uses special characters, or has to typeset math. Again, we would advise (3).
+#+END_QUOTE
+
+The book is
+
+I had seen this a while ago, but remembered this while reading Seroul & Levy's book, when (towards the end of the book) they reached the chapter on catcodes. It is a tribute to the book that it converts beginners into experts (as Hans Hagen said): I felt I could figure it out.
+
+I began by just starting to read it left-to-right.
+
+#+BEGIN_SRC
+\let~\catcode
+#+END_SRC
+
+Note that =~= is an "active" character: it has category code 13. So basically it is a macro. See this:
+
+#+BEGIN_EXAMPLE
+*\show~
+> ~=macro:
+->\penalty \@M \ .
+<*> \show~
+
+?
+#+END_EXAMPLE
+
+# (TODO: bring back the trailing whitespace from above example.)
+
+So what =\let~\catcode= does is to (re)define the macro =~= to stand for =\catcode=.
+
+This could also be written =\def~{\catcode}= -- normally the difference between ~\let~ and ~\def~ is that ~\let~ "copies" the definition
+
+* Setting up a safety harness
+
+I did this after a few of the steps below, but might as well mention it now...
 
 
-Here I describe my process of understanding it.
-
-[Insert original description / code]
 
 Related:
 - https://tex.stackexchange.com/questions/6490/can-i-see-a-plain-tex-source-file-please
