@@ -1,0 +1,180 @@
+[Remaining: fully integrate Gustavo's answer,
+https://www.tug.org/utilities/plain/cseq.html#splitmaxdepth-rp
+http://mirrors.acm.jhu.edu/ctan/macros/latex/contrib/needspace/needspace.pdf
+https://tex.stackexchange.com/questions/191408/peek-ahead-a-vbox-vsplit-and-reassemble-again
+http://texdoc.net/texmf-dist/doc/etex/base/etex_man.pdf -- for \savingvdiscards
+]
+
+
+[Answer to https://tex.stackexchange.com/questions/348299/prevent-widowing-orphaning-of-sections-that-can-fit-on-one-page/ ]
+
+(Completely rewrote this answer based on the other two answers, but the basic idea is the same.)
+
+The question ends with “Can this be done in LaTeX?” (i.e., keeping “sections” on a single page whenever possible). Before showing how this _can_ be done (to some extent), let me first say (my own opinion of course) why you _shouldn't_ do this in (La)TeX.
+
+This answer grew so long that it needs its own Table of Contents:
+
+ - "How TeX makes lines into pages"
+ - Are you sure you want to use TeX?
+ - Are you sure you want to use LaTeX?
+ - Putting your section into a box
+ - Can it fit on the current page, without shrinking?
+ - Can it fit on the current page, with shrinking?
+ - Can it fit on a page?
+ - Does it have an `\includepdf`?
+
+# How TeX makes lines into pages
+
+TeX may seem like magic, but it is not. At heart, it has a simple but powerful model of typesetting: repeatedly, it takes a list of boxes, glues and penalties, and decides on a good place to break this list. For example,
+
+ - [Horizontal lists (lines)] Each character is a small box; a word is a bigger box made of a bunch of these boxes laid together; a line is a big box made of these bigger boxes joined together with stretchable shrinkable spaces (glue).
+ - [Vertical lists (pages)] Each line is a box; these boxes are separated by vertical glue; a list of these boxes is broken somewhere to form a big box which is the page.
+
+No matter what packages you use, TeX as a typesetter still uses the same box-glue-penalty model; your packages only affect the list of boxes, glues and penalties used. IMO taking a few hours to learn this model (e.g. from _A Beginner's Book of TeX_ or of course _The TeXbook_) will be most valuable if you care about the appearance.
+
+(The full details of how the vertical list of boxes turns into a page are treated, in different ways, in Chapter 15 of _The TeXbook_ (“How TeX makes lines into pages”) and Chapter 27 of _TeX By Topic_ (“Page Breaking”).)
+
+# Why TeX?
+
+Knuth designed TeX to produce high-quality typesetting, matching the finest (technical) printed books. Even for individual paragraphs, having good line breaks (spaces not overstretched, words not over-hyphenated) often requires some rewriting of sentences; this is why TeX by default prefers to produce overfull lines (words sticking out of the margin, further highlighted with black bars) rather than stretch spacing beyond aesthetically pleasing limits. (Though you can change this by increasing the `\tolerance`.)
+
+Thus the highest quality is impossible to achieve with an automated system; it necessarily requires human input (computers are not yet good at rewording your sentences). Knuth says as much at the beginning of Chapter 15 of _The TeXbook_:
+
+> Therefore if you are fussy about the appearance of pages, you can expect to do some rewriting of the manuscript until you achieve an appropriate balance, or you might need to fiddle with the \looseness as described in Chapter 14; no automated system will be able to do this as well as you.
+
+See also Chapter 1:
+
+> If you merely want to produce a passably good document—something acceptable and basically readable but not really beautiful—a simpler system will usually suffice.
+
+You should probably consider this strongly, and decide whether you really need fine typesetting.
+
+# Why LaTeX?
+
+While Knuth thought deeply about the page, Leslie Lamport had useful insights about people (the authors). LaTeX encodes a profound idea of a "document-preparation system" that uses "logical structure" (see his article "Document Production: Visual or Logical?" on [his website](https://research.microsoft.com/en-us/um/people/lamport/pubs/document-production.pdf) or [in TUGboat](https://www.tug.org/TUGboat/tb09-1/tb20lamport.pdf)), keeping the author concerned more with the content than the appearance (thinking of their "document" as a collection of "chapters", "sections", "subsections", etc). This way, in your document you only enter "semantic" indicators and they get translated into appropriate TeX typesetting instructions. To get another insight into Lamport's (and by extension LaTeX's) philosophy, see [this interview](https://research.microsoft.com/en-us/um/people/lamport/pubs/lamport-latex-interview.pdf):
+
+> Q: Three LATEX mistakes that people should stop making?
+> Lamport:
+> 1. Worrying too much about formatting and not enough about content.
+> 2. Worrying too much about formatting and not enough about content.
+> 3. Worrying too much about formatting and not enough about content.
+
+This is all very fine, but if you are not directly typing the LaTeX source, and keeping your document's "logical structure" somewhere else and using (La)TeX simply for typesetting, then (this is my own opinion, probably controversial here) there is really no good reason to use LaTeX instead of plain TeX. Yes, LaTeX provides some shortcuts and reasonable defaults. For example, you don't have to realize that the vertical space after a section heading and before its first sentence needs to be non-breakable, and think about how to achieve that with glue and penalties. But, on the whole, it obscures the actual typesetting that is going on. If your goal in using (La)TeX is merely to produce pages, and you _do_ care very much about the appearance, then it makes sense to understand exactly what's happening under the hood so that you can influence it appropriately.
+
+Further, TeX's macro facilities were not intended by Knuth as a full-fledged programming language (though Turing-completeness "snuck in"), so I would suggest using TeX solely as a typesetter, and doing your programming externally (as much as possible).
+
+# Your problem here
+
+With all that said, let's turn to your problem here. You have your content somewhere, from which you auto-generate LaTeX code. In this content, you have something that you (logically) think of as "sections", and you'd like each of them to be typeset the following way:
+
+ - If it can fit on the same page as wherever the preceding one ended, it should appear there.
+ - Else, if it can fit on a page (any page), then it should appear by itself on a page (even if it means a lot of empty space on the previous page).
+ - Else (if it's too long to fit on a page), then it should simply appear after the previous one.
+
+To repeat my [comment above](https://tex.stackexchange.com/questions/348299/prevent-widowing-orphaning-of-sections-that-can-fit-on-one-page#comment856616_348299): an idea to do this is to put the entire "section" into a box, and measure the height of the box. If the height of the box is small enough that it would fit in a page, *and* if it is large enough that it wouldn't fit on the current page, then we insert a `\clearpage`.
+
+This requires doing a few things.
+
+# Putting your section into a box
+
+Right now for each of your "logical" sections, you generate LaTeX markup that begins with `\section{Name}` and has no special ending. This is the standard LaTeX markup, no doubt.
+
+For your purpose, it would be a simple matter for you to instead generate different markup. You can do it this way:
+
+        \newbox\mysectionbox
+
+to declare a box called `\mysectionbox`, and then begin each of your "sections" with:
+
+        \setbox\mysectionbox=\vbox\bgroup
+        \section{#1}
+
+and end it with
+
+        \egroup
+        % Other code goes here
+
+The `\section{#1}` is there to match the output you were getting with standard LaTeX markup. Note the `\vbox\bgroup` and the matching `\egroup` in the end block. This puts all the actual "contents" of your section (including the `\section{#1}` at the top) into the box called `\mysectionbox`.
+
+(The answer by @cfr uses \begin{minipage}{\texwidth}\section{#1} and \end{minipage} instead: that works too. You can also use `\newenvironment{mysection}[1]{<before stuff>}{<after stuff>}` if you'd prefer your LaTeX source to look like `\begin{mysection}{Name}` ... `\end{mysection}`.)
+
+# The natural height of my box
+
+After having put the "section" into a box, its natural height is available as the `\ht` of that box. There is also a depth, available with `\dp`, but for a normal `\vbox` made of lines, the depth is how much the last line dips below the baseline (e.g. from letters like 'g', 'j', 'p', 'q' and 'y'); you may want to consider that as well.
+
+## TeX code
+
+        \ht\mysectionbox
+
+or if you want to include the depth:
+
+        \newdimen\mysectionboxheight
+        \mysectionboxheight=\ht\mysectionbox
+        \advance\mysectionboxheight by \dp\mysectionbox
+
+## LuaTeX code
+
+        local mysectionbox = tex.getbox('mysectionbox')
+        local mysectionboxheight = mysectionbox.height + mysectionbox.depth
+
+
+# How much space remains on the page
+
+The amount of space remaining on the page (at the place the environment starts) can be calculated with (after a paragraph ends):
+
+## TeX code
+
+After having declared a dimension called `\pageremaining` with
+
+        \newdimen\pageremaining
+
+you can calculate the remaining space with the expression
+
+        \pageremaining=\pagegoal
+        \advance\pageremaining by -\pagetotal
+
+## LuaTeX code
+
+        local remaining = tex.get('pagegoal') - tex.get('pagetotal')
+
+# Can my box fit on this page, without shrinking
+
+## TeX code
+
+        \ifdim\mysectionboxheight>\pageremaining
+
+## LuaTeX code
+
+        if mysectionboxheight > pageremaining
+
+# Can my box fit on this page, with shrinking
+
+Gustavo pointed out that lists of boxes-and-glues can also shrink. This includes the current page, and the box we are checking to typeset.
+
+We can use `\vsplit` for this. This needs some preparation: set `\splittopskip = 0.0pt`, set `\splitmaxdepth = \maxdepth`.
+
+# How much space is there on a page
+This is available as the `\vsize` value in plain TeX, which in LaTeX is set via the `\textheight` parameter of a page style. (Thanks to Gustavo for pointing out that I was incorrectly using `\pagegoal` here too.)
+
+(This requires no additional packages and uses only things available in plain TeX, apart from of course `\clearpage` which you wanted, and `\newenvironment`… more on this below.)
+
+
+
+**Edit**: To go with my suggestion of keeping programming out of (La)TeX as much as possible to preserve your sanity, here's an equivalent with some of the "programming" part (getting the height and comparing it) done in Lua: my first lines of LuaTeX code :-) (You'll need to compile the file with `lualatex` instead of `pdflatex`.)
+
+    \newbox\mysectionbox
+    \newenvironment{mysection}[1]{
+      \setbox\mysectionbox=\vbox\bgroup
+      \section{#1}
+    }{\egroup
+      \directlua{
+        local remaining = tex.get('pagegoal') - tex.get('pagetotal')
+        local myboxheight = tex.getbox('mysectionbox').height
+        -- If the box can fit on a page *and* cannot fit on current page, then clear page.
+        if myboxheight <= tex.get('pagegoal') and myboxheight > remaining then
+          tex.print([[\noexpand\clearpage]])
+        end
+      }
+      % Unbox the section box and typeset it.
+      \unvbox\mysectionbox
+    }
+
+  [1]: https://i.stack.imgur.com/06WIo.png
