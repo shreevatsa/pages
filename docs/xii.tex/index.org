@@ -1,9 +1,10 @@
+# -*- truncate-lines: nil; -*-
 #+TITLE: Understanding ~xii.tex~
 #+HTML_DOCTYPE: html5
 # #+HTML_LINK_HOME: ..
 # #+HTML_LINK_UP: ..
 # #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style1.css" />
-# #+HTML_HEAD_EXTRA: <link rel="alternate stylesheet" type="text/css" href="style2.css" />
+#+HTML_HEAD_EXTRA: <style>.figure {margin: auto;}</style>
 # #+OPTIONS: html-doctype:html5 # Doesn't work!
 #+OPTIONS: html-html5-fancy:t
 #+OPTIONS: html-style:nil
@@ -13,7 +14,7 @@
 #+OPTIONS: timestamp:nil
 
 * Introduction
-In 1998, David Carlisle published [[https://tug.org/TUGboat/tb19-4/tb61carl.pdf][A Seasonal Puzzle]] in [[https://www.tug.org/tugboat/][TUGBoat]], the journal of the [[https://www.tug.org/][TeX Users Group]] ([[https://www.tug.org/TUGboat/Contents/contents19-4.html][Volume 19, No. 4 (December)]]). This was a source file named [[http://www.tug.org/TUGboat/Articles/tb61/xii.tex][=xii.tex=]] that contained the following:
+In 1998, David Carlisle published [[https://tug.org/TUGboat/tb19-4/tb61carl.pdf][A Seasonal Puzzle]] in [[https://www.tug.org/tugboat/][TUGboat]], the journal of the [[https://www.tug.org/][TeX Users Group]] ([[https://www.tug.org/TUGboat/Contents/contents19-4.html][Volume 19, No. 4 (December)]]). This was a source file named [[http://www.tug.org/TUGboat/Articles/tb61/xii.tex][=xii.tex=]] that contained the following:
 
 #+BEGIN_SRC
 \let~\catcode~`76~`A13~`F1~`j00~`P2jdefA71F~`7113jdefPALLF
@@ -36,15 +37,15 @@ This source file (neatly laid out as 13 lines of 58 characters each), when passe
 #+ATTR_HTML: :width 90%
 [[file:xii-pages.png][file:xii-pages.png]]
 
-How does it do that?
+How does it do that?!
 
 Here I describe my process of understanding it. In the process we learn some suprising things about TeX, and see some clever tricks used by Carlisle to obfuscate the above text.
 
-* My story
+* My story: praise for /Seroul & Levy/
 
 I had used LaTeX a bit, and had even seen this example (=xii.tex=) a while ago but didn't feel I was equipped to understand it at the time.
 
-Recently I read (most of) the excellent book /A Beginner's Book of TeX/ by Seroul and Levy (1991, corrected third printing 1995, based on the French /Le petit livre de TeX/ (1989) by Raymond Seroul, with the translator-turned-coauthor Silvio Levy). This book comes highly recommended by Hans Hagen in his Preface to [[http://www.pragma-ade.com/general/manuals/cont-eni.pdf][the ConTeXt manual]] (also available [[http://pmrb.free.fr/contextref.pdf][here]] and [[http://www.ctex.org/documents/context/cont-enp.pdf][here]]):
+Recently I read (most of) the excellent book /A Beginner's Book of TeX/ by Seroul and Levy (1991, corrected third printing 1995, translated and coauthored by Silvio Levy based on the French /Le petit livre de TeX/ (1989) by Raymond Seroul). This book comes highly recommended by Hans Hagen in his Preface to [[http://www.pragma-ade.com/general/manuals/cont-eni.pdf][the ConTeXt manual]] (also available [[http://pmrb.free.fr/contextref.pdf][here]] and [[http://www.ctex.org/documents/context/cont-enp.pdf][here]]):
 
 #+BEGIN_QUOTE
 In this manual we will not discuss TeX in depth because highly recommended books on TeX already exist. We would like to mention:
@@ -57,17 +58,24 @@ In this manual we will not discuss TeX in depth because highly recommended books
 For newcomers we advise (3), for the curious (1), and for the impatient (2). ConTeXt users will not necessarly need this literature, unless one wants to program in TeX, uses special characters, or has to typeset math. Again, we would advise (3).
 #+END_QUOTE
 
-The book is
+The book lives up to this billing: it is indeed written for beginners, and it indeed can turn "every beginner into an expert" (or at least into someone confident of being able to become an expert, which is a step towards it). It is written with remarkable clarity, and it contains that great feature of good program documentation: it doesn't just tell you how to accomplish things, it makes your mental model match the program's working: in short, it makes TeX seem less arcane and magical.
 
-I had seen this a while ago, but remembered this while reading Seroul & Levy's book, when (towards the end of the book) they reached the chapter on catcodes. It is a tribute to the book that it converts beginners into experts (as Hans Hagen said): I felt I could figure it out.
+Towards the end of the book (Chapter 12 of the book is "TeX Programming", before the final chapter which is "Dictionary and Index"), they explain TeX's "category codes", on page 172:
 
-I began by just starting to read it left-to-right.
+#+ATTR_HTML: :width 30%
+[[file:Seroul.Levy-12.5-Category.codes.png]]
+
+After reading this page, I felt I could figure out the arcane file I had once seen.
+
+* Let's begin
+
+I began by just starting to read the source left-to-right, the way TeX does. It begins:
 
 #+BEGIN_SRC
 \let~\catcode
 #+END_SRC
 
-Note that =~= is an "active" character: it has category code 13. So basically it is a macro. See this:
+Note that, in default (plain) TeX, =~= is an "active" character: it has category code 13. So basically it is a macro. At least, TeX says it a macro: see this, in an interactive TeX session (type ~tex~ and then ~\relax~):
 
 #+BEGIN_EXAMPLE
 *\show~
@@ -77,16 +85,57 @@ Note that =~= is an "active" character: it has category code 13. So basically it
 
 ?
 #+END_EXAMPLE
-
 # (TODO: bring back the trailing whitespace from above example.)
 
 So what =\let~\catcode= does is to (re)define the macro =~= to stand for =\catcode=.
 
-This could also be written =\def~{\catcode}= -- normally the difference between ~\let~ and ~\def~ is that ~\let~ "copies" the definition
+This could also be written =\def~{\catcode}=: normally the difference between ~\let~ and ~\def~ is that ~\let~ "copies" the definition of one macro (at the time of the ~\let~) into another, but in this case, as we never redefine ~\catcode~ to anything else, this difference does not matter.
+
+Anyway, this lets us look at our input file
+
+#+BEGIN_SRC
+\let~\catcode~`76~`A13~`F1~`j00~`P2jdefA71F~`7113jdefPALLF
+PA''FwPA;;FPAZZFLaLPA//71F71iPAHHFLPAzzFenPASSFthP;A$$FevP
+A@@FfPARR717273F737271P;ADDFRgniPAWW71FPATTFvePA**FstRsamP
+AGGFRruoPAqq71.72.F717271PAYY7172F727171PA??Fi*LmPA&&71jfi
+Fjfi71PAVVFjbigskipRPWGAUU71727374 75,76Fjpar71727375Djifx
+:76jelse&U76jfiPLAKK7172F71l7271PAXX71FVLnOSeL71SLRyadR@oL
+RrhC?yLRurtKFeLPFovPgaTLtReRomL;PABB71 72,73:Fjif.73.jelse
+B73:jfiXF71PU71 72,73:PWs;AMM71F71diPAJJFRdriPAQQFRsreLPAI
+I71Fo71dPA!!FRgiePBt'el@ lTLqdrYmu.Q.,Ke;vz vzLqpip.Q.,tz;
+;Lql.IrsZ.eap,qn.i. i.eLlMaesLdRcna,;!;h htLqm.MRasZ.ilk,%
+s$;z zLqs'.ansZ.Ymi,/sx ;LYegseZRyal,@i;@ TLRlogdLrDsW,@;G
+LcYlaDLbJsW,SWXJW ree @rzchLhzsW,;WERcesInW qt.'oL.Rtrul;e
+doTsW,Wk;Rri@stW aHAHHFndZPpqar.tridgeLinZpe.LtYer.W,:jbye
+#+END_SRC
+
+and turn all instances of =~= (after the =\let~\catcode= statement) into ~\catcode~ instead, giving us the file:
+
+#+BEGIN_SRC
+\catcode`76\catcode`A13\catcode`F1\catcode`j00\catcode`P2jdefA71F\catcode`7113jdefPALLF
+PA''FwPA;;FPAZZFLaLPA//71F71iPAHHFLPAzzFenPASSFthP;A$$FevP
+A@@FfPARR717273F737271P;ADDFRgniPAWW71FPATTFvePA**FstRsamP
+AGGFRruoPAqq71.72.F717271PAYY7172F727171PA??Fi*LmPA&&71jfi
+Fjfi71PAVVFjbigskipRPWGAUU71727374 75,76Fjpar71727375Djifx
+:76jelse&U76jfiPLAKK7172F71l7271PAXX71FVLnOSeL71SLRyadR@oL
+RrhC?yLRurtKFeLPFovPgaTLtReRomL;PABB71 72,73:Fjif.73.jelse
+B73:jfiXF71PU71 72,73:PWs;AMM71F71diPAJJFRdriPAQQFRsreLPAI
+I71Fo71dPA!!FRgiePBt'el@ lTLqdrYmu.Q.,Ke;vz vzLqpip.Q.,tz;
+;Lql.IrsZ.eap,qn.i. i.eLlMaesLdRcna,;!;h htLqm.MRasZ.ilk,%
+s$;z zLqs'.ansZ.Ymi,/sx ;LYegseZRyal,@i;@ TLRlogdLrDsW,@;G
+LcYlaDLbJsW,SWXJW ree @rzchLhzsW,;WERcesInW qt.'oL.Rtrul;e
+doTsW,Wk;Rri@stW aHAHHFndZPpqar.tridgeLinZpe.LtYer.W,:jbye
+#+END_SRC
+
+which produces the same output as before, but has one tricky thing less.
+
+The hope is to progressively undo the tricks in this file one-by-one, being careful not to change the output, till we understand exactly what's going on.
 
 * Setting up a safety harness
 
-I did this after a few of the steps below, but might as well mention it now...
+But wait, how can we be sure that some change we made did not subtly change the output, a space here or a word there, that we didn't notice? Or even if we don't care about subtle changes, how to save effort reading through the entire output looking for non-subtle changes?
+
+This is where [[https://tex.stackexchange.com/questions/98315/how-to-compare-two-dvi-files][the answers to this question (“How to compare two dvi files?”)]] help us. There is a utility called ~dvitype~ (written by Knuth: see [[https://www.ctan.org/pkg/dvitype][CTAN]] and [[http://texdoc.net/texmf-dist/doc/generic/knuth/texware/dvitype.pdf][woven documentation]])
 
 
 
