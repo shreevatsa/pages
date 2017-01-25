@@ -1,0 +1,18 @@
+# -*- truncate-lines: nil; -*-
+I started writing this for this question here: https://tex.stackexchange.com/questions/350241/how-to-forbid-fonts-from-protruding-the-margins-in-context
+
+See also:
+
+- https://tex.stackexchange.com/questions/35/what-does-overfull-hbox-mean
+- ^ links to http://www.tex.ac.uk/faq/FAQ-overfull.html
+- https://tex.stackexchange.com/questions/50830/do-i-have-to-care-about-bad-boxes
+- https://tex.stackexchange.com/questions/241343/what-is-the-meaning-of-fussy-sloppy-emergencystretch-tolerance-hbadness
+- https://tex.stackexchange.com/questions/52850/temporarily-increase-the-limit-on-space-size (for copying Knuth's quote)
+- https://tex.stackexchange.com/questions/332793/what-is-the-context-equivalent-of-sloppy
+
+#+BEGIN_QUOTE
+[…] TeX is primarily concerned with high-quality technical manuscripts: Its emphasis is on art and technology, as in the underlying Greek word. If you merely want to produce a passably good document—something acceptable and basically readable but not really beautiful—a simpler system will usually suffice. With TeX the goal is to produce the /finest/ quality; this requires more attention to detail, […]
+#+END_QUOTE
+-- Knuth, The TeXbook, page 1.
+
+At the heart of TeX is an algorithm for breaking paragraphs into lines.

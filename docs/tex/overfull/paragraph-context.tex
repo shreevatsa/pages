@@ -1,0 +1,57 @@
+\overfullrule=2pt
+\setuppagenumbering[location=]
+\definepapersize[exotic][width=4in, height=9.5in]
+\setuppapersize[exotic]
+
+\define\try{
+
+tolerance \the\tolerance
+
+emergencystretch \the\emergencystretch
+
+\parindent=0pt
+
+\hsize 1.9in
+\vskip 5mm
+\hrule width \hsize
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut aliquet justo. Curabitur a congue sapien. Duis luctus nisl nulla, fringilla tristique ligula ornare at. Vestibulum ante ipsum primis.
+\hrule width \hsize
+\vskip 1cm
+
+\hsize 2in
+\hrule width \hsize
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut aliquet justo. Curabitur a congue sapien. Duis luctus nisl nulla, fringilla tristique ligula ornare at. Vestibulum ante ipsum primis.
+\hrule width \hsize
+\vskip 1cm
+
+\hsize 2.1in
+\hrule width \hsize
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut aliquet justo. Curabitur a congue sapien. Duis luctus nisl nulla, fringilla tristique ligula ornare at. Vestibulum ante ipsum primis.
+\hrule width \hsize
+\vskip 1cm
+
+\page
+}
+
+\starttext
+
+
+
+{\try}
+{\tolerance=9999\try}
+{\tolerance=10000\try}
+
+{\emergencystretch=1em\try}
+{\emergencystretch=1.5em\try}
+{\emergencystretch=2em\try}
+{\emergencystretch=3em\try}
+{\emergencystretch=\maxdimen\try}
+
+{\emergencystretch=0.25em\tolerance=8000\try}
+{\emergencystretch=0.5em\tolerance=4000\try}
+{\emergencystretch=1em\tolerance=950\try}
+{\emergencystretch=1.5em\tolerance=400\try}
+
+{\raggedright\try}
+
+\stoptext
