@@ -1,0 +1,102 @@
+#+TITLE: Notes on TeX
+#+HTML_DOCTYPE: html5
+
+* TeX and me
+In my fascination for all things Knuthian, I have begun to take
+another look at his programs TeX and METAFONT.
+
+I did use LaTeX as an undergraduate and graduate student, but didn't
+look into it very deeply, and seeing it anew from a historical (and
+Knuth's) perspective is giving me new insights.
+
+* What is TeX
+
+"TeX is a two-dimensional list processor." (paraphrasing(?) Knuth)
+
+"TeX's mission in life is to produce boxes." (paraphrasing(?) Knuth)
+
+TeX is best understood and appreciated as a wrapper around an
+[algorithm for breaking paragraphs into lines]. This algorithm
+introduces a boxes-and-glue model of typesetting which turns out to be
+unexpectedly powerful (suitable for setting things other than
+paragraphs), and also includes some values of the parameters (the
+default glue specifications) which are based on good typographic
+practice.
+
+The result is that output produced with TeX looks good.
+
+* Reasons for using TeX
+
+Good reasons for using TeX (as opposed to other contemporary systems):
+quality and archival.
+
+Quality:
+ - It uses a great algorithm for breaking paragraphs into lines.
+ - Its parameters encode some nuances of good typographic practice.
+
+Archival:
+ - Documents produced with TeX will produce the same output: they are
+   fairly robust against changes in technology.
+
+In practice, the /real/ reasons many people use TeX are rather
+different, even silly:
+ - You are an academic and it is what everyone uses.
+ - You just want to generate PDFs (using TeX simply because it has a
+   PDF output driver!)
+ - You can "program" your document, blah blah blah (TeX's facilities
+   for programming are absolutely horrible: writing elaborate macros
+   in TeX (such as the entire LaTeX system) is a big mistake.
+
+* LaTeX is a big mistake
+
+LaTeX is a profound idea, but its implementation as a set of TeX
+macros is a mistake. Today, Leslie Lamport would probably agree.
+
+* History
+
+Hot-metal typesetting -> phototypesetting -> digital typesetting
+
+The task of typesetting is to take the author's "content" (their text, from, say, a manuscript) and lay it out on pages.
+
+In 1977, the computer scientist Donald Knuth got the galley proofs for the second edition of Volume 2 of his life's work /The Art of Computer Programming/. The publisher had moved from hot-metal typesetting with Monotype machines to phototypesetting, and he did not like the results. He was very disappointed: [find exact quote] "How could I go on writing, if the results were going to be so ugly?" At the same time, he became aware that the quality (resolution) of yet another technology (digital typesetting) had advanced to the point where the results were indistinguishable from "real books". So he set out to solve the problem for himself.
+
+He came up with a model of boxes and glue, whose elegance is often missed. It makes simple things easy and complex things possible -- its power was surprising even to its creator.
+
+* What you can do with boxes and glue
+
+#+BEGIN_QUOTE
+A system based on three simple primitive concepts called ‘boxes’,
+‘glue’, and ‘penalties’ provides the ability to deal satisfactorily
+with a wide variety of typesetting problems in a unified framework,
+using a single algorithm that determines optimum breakpoints.
+#+END_QUOTE
+(Knuth&Plass, from the abstract of BPiL.)
+
+This page is not a TeX manual, but hopes to show the kind of things that the simple model makes possible. There is accompanying TeX code too (plain TeX, not LaTeX).
+
+A mastery of the box-glue model is much more valuable than an intimate familiarity with the LaTeX package ecosystem.
+
+No matter what complicated packages you use, ultimately all that TeX is doing is "breaking paragraphs into lines" according to the box-glue model.
+
+[Write here]
+
+Later, see also:
+http://pragma-ade.com/articles/art-visi.pdf (read this -- informative but not very relevant right now, as we (I) don't want to visualize in the output itself with a visual language that needs to be learned, but "on the side". Also, want to do it not by overriding primitives but with independent Lua code)
+https://tex.stackexchange.com/questions/2083/how-can-i-visualize-boxes
+
+http://stackoverflow.com/questions/3089125/what-are-the-differences-between-the-css-and-latex-box-models
+http://tex.stackexchange.com/questions/6461/why-couldnt-latexs-layout-model-be-as-simple-as-csss-layout-model/
+http://tex.stackexchange.com/questions/70901/typesetting-limitations-of-latex
+https://mailman.ntg.nl/pipermail/ntg-context/2008/031883.html ("I would say that TeX is a way in which a mathematician / theoretical...")
+There's also a thread, not worth reading https://mailman.ntg.nl/pipermail/ntg-context/2008/031848.html (E.g. Aditya Mahajan refers to ant.)
+But most of the comments by "Charles P. Schaum" are great.
+http://forkable.eu/workshop/bag/Boxes_and_Glue.pdf
+Probably not worth looking at?? https://www.math.utah.edu/~beebe/reports/2009/boxes.pdf
+^ Most of these found via a Google search for [indesign boxes and glue].
+
+See also exercises in this video around 40:00: https://www.youtube.com/watch?v=VkbucteDmWQ&list=PL94E35692EB9D36F3&index=7#t=524.969508
+(Advanced TeXArcana, 2.)
+
+* Generating TeX code
+
+This is very cool: http://wiki.luatex.org/index.php/TeX_without_TeX
