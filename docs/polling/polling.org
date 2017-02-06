@@ -1,0 +1,11 @@
+# -*- truncate-lines: nil; -*-
+How much certainty can you get from polling?
+
+(Some thoughts on the 2016 US election situation as well.)
+
+Just dumping open tabs for now:
+- https://terrytao.wordpress.com/2008/10/10/small-samples-and-the-margin-of-error/
+- http://www.americanresearchgroup.com/moe.html
+- https://projects.fivethirtyeight.com/2016-election-forecast/updates/
+- http://www.realclearpolitics.com/articles/2016/11/12/it_wasnt_the_polls_that_missed_it_was_the_pundits_132333.html
+- https://politics.stackexchange.com/questions/13114/is-there-a-way-to-block-an-elected-president-from-entering-office (for the "There are 6 states where Trump won, but only obtained a plurality of the vote" numbers)
