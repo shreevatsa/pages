@@ -1,0 +1,25 @@
+# -*- truncate-lines: nil; -*-
+Just dumping my open tabs here for now:
+
+- https://people.eecs.berkeley.edu/~wkahan/ieee754status/IEEE754.PDF
+  Lecture Notes on the Status of IEEE Standard 754 for Binary Floating-Point Arithmetic
+  Prof. W. Kahan
+  October 1997
+  #+BEGIN_QUOTE
+  Twenty years ago anarchy threatened floating-point arithmetic. [...] Thirteen years ago, when IEEE 754 became official, [...] Now atrophy threatens features of IEEE 754 [...] those features are discussed in these notes
+  #+END_QUOTE
+
+- https://en.wikipedia.org/wiki/Double-precision_floating-point_format
+  Specifically: https://en.wikipedia.org/w/index.php?title=Double-precision_floating-point_format&oldid=759832476
+
+
+Nextafter:
+- https://stackoverflow.com/questions/31925435/fast-nextafter-function-in-javascript
+- https://gist.github.com/Yaffle/4654250
+- https://github.com/scijs/nextafter/blob/master/nextafter.js
+
+- Google search for [javascript ieee 764]
+- Has results like: https://stackoverflow.com/questions/17849101/laymans-explanation-for-why-javascript-has-weird-floating-math-ieee-754-stand (see the folk heuristics used by some people)
+- https://www.h-schmidt.net/FloatConverter/IEEE754.html (really good: I want to replicate this, in JavaScript)
+- http://www.2ality.com/2012/04/number-encoding.html (blog post)
+- https://en.wikipedia.org/wiki/IEEE_floating_point
