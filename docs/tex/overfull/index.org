@@ -1,5 +1,57 @@
 # -*- truncate-lines: nil; -*-
-I started writing this for this question here: https://tex.stackexchange.com/questions/350241/how-to-forbid-fonts-from-protruding-the-margins-in-context
+#+TITLE: TeX and lines sticking out of the margin
+
+Why does TeX sometimes produce words sticking out into the margin?
+
+#+BEGIN_QUOTE
+… TeX is primarily concerned with high-quality technical manuscripts: Its emphasis is on art and technology, as in the underlying Greek word. If you merely want to produce a passably good document—something acceptable and basically readable but not really beautiful—a simpler system will usually suffice. With TeX the goal is to produce the /finest/ quality; this requires more attention to detail…
+#+END_QUOTE
+-- Knuth, The TeXbook, page 1.
+
+At the heart of TeX is an algorithm for breaking paragraphs into lines. In fact, this is possibly the /main/ feature of TeX.
+
+* The algorithm
+
+The full details are explained in:
+
+ - Donald E. Knuth and Michael F. Plass, /Breaking Paragraphs into Lines/, Software—Practice And Experience, Vol. 11, 1119–1184 (1981), reprinted with corrections as Chapter 3 of /Digital Typography/ by Knuth (1999), pages 67–156
+ - Knuth, The TeXbook, Chapter 14: /How TeX Breaks Paragraphs into Lines/
+ - Eijkhout, TeX By Topic, Chapter 19: /Line Breaking/
+
+In short (drawing on Eijkhout here, because it's the most convenient of the three to access: most definitive TeX documentation is not yet in the online era), the lines of a paragraph (a horizontal list of boxes, glues, penalties, etc.) are broken so as to minimize the total "demerits" of the paragraph. This is the sum of:
+
+- the demerits of each line (defined below)
+- ~\adjdemerits~ for each pair of adjacent lines that are either tight–loose, tight–v.loose, or decent–v.loose (default 10000)
+- ~\doublehyphendemerits~ for each pair of adjacent lines both with hyphen (default 10000)
+- ~\finalhyphendemerits~ if the penultimate line of the paragraph ends with a hyphen (default 5000)
+
+The demerits of a line:
+
+$$d = \begin{cases}
+    (l + b)^2 & \text{if } p \le -10000 \\
+    (l + b)^2 - p^2 & \text{if } -10000 < p < 0 \\
+    (l + b)^2 + p^2 & \text{if } 0 \le p < 10000
+  \end{cases}$$
+where $l$ is the ~\linepenalty~ (default 10), $b$ is the badness of the line (defined below), and $p$ is the penalty at the break chosen.
+
+(What about the case when $p \ge 10000$? I don't know: I guess a break is suppressed there.)
+
+The "badness" of a line is how much stretch or shrink it has undergone:
+
+$$ b = \min\left(10000, 100 \times \left(\frac{\text{amount of stretch used}}{\text{maximum stretchability that was available}}\right)^3\right)$$
+
+or
+
+$$ b = \min\left(10000, 100 \times \left(\frac{\text{amount of shrink used}}{\text{maximum shrinkability that was available}}\right)^3\right)$$
+
+depending on whether it was stretch or shrink that was used. The point of the cube in this formula is so that the fraction is small when the ratio is less than 1, and rises rapidly as the magnitude increases beyond 1.
+
+
+
+
+
+
+(I started writing this for this question here: https://tex.stackexchange.com/questions/350241/how-to-forbid-fonts-from-protruding-the-margins-in-context)
 
 See also:
 
@@ -9,10 +61,3 @@ See also:
 - https://tex.stackexchange.com/questions/241343/what-is-the-meaning-of-fussy-sloppy-emergencystretch-tolerance-hbadness
 - https://tex.stackexchange.com/questions/52850/temporarily-increase-the-limit-on-space-size (for copying Knuth's quote)
 - https://tex.stackexchange.com/questions/332793/what-is-the-context-equivalent-of-sloppy
-
-#+BEGIN_QUOTE
-[…] TeX is primarily concerned with high-quality technical manuscripts: Its emphasis is on art and technology, as in the underlying Greek word. If you merely want to produce a passably good document—something acceptable and basically readable but not really beautiful—a simpler system will usually suffice. With TeX the goal is to produce the /finest/ quality; this requires more attention to detail, […]
-#+END_QUOTE
--- Knuth, The TeXbook, page 1.
-
-At the heart of TeX is an algorithm for breaking paragraphs into lines.
