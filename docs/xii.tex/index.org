@@ -138,6 +138,8 @@ But wait, how can we be sure that some change we made did not subtly change the 
 This is where [[https://tex.stackexchange.com/questions/98315/how-to-compare-two-dvi-files][the answers to this question (“How to compare two dvi files?”)]] help us. There is a utility called ~dvitype~ (written by Knuth: see [[https://www.ctan.org/pkg/dvitype][CTAN]] and [[http://texdoc.net/texmf-dist/doc/generic/knuth/texware/dvitype.pdf][woven documentation]])
 
 
+https://tex.stackexchange.com/questions/4201/is-there-a-bnf-grammar-of-the-tex-language
+
 
 Related:
 - https://tex.stackexchange.com/questions/6490/can-i-see-a-plain-tex-source-file-please
