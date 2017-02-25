@@ -1,0 +1,28 @@
+#+TITLE: Line boundaries
+
+According to http://www.unicode.org/reports/tr18/#Line_Boundaries,
+#+BEGIN_QUOTE
+To meet this requirement, if an implementation provides for line-boundary testing, it shall recognize not only CRLF, LF, CR, but also NEL (U+0085), PARAGRAPH SEPARATOR (U+2029) and LINE SEPARATOR (U+2028).
+#+END_QUOTE
+
+So let's try this:
+
+#+BEGIN_SRC python
+from __future__ import unicode_literals
+s = ''
+s += '(This line ends with U+000D CR)\r'
+s += '(This line ends with U+000A LF)\n'
+s += '(This line ends with CRLF)\r\n'
+s += '(This line ends with U+0085 NEL)\u0085'
+s += '(This line ends with U+2029 PARAGRAPH SEPARATOR)\u2029'
+s += '(This line ends with U+2028 LINE SEPARATOR)\u2028'
+s += '(This line ends with U+000C formfeed)\u000c'
+s += '(Last line)'
+open('test-line-boundaries.txt', 'w').write(s.encode('utf-8'))
+#+END_SRC
+
+Here's the resulting file: [[file:test-line-boundaries.txt][test-line-boundaries.txt]].
+
+Exercise:
+- how do your tools work with iterating through lines of that file?
+- Print out the lines. What happened to the first line (ending with CR)?

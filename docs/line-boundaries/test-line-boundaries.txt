@@ -1,0 +1,3 @@
+(This line ends with U+000D CR)(This line ends with U+000A LF)
+(This line ends with CRLF)
+(This line ends with U+0085 NEL)(This line ends with U+2029 PARAGRAPH SEPARATOR) (This line ends with U+2028 LINE SEPARATOR) (This line ends with U+000C formfeed)(Last line)
