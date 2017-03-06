@@ -1,0 +1,112 @@
+How to produce Sanskrit documents with (Xe)(La)TeX
+
+Input formats:
+- Devanagari input
+- IAST input
+- Velthuis transliteration input
+- Some other transliteration input?
+
+Ouput formats:
+- Devanagari output
+- IAST output
+
+Engine
+- xe(la)tex
+- pdf(la)tex or (la)tex
+
+Not all 4x2x2 combinations make sense, but many do.
+
+Some posts on Wujastyk's blog:
+- 2010-07-05 16:00 https://cikitsa.blogspot.com/2010/07/xelatex-for-sanskrit.html (has a 2013 update)
+- 2010-07-06 15:27 https://cikitsa.blogspot.com/2010/07/minimal-edition-of-sanskrit-verse-using.html
+- 2010-07-06 18:03 https://cikitsa.blogspot.com/2010/07/how-do-i-install-romdev-mapping-for.html
+- 2010-07-06 19:56 https://cikitsa.blogspot.com/2010/07/switching-from-devanagari-to-roman-with.html
+- 2010-09 https://cikitsa.blogspot.com/2010/09/xelatex-velthuis-encoding-and-palatal.html
+- 2010-11 https://cikitsa.blogspot.com/2010/11/hyphenating-sanskrit-in-roman.html
+- 2010-12 https://cikitsa.blogspot.com/2010/12/devanagaristy-xelatex-clash.html
+- 2011 https://cikitsa.blogspot.com/2011/10/simplest-sanskrit-xelatex-file.html
+- 2012-05 https://cikitsa.blogspot.com/2012/05/two-more-good-devanagari-fonts.html
+- 2012-07 https://cikitsa.blogspot.com/2012/07/sanskrit-hyphenation-list.html
+- 2013-05 https://cikitsa.blogspot.com/2013/05/xelatex-for-sanskrit-update.html
+- 2013-07 https://cikitsa.blogspot.com/2013/07/minimal-example-of-xelatex-with.html
+
+Some questions on TeX.SE:
+- https://tex.stackexchange.com/questions/tagged/indic
+- https://tex.stackexchange.com/questions/tagged/hindi
+- Example: https://tex.stackexchange.com/questions/2576/getting-started-to-xetex-for-devangari
+
+
+If your input has only occasional Sanskrit (in Devanagari):
+
+#+BEGIN_SRC tex
+\documentclass[12pt]{article}
+\usepackage{fontspec}
+\newfontfamily\hindifont[Script=Devanagari]{Noto Sans Devanagari}
+
+\begin{document}
+
+Hindi ahead: {\hindifont तुलसीदास श्रीरामचरितमानस} -- that was Hindi.
+
+\end{document}
+#+END_SRC
+
+If you need more features like hyphenation and so on, use ~polyglossia~:
+
+#+BEGIN_SRC
+\documentclass[12pt]{article}
+\usepackage{fontspec}
+\newfontfamily\hindifont[Script=Devanagari]{Noto Sans Devanagari}
+
+\usepackage{polyglossia}
+\setdefaultlanguage{english}
+\setotherlanguages{hindi}
+
+\begin{document}
+
+Hindi ahead: \texthindi{तुलसीदास श्रीरामचरितमानस} -- that was Hindi.
+
+\end{document}
+#+END_SRC
+
+If your document is mainly in Sanskrit, you can set a Devanagari font as the main font:
+
+#+BEGIN_SRC
+\documentclass{article}
+\usepackage{fontspec}
+\setmainfont[Script=Devanagari]{your font}
+\begin{document}
+\section{संस्कृतम्}
+जीवनस्य लक्ष्यमेव संस्कृतस्य वर्धनम्
+\subsection{कोऽम्}
+\end{document}
+#+END_SRC
+
+You can use RomDev.map to input in IAST and get output in Devanagari (https://tex.stackexchange.com/questions/306326/xelatex-error-with-using-teckit-mapping-romdev-for-roman-to-devanagari-script):
+
+#+BEGIN_SRC
+\documentclass[12pt]{article}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\usepackage{xltxtra}
+
+\setmainfont[Script=Devanagari,Mapping=RomDev]{Chandas}
+\setmainlanguage{sanskrit}
+
+\begin{document}
+
+śarvavarmā tataścedamadbhutaṃ vākyamabravīt || śrutimantaṃ me kurviti prāguktaṃ deva me tvayā |
+
+\end{document}
+#+END_SRC
+
+
+
+Can change
+#+BEGIN_SRC tex
+\setdefaultlanguage{sanskrit}
+#+END_SRC
+to
+#+BEGIN_SRC tex
+\setdefaultlanguage{english}
+#+END_SRC
+to get IAST instead of Devanagari.
