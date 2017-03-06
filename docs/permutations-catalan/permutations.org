@@ -1,0 +1,43 @@
+"Permutations that are the product of all their inversions"
+
+Given a permutation $w = w_1w_2\dotsw_n$, there are two ways of defining an inversion:
+
+- A pair $(w_i, w_j)$ for which $i < j$ but $w_i > w_j$
+- A pair $(i, j)$ for which $i < j$ but $w_i > w_j$
+
+So, these are some orders in which we can enumerate all the inversions in a permutation:
+
+- Enumerate $(w_i, w_j)$ or $(i, j)$,
+- considering either $(w_i, w_j)$ or $(i, j)$,
+- in {,rev}{,ref}{,co}lex order. (See https://oeis.org/wiki/Orderings#Lexicographic_order and later.)
+
+(So 2*2*8 orders... many will be equivalent, especially as we have only pairs.)
+
+There are two ways of multipling a sequence of permutations (specifically, inversions): left-multiply each one, or right-multiply each one.
+We can write this out, but already I can see that this corresponds to the "{,rev}" choice above.
+
+After computing this product, we can look at (or count) when
+- the product is equal to the permutation
+- the product is equal to the inverse of the permutation
+
+Many of these counts will give Catalan numbers. The sets of permutations will also correspond to particular pattern-avoidances (e.g. 312-avoiding permutations).
+
+Timeline:
+
+- INOI 2004 was held on May 1, 2004. (http://www.iarcs.org.in/inoi/2004/#inoi2004) Question 2 (http://www.iarcs.org.in/inoi/2004/inoi2004/inoi2004-qpaper.pdf) reduced to sorting. I made a bug in the code.
+
+- A few days later (or possibly the same day), sometime before the results were announced (camp started 14 June http://www.iarcs.org.in/inoi/2004/inoi2004/results_inoi2004.php so results must have been announced in late May), I analyzed the probability of getting the answer right. I got the answer was the Catalan numbers, which I found very exciting. I probably emailed Prof. MM about this.
+
+- I set it aside for a few years. (Seven years!)
+
+- In April 2011, while cleaning up my papers, I found this again, and took another look. I did some computer experimentation. By now, I knew that the number of permutations avoiding a certain pattern (231) was the Catalan numbers, so I looked at that too. This computer experimentation suggested that the permutations were those that avoided the pattern 312.
+
+- I asked a question about this on Math.SE: https://math.stackexchange.com/questions/36022/how-do-the-catalan-numbers-turn-up-here (Apr 30, 2011). The same day, Yuval Filmus gave a proof that the pattern-avoidance equivalence was correct.
+
+- Forgot about it for another six years.
+
+- In February 2017 I emailed Richard Stanley about it. (Specifically I asked him whether "permutations that are the product of their inversions" was close to anything on his list.) He told me "I don't see any simple direct connection with any of the items on my list."
+
+- Then I started writing this page.
+
+See some relevant references at https://en.wikipedia.org/wiki/Permutation_pattern and https://en.wikipedia.org/wiki/Stanley%E2%80%93Wilf_conjecture and https://en.wikipedia.org/wiki/Enumerations_of_specific_permutation_classes
