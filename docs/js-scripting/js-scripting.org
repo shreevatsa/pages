@@ -1,0 +1,144 @@
+Trying to use JavaScript as a scripting language.
+
+The node repl (started with ~node~) is not as good as the iPython shell.
+
+Python has docstrings; you can look up the documentation of a function from the shell itself. (In Python I can type ~help(open)~ additionally in iPython I can type ~open?~.)
+In node
+#+BEGIN_EXAMPLE
+> help(fs.openSync)
+ReferenceError: help is not defined
+#+END_EXAMPLE
+I tried ~fs.openSync?~ and it waits for more input has to be aborted with Ctrl-C.
+
+But there is a way to explore, via error messages:
+#+BEGIN_EXAMPLE
+> fs.openSync()
+TypeError: path must be a string
+#+END_EXAMPLE
+
+~fs.openSync('/~ does not autocomplete file paths. iPython does. (But the standard ~python~ shell doesn't.)
+
+#+BEGIN_EXAMPLE
+> fs.openSync('~/Downloads/anagrams-scored.txt')
+TypeError: flags must be an int
+#+END_EXAMPLE
+
+Also, because it doesn't autocomplete file paths, this is also more likely:
+
+#+BEGIN_EXAMPLE
+> g = fs.readFileSync('~/Downloads/anagrams-scored.txt')
+Error: ENOENT: no such file or directory, open '~/Downloads/anagrams-scored.txt'
+#+END_EXAMPLE
+
+(Same could happen in Python too, but in iPython when you hit tab the =~= is expanded.)
+
+Another annoyance: no readline history. Up arrow / down arrow works, but not Ctrl-R etc. (Tried ~rlwrap node~, but it doesn't quite work.)
+
+Basic things like reading a file line-by-line seem to be awfully hard: see https://stackoverflow.com/questions/6156501/read-a-file-one-line-at-a-time-in-node-js
+All the workarounds are suboptimal for simple scripting:
+
+- Read the whole file and split
+- Use an async library that generates an event for every line (and another event for the end)
+
+Even reading one character synchronously from a buffer doesn't seem to be easy? https://stackoverflow.com/questions/20185548/how-do-i-read-a-single-character-from-stdin-synchronously (no answers)
+
+Can't just call a shell command with "!" (even Vim can do that!)
+
+After trying somewhat better shells (e.g. https://danielgtaylor.github.io/nesh/), I finally went back to iPython which now (under the name of ~jupyter console~) supports javascript kernels. But the available Javascript kernels have somewhat annoying bugs:
+
+- https://github.com/jupyter/jupyter_console/issues/120
+- https://github.com/notablemind/jupyter-nodejs/issues/42
+- https://github.com/n-riesco/ijavascript/issues/97
+
+Anyway, now we have three ways of using Javascript from within iPython:
+
+- [[https://github.com/notablemind/jupyter-nodejs][Jupyter NodeJS]] (~jupyter console --kernel=nodejs~, use ~%load_ext babel~ to load Babel features but needs ~%%babel~ for everything)
+- [[https://github.com/n-riesco/ijavascript][ijavascript]] (~jupyter console --kernel=javascript~) and [[https://github.com/n-riesco/jp-babel/][jp-babel]] (~jupyter console --kernel=babel~) (don't make typos: https://github.com/n-riesco/jp-babel/issues/13)
+
+Can't just iterate over a string (need to use =Array.from=) or =Object= (need to use =Object.keys= or similar). Compare
+
+#+BEGIN_SRC python
+sum(1 for c in 'c|i|n|e|m|a|t|o|g|ra|p|h|er' if c == '|')
+#+END_SRC
+
+with
+
+#+BEGIN_SRC javascript
+Array.from('c|i|n|e|m|a|t|o|g|ra|p|h|er').filter(c => c == '|').length
+#+END_SRC
+
+Basic constructions like =zip= are missing.
+
+Basic data structures like =Set= are lame: intersection, difference etc. are missing, and you cannot compare two sets for equality. Compare Python
+#+BEGIN_SRC python
+In [37]: {2, 3} == {3, 2}
+Out[37]: True
+#+END_SRC
+with Javascript
+#+BEGIN_SRC javascript
+In [30]: new Set([2, 3]) == new Set([3, 2])
+Out[30]: false
+#+END_SRC
+
+Also, compare how I'd do bigrams of a word in Python:
+#+BEGIN_SRC python
+{word[i:i+2] for i in range(len(word) - 1)}
+#+END_SRC
+that gives a set.
+
+In Javascript, either:
+#+BEGIN_SRC javascript
+  const s = new Set();
+  for (let i = 0; i < word.length - 1; i += 1) {
+    s.add(word.substring(i, i + 2));
+  }
+#+END_SRC
+
+or (using some nonobvious hacks from https://stackoverflow.com/questions/3895478/does-javascript-have-a-method-like-range-to-generate-an-array-based-on-suppl and https://stackoverflow.com/questions/6299500/tersest-way-to-create-an-array-of-integers-from-1-20-in-javascript)
+
+#+BEGIN_SRC javascript
+new Set([...Array(word.length - 1).keys()].map(i => word.substring(i, i + 2)))
+#+END_SRC
+
+which is still almost twice as long, and probably less readable than the loop.
+
+The string representation can be misleading:
+#+BEGIN_SRC javascript
+let y = Array(5).keys()
+console.log(y)
+console.log(Array.from(y))
+#+END_SRC
+output is
+#+BEGIN_EXAMPLE
+{}
+[ 0, 1, 2, 3, 4 ]
+#+END_EXAMPLE
+Note how ~y~ is printed as ~{}~ even though it is not. It turns out that [[https://stackoverflow.com/questions/24902061/is-there-an-repr-equivalent-for-javascript][JavaScript doesn't have a ~repr()~]]. There is ~String()~ which does better in this case:
+
+#+BEGIN_SRC javascript
+console.log(String(Array(5).keys()))
+#+END_SRC
+prints
+#+BEGIN_EXAMPLE
+[object Array Iterator]
+#+END_EXAMPLE
+
+but ~String()~ is worse for almost anything else:
+#+BEGIN_SRC javascript
+let y = ['hello', 'world']
+console.log(String(y))
+#+END_SRC
+prints
+#+BEGIN_EXAMPLE
+hello,world
+#+END_EXAMPLE
+
+which is indistiguishable from the output for ~'hello,world'~ or for ~['hello,world']~ etc.
+
+Actually, forget sets that I mentioned above: can't even compare arrays for equality!
+#+BEGIN_SRC javascript
+In [101]: ['a', 'a', 'b'] === ['a', 'a', 'b']
+Out[101]: false
+#+END_SRC
+https://stackoverflow.com/questions/3115982/how-to-check-if-two-arrays-are-equal-with-javascript -- it's hilarious how much work is needed.
+https://stackoverflow.com/questions/7837456/how-to-compare-arrays-in-javascript
