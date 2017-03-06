@@ -1,0 +1,200 @@
+#+TITLE: More on anagram scoring
+#+OPTIONS: toc:nil
+
+/(For background, read these posts by Mark Jason Dominus on his blog: [[http://blog.plover.com/lang/anagram-scoring.html][1]], [[http://blog.plover.com/lang/anagram-scoring-2.html][2]], [[http://blog.plover.com/lang/anagram-scoring-3.html][3]].)/
+
+An anagram is a pair of words, in which we can rearrange the letters of one word to get the other word. For example, =comedian= and =demoniac= are anagrams, as are =stainless= and =saltiness=.
+
+Mark Jason Dominus collected a list of over 200,000 words, and found all anagrams in them. By sorting the anagrams by length, he observed, from the example of the longest pair
+#+BEGIN_QUOTE
+cholecystoduodenostomy
+
+duodenocholecystostomy
+#+END_QUOTE
+that we should look at the anagrams not as rearrangements of the individual letters, but of blocks:
+#+BEGIN_QUOTE
+cholecysto⏐duodeno⏐stomy
+
+duodeno⏐cholecysto⏐stomy
+#+END_QUOTE
+
+Let's look at how we can find such blocks, and then (once we've found those blocks) how we can score anagrams for "interestingness".
+
+* The data
+
+# (article says 46351 pairs of anagrams, this is probably a typo for number of words)
+
+Starting with MJD's list of [[http://pic.blog.plover.com/lang/anagram-scoring/anagrams-scored.txt][38333 word-pairs scored]], and "undoing" the work, we get [[./all-words.txt][this list]] of 46891 relevant words (words involved in at least one anagram). When we group them into sets (of words with the same letters), they fall into 19893 sets, whose sizes are distributed as:
+#+BEGIN_EXAMPLE
+ {
+  2: 15295,
+  3: 3084,
+  4: 942,
+  5: 331,
+  6: 137,
+  7: 59,
+  8: 27,
+  9: 10,
+  10: 6,
+  12: 1,
+  13: 1
+ }
+#+END_EXAMPLE
+
+(Sanity check: the number of sets is 15295 + 3084 + ... 1 = 19893, the number of words is 15295*2 + 3084*3 + 1*13 ... = 46891, and the number of pairs is 15295*1 + 3084*3 + ... 1*78 = 38333.)
+
+
+* Finding blocks
+
+So we'd like to take two words like =cholecystoduodenostomy= and =duodenocholecystostomy=, and arrive at the three blocks {=cholecysto=, =duodeno=, =stomy=}.
+
+Note that we could also have broken the words into the four blocks {=chole=, =cysto=, =duodeno=, =stomy=}, or indeed into blocks where each is a single letter, but this is not what we want: we want a set of blocks of minimum size.
+
+How do we determine such a minimal set?
+
+We could take one of the words, and consider all the possible places we can break it, and try to find the smallest set of breaks that would be enough to rearrange the blocks into the other word.
+
+** Forced breaks
+
+In some places we are forced to insert breaks. Whenever there are two letters that are consecutive in one word but not in the other, we know that we will have a break there. For example, consider the pair =comedian/demoniac=. In the word =comedian=, we know that there needs to be a break in the first possible place (between the =c= and the =o=), because the letters =c= and =o= do not occur consecutively in the other word =demoniac=. Similarly between =o= and =m=, between =m= and =e=, and so on: the only place a break is not forced is between the =i= and =a=. So just the immediately forced breaks look like =c|o|m|e|d|ia|n= and =d|e|m|o|n|ia|c= respectively. In this case the blocks can be rearranged into each other, so we know, without any further looking, that this is a minimal set: {=c=, =d=, =e=, =ia=, =m=, =n=, =o=}.
+
+We can determine these "forced" breaks easily: given a pair of words, we can first note down all bigrams (pairs of consecutive characters) that occur in each word, and then as we walk through each word, check for each of the possible breaks whether the bigram that spans that break occurs in the other word.
+
+A couple more examples: =stainless= and =saltiness= break as =s|t|a|in|l|ess= and =s|a|l|t|in|ess=, and again we get the same six blocks in both cases, so we don't need to do any further searching.
+
+Consider the highest-scoring example =cinematographer= =megachiropteran=. If we note down all forced breaks, these break as =c|i|n|e|m|a|t|o|g|ra|p|h|er= and =m|e|g|a|c|h|i|r|o|p|t|era|n=. Here the two sets of 13 blocks are not the same (after removing common elements, the former has {=er=, =ra=}, and the latter has {=era=, =r=}). But the very fact that the sets are not the same implies that 13 blocks is not enough, and we need at least one more, so the answer is at least 14. And if we can somehow determine that these two sets of blocks can in fact be refined into {=e=, =r=, =ra=} (one cut each), we would be done.
+
+Finally, consider the longest example =cholecystoduodenostomy= =duodenocholecystostomy=. Here no break is forced: the bigrams =od= and =os= happen to be present in both words. So the heuristic is useless here.
+
+It turns out that simply looking at these bigram-forced breaks is enough for 33724 out of the 38333, which is about 8 out of 9.
+
+
+* Stuff
+
+
+But doing it efficiently for the special case of real-life English words.
+This [[https://cs.stackexchange.com/questions/2259/finding-interesting-anagrams][turns out]] to have been studied in computer science under the name of the [[http://www.combinatorics.org/ojs/index.php/eljc/article/view/v12i1r50][Minimum Common String Partition Problem]].
+
+
+
+
+If you don't want to get arrested, you go underground. This is explained by
+
+#+BEGIN_QUOTE
+11 subterraneal unarrestable
+#+END_QUOTE
+
+
+
+aal ala
+zolotink zolotnik
+cholecystoduodenostomy duodenocholecystostomy [Note: cholecysto duodeno stomy <-> duodeno cholecysto stomy.]
+abler blare
+acrididae cidaridae
+abscise scabies
+cinematographer megachiropteran
+rotundifoliate titanofluoride
+
+Consider abscise / scabies. Of the pairs of consecutive letters in the first (ab, bs, sc, ci, is, se), only <ab, sc> occur in the second. In other words, we necessarily need cuts at the other places:
+[ab | sc | i | s | e].
+Similarly "scabies" necessarily has to be cut into [sc | ab | i | e | s].
+These are already permutations of each other, so we don't need to try anything at all. The answer is 5.
+
+Consider [yttrious touristy]:
+y | t | t | ri | ou | s
+t | ou | ri | s | t | y -> again, already permutations of each other. No work needed to declare answer as 6.
+
+
+[c | i | n | e | m | a | t | o | g | ra | p | h | er (13)
+ m | e | g | a | c | h | i | r | o | p | t | era | n] (13) -> so we know ans >= 13.
+Moreover, dropping common strings (single characters), we are left with [er, ra] and [era, r].
+What we need to do is find minimal breaks needed out of [er, ra] and [era, r]. (With 1 break each, they both become [a, er, r].)
+
+
+
+5 abets baste
+5 Acephali Phacelia
+5 notaries senorita
+5 crumpets spectrum
+
+6 yttrious touristy
+
+7 admirer married
+7 admires sidearm
+
+8 negativism timesaving
+8 peripatetic precipitate
+8 scepters respects
+8 shortened threnodes
+8 soapstone teaspoons
+
+9 earringed grenadier
+9 excitation intoxicate
+9 integrals triangles
+9 ivoriness revisions
+9 masculine calumnies
+
+10 coprophagist topographics
+10 chuprassie haruspices
+10 citronella interlocal
+
+11 clitoridean directional
+11 dispensable piebaldness
+
+basiparachromatin
+Marsipobranchiata
+
+10 antiparticles paternalistic
+10 nectarines transience
+10 obscurantist subtractions
+
+11 colonialists oscillations
+11 derailments streamlined
+
+Chaenolobus
+unchoosable
+
+
+* Sidenote: Scramblings
+
+See https://oeis.org/A000255 -- the number of permutations A_n goes as ~ n!/e.
+It is is equal to D_{n+1}/n = D_n + D_{n-1} and is the closest integer to (n+1)!/(ne) = (n! + (n-1)!)/e.
+
+"The link between scrambling numbers and derangements" (http://scholar.rose-hulman.edu/cgi/viewcontent.cgi?article=1063&context=math_mstr)
+
+(Also mentioned in https://arxiv.org/abs/1610.01987 and https://doi.org/10.1017/S0025557200000176 (downloaded) and http://www.fq.math.ca/Scanned/18-3/kreweras.pdf (old) and https://www.whitman.edu/Documents/Academics/Mathematics/Jenne.pdf)
+
+* Scoring
+
+We can wonder whether this the best way of scoring for interestingness. For example, both these get the same score:
+
+04 peruse rupees
+04 pervious previous
+04 perviousness previousness
+
+and yet I think the first one is somewhat more interesting than the others. A single transposition adds a count of 4, but maybe transpositions should count for less than permutations in which letters are more scattered.
+
+Perhaps we should consider the inversion distance of the blocks themselves: in cholecysto-duodeno-stomy / duodeno-cholecysto-stomy, we have 123 becoming 213.
+In anatomic-o-physiologic physiologic-o-anatomic, we have 123 becoming 321.
+
+But in peruse / rupees, namely pe-ru-s-e / ru-pe-e-s, we have 1234 becoming 2143, while in p-e-r-vious/p-r-e-vious we have 1234 becoming 1324. Probably a permutation like 2143 should count higher than one like 1324. We could count inversion distance (number of inversions needed to turn one permutation into another: 2143 needs two inversions while 1324 needs only one), or we could count number of fixed points (2143 has zero fixed points while 1324 has two). Probably inversion distance is better.
+
+In his post MJD also has an interesting comment:
+#+BEGIN_QUOTE
+Levenshtein distance measures how far every letter has to travel to get to its new place and it seems clear that this would give “cholecystoduodenostomy / duodenocholecystostomy” a high score because most of the letters move a long way.
+#+END_QUOTE
+This is not what Levenshtein distance actually measures (as far as I can tell), but "how far away do letters move" may also be an interesting metric for scoring permutations.
+
+Right now, the "score by number of blocks" is just the most trivial "length" metric, applied to the set of blocks instead of to the word itself.
+
+So on permutations, we can consider different distances:
+
+- length
+- Hamming distance (length of permutation - number of fixed points)
+- number of adjacent swaps needed (Kendall-Tau distance, bubble-sort distance, number of inversions)
+- number of (not necessarily adjacent) swaps needed (Cayley distance) (= length of permutation - number of cycles)
+- why does this answer mention something more complicated like O(n^3)?? Look into it: https://cs.stackexchange.com/questions/5036/alternative-to-hamming-distance-for-permutations
+- total distance elements travel
+- See https://en.wikipedia.org/wiki/String_metric and other string metrics under https://en.wikipedia.org/wiki/Template:Strings
+- Iterate this function twice? (Won't help because in our new permutation, there are guaranteed not to be any consecutive elements.)
+- Should we consider something about vowels and consonants (e.g. ache <-> each is somewhat interesting despite being only 2, because the vowel and consonant sounds are different?) Maybe get the set of phonemes in the word, and compare the sets.
