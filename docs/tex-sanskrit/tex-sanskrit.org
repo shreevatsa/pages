@@ -52,7 +52,7 @@ Hindi ahead: {\hindifont तुलसीदास श्रीरामचरि
 
 If you need more features like hyphenation and so on, use ~polyglossia~:
 
-#+BEGIN_SRC
+#+BEGIN_SRC tex
 \documentclass[12pt]{article}
 \usepackage{fontspec}
 \newfontfamily\hindifont[Script=Devanagari]{Noto Sans Devanagari}
@@ -70,7 +70,7 @@ Hindi ahead: \texthindi{तुलसीदास श्रीरामचरि�
 
 If your document is mainly in Sanskrit, you can set a Devanagari font as the main font:
 
-#+BEGIN_SRC
+#+BEGIN_SRC tex
 \documentclass{article}
 \usepackage{fontspec}
 \setmainfont[Script=Devanagari]{your font}
@@ -83,7 +83,7 @@ If your document is mainly in Sanskrit, you can set a Devanagari font as the mai
 
 You can use RomDev.map to input in IAST and get output in Devanagari (https://tex.stackexchange.com/questions/306326/xelatex-error-with-using-teckit-mapping-romdev-for-roman-to-devanagari-script):
 
-#+BEGIN_SRC
+#+BEGIN_SRC tex
 \documentclass[12pt]{article}
 \usepackage{fontspec}
 \usepackage{polyglossia}
@@ -99,8 +99,6 @@ You can use RomDev.map to input in IAST and get output in Devanagari (https://te
 \end{document}
 #+END_SRC
 
-
-
 Can change
 #+BEGIN_SRC tex
 \setdefaultlanguage{sanskrit}
@@ -110,3 +108,17 @@ to
 \setdefaultlanguage{english}
 #+END_SRC
 to get IAST instead of Devanagari.
+
+
+You can use transliteration with a mapping:
+
+#+BEGIN_SRC tex
+\documentclass{article}
+\usepackage{fontspec}
+\setmainfont[Mapping=velthuis-sanskrit]{Sanskrit 2003}
+\begin{document}
+"srii-ga.ne"sa-"saaradaa-gurubhyo nama.h
+\end{document}
+#+END_SRC
+
+(see https://tex.stackexchange.com/questions/207310/devanagari-characters-and-pdflalitex/211627#211627)
