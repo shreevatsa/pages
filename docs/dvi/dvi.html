@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Is this right? Have to test the page on mobile to be sure. -->
+    <title>DVI structure explainer</title>
+    <style>
+      #file, #intro, #hexdump {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <!--
+         For working with files, see
+         https://developer.mozilla.org/en-US/docs/Using_files_from_web_applications
+         and
+         https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API/File_drag_and_drop
+      -->
+    <h1>Enter a file below</h1>
+    <input type="file" id="inputDviFile"/>
+    <output id="intro">Intro goes here</output>
+    <output id="hexdump">The hexdump of this file is below. <div></div></output>
+    <script src="dvi.js"></script>
+    <script src="dvi-web.js"></script>
+  </body>
+</html>
