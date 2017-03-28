@@ -142,3 +142,18 @@ Out[101]: false
 #+END_SRC
 https://stackoverflow.com/questions/3115982/how-to-check-if-two-arrays-are-equal-with-javascript -- it's hilarious how much work is needed.
 https://stackoverflow.com/questions/7837456/how-to-compare-arrays-in-javascript
+
+Watch out: simply using ~(a, b)~ as a pair works like the comma operator: throws away ~a~ and is equal to ~b~. You want to use ~[a, b]~ instead.
+
+The lack of a repr (or sane toString) is positively hideous. Look at this:
+#+BEGIN_SRC javascript
+d = {params: [{ i: [1, 2] }]}
+console.log(d)
+#+END_SRC
+prints:
+#+BEGIN_SRC
+{ params: [ { i: [Object] } ] }
+#+END_SRC
+Why can't it even print an array? See https://stackoverflow.com/questions/10729276/how-can-i-get-the-full-object-in-node-jss-console-log-rather-than-object for workarounds.
+
+Each time I open ~jupyter console~, it doesn't remember any history from previous sessions.
