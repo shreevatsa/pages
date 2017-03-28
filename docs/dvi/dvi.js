@@ -43,6 +43,14 @@ class DVIBuffer {
     return ret;
   }
 
+  readIntTwoSigned() {
+    let ret = this.readIntTwo();
+    if (ret > (1 << 15)) {
+      ret -= (1 << 16);
+    }
+    return ret;
+  }
+
   readString(n) {
     const ret = this.f.toString('utf8', this.pos, this.pos + n);
     this.pos += n;
@@ -77,6 +85,57 @@ class DVIBuffer {
         ],
       };
     }
+    // post
+    if (opCode === 248) {
+      const parP = this.readIntFourSigned();
+      const parNum = this.readIntFour();
+      const parDen = this.readIntFour();
+      const parMag = this.readIntFour();
+      const parL = this.readIntFour();
+      const parU = this.readIntFour();
+      const parS = this.readIntTwo();
+      const parT = this.readIntTwo();
+      return {
+        op: ['post', 'Beginning of the postamble'],
+        params: [
+          { p: [parP, 'Pointer to the final `bop` in the page.'] },
+          { num: [parNum, 'The numerator of the fraction to multiply measurements by, to get distances in units of 100 nm (usually: 2.54 x 10^7)'] },
+          { den: [parDen, 'The denominator of the fraction to multiply measurements by, to get distances in units of 100 nm (usually: 2^16)'] },
+          { mag: [parMag, 'A thousand times the desired magnification (usually: 1000)'] },
+          { l: [parL, 'The height plus depth of the tallest page'] },
+          { u: [parU, 'The width of the widest page'] },
+          { s: [parS, 'The maximum stack depth needed to process this file'] },
+          { t: [parT, 'The total number of pages present'] },
+        ],
+      };
+    }
+    // post_post
+    if (opCode === 249) {
+      const parQ = this.readIntFourSigned();
+      const parI = this.readByte();
+      let tailLen = 0;
+      while (this.more()) {
+        const tail = this.readByte();
+        tailLen += 1;
+        if (tail !== 223) {
+          // TODO: Do something better here
+          console.log('Invalid');
+        }
+      }
+      if (tailLen < 4) {
+        // TODO: Do something better here
+        console.log('Invalid');
+      }
+      console.log('All OK!');
+      return {
+        op: ['post_post', 'End of the postamble'],
+        params: [
+          { q: [parQ, 'Pointer to the `post` command that started the postamble'] },
+          { i: [parI, 'The identification byte for the DVI version (same as in the preamble)'] },
+        ],
+      };
+    }
+
     // bop
     if (opCode === 139) {
       const parC0 = this.readIntFour();
@@ -107,6 +166,12 @@ class DVIBuffer {
         ],
       };
     }
+    // eop
+    if (opCode === 140) {
+      return {
+        op: ['eop', 'End of page: Print what you have read since the previous bop. At this point the stack should be empty.'],
+      };
+    }
     // push
     if (opCode === 141) {
       return {
@@ -117,6 +182,36 @@ class DVIBuffer {
     if (opCode === 142) {
       return {
         op: ['pop', 'Pop the top six values off of the stack and assign them to (h,v,w,x,y,z).'],
+      };
+    }
+    // right2
+    if (opCode === 144) {
+      const parB = this.readIntTwoSigned();
+      return {
+        op: ['right2', 'Set h <- h + b, i.e., Move right `b` units'],
+        params: [
+          { b: [parB, 'The number of units to move right'] },
+        ],
+      };
+    }
+    // right3
+    if (opCode === 145) {
+      const parB = this.readIntThreeSigned();
+      return {
+        op: ['right3', 'Set h <- h + b, i.e., Move right `b` units'],
+        params: [
+          { b: [parB, 'The number of units to move right'] },
+        ],
+      };
+    }
+    // right4
+    if (opCode === 146) {
+      const parB = this.readIntFourSigned();
+      return {
+        op: ['right4', 'Set h <- h + b, i.e., Move right `b` units'],
+        params: [
+          { b: [parB, 'The number of units to move right'] },
+        ],
       };
     }
     // down3
@@ -136,16 +231,6 @@ class DVIBuffer {
         op: ['down4', 'Set v <- v + a, i.e., move down `a` units'],
         params: [
           { a: [parA, 'The number of units to move down.'] },
-        ],
-      };
-    }
-    // right3
-    if (opCode === 145) {
-      const parB = this.readIntThreeSigned();
-      return {
-        op: ['right3', 'Set h <- h + b, i.e., Move right `b` units'],
-        params: [
-          { b: [parB, 'The number of units to move right'] },
         ],
       };
     }
@@ -171,6 +256,21 @@ class DVIBuffer {
         ],
       };
     }
+    // fnt_num_0
+    if (opCode === 171) {
+      return {
+        op: ['fnt_num_0', 'Set f to 0. Font 0 must have been previously defined.'],
+      };
+    }
+    // set_char_i
+    if (opCode >= 0 && opCode <= 127) {
+      const chr = (opCode >= 32 && opCode <= 126) ? String.fromCharCode(opCode) : '?';
+      return {
+        op: [`set_char_${opCode}`, `Typeset character ${opCode} (${chr}) and move right.`],
+      };
+    }
+
+
     throw Error(`Unknown op ${opCode}`);
   }
 }
