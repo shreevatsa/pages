@@ -72,7 +72,7 @@ Some examples here: https://staff.washington.edu/fmf/2009/09/01/understanding-cs
 * First pass
 from http://learnlayout.com/
 
-Note that there are many aspects to CSS: as said at [[https://en.wikipedia.org/w/index.php?title=Style_sheet_language&oldid=743194356#Components][Style sheet language#Components]], you may want to learn about selectors, about properties and their values (enums, units), how they propagate (inheritance, initial values, cascading) -- but mostly here I care about layout (the visual formatting model): how to achieve a particular appearance, by instructing the user's browser via CSS syntax.
+Note that there are many aspects to CSS: as said at [[https://en.wikipedia.org/w/index.php?title=Style_sheet_language&oldid=743194356#Components][Style sheet language#Components]], you may want to learn about selectors, about properties and their values (enums, units), how they propagate (inheritance, initial values, cascading) -- but mostly here I care about layout (the visual formatting model): how to achieve a particular position of elements, by instructing the user's browser via CSS syntax.
 
 Some best practices: skim (quickly) through a few of the slides here: http://keithjgrant.com/talks/css-for-engineers (hit the ~<Space>~ key to advance. Probably start [[http://keithjgrant.com/talks/css-for-engineers/#/2/2][here]]).
 

@@ -19,7 +19,7 @@
 <textarea id="styleToInject"></textarea>
 <textarea id="divsToInject"></textarea>
 <button onclick="injectAndLayout();">Lay out the above</button>
-<button onclick="generateRandom(); injectAndLayout();">Generate something random and lay it out</button>
+<button onclick="generateRandom(); injectAndLayout();">Lay out something random (replacing the above)</button>
 <iframe id="iframe1"></iframe>
 <script>
     function generateRandom() {
@@ -27,10 +27,12 @@
         let html = ''; // '<html><body>\n';
         let css = 'div { border:1px solid red; }\n';
         for (let i = 0; i < numDivs; ++i) {
-            const width = 10 + Math.floor(Math.random() * 40);
+            const width = 10 + Math.floor(Math.random() * 80);
             const height = 10 + Math.floor(Math.random() * 40);
-            html += `<div id="example${i}"></div>\n`;
-            css += `#example${i} { width: ${width}px; height: ${height}px; }\n`;
+            const text = `Text${i}`;
+            html += `<div id="example${i}">${text}</div>\n`;
+            const widthStr = Math.floor(Math.random() * 5) ? `width: ${width}px;` : '';
+            css += `#example${i} {${widthStr} height: ${height}px; }\n`;
         }
         // html += '</body></html>';
         document.getElementById('styleToInject').value = css;
@@ -56,7 +58,7 @@
       display: block;
   }
   #experiment1 button {
-      display: block;
+      display: inline-block;
   }
   #experiment1 #iframe1 {
       width: 100%;
@@ -66,6 +68,10 @@
 </style>
 </div>
 
-As you can see, ...
+Things to try:
+<ul>
+  <li>Try leaving one of the <tt>width</tt> values blank (also <tt>height</tt>).</li>
+  <li>Try typing some text (and then, a lot of text) into some of the divs</li>
+</ul>
 
 </body> </html>
