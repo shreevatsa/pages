@@ -8,6 +8,15 @@
       #file, #intro, #hexdump {
         display: block;
       }
+      table.opTable, th.opTable, td.opTable
+      {
+          padding: 5px;
+          border: 1px solid black;
+      }
+      p.parameterDescription {
+          margin: 0px;
+          margin-left: 1em;
+      }
     </style>
   </head>
   <body>
@@ -20,7 +29,13 @@
     <h1>Enter a file below</h1>
     <input type="file" id="inputDviFile"/>
     <output id="intro">Intro goes here</output>
+    <hr>
     <output id="hexdump">The hexdump of this file is below. <div></div></output>
+    <hr>
+    <div id="dvi-commands">
+      <dvi-command v-for="item in commandList" v-bind:command="item" :key="item.id"></dvi-command>
+    </div>
+    <script src="https://unpkg.com/vue"></script>
     <script src="dvi.js"></script>
     <script src="dvi-web.js"></script>
   </body>

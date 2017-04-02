@@ -1,4 +1,64 @@
-/* global window, document, FileReader, DVIBuffer */
+/* global window, document, FileReader, DVIBuffer, Vue */
+
+Vue.component('dvi-parameter-value', {
+  props: ['parameter'],
+  template: `
+            <div>
+              <table>
+                <tr>
+                  <td><span class="parameterName">{{Object.keys(parameter)[0]}}</span></td>
+                  <td><span class="parameterValue">{{Object.values(parameter)[0][0]}}</span></td>
+                </tr>
+              </table>
+              <p class="parameterDescription">{{Object.values(parameter)[0][1]}}</p>
+            </div>
+    `,
+});
+
+Vue.component('dvi-parameter-list', {
+  props: ['parameters'],
+  template: `
+        <div>
+              <dvi-parameter-value v-for="item in parameters" :key="item.id" v-bind:parameter="item"></dvi-parameter-value>
+        </div>
+  `,
+});
+
+Vue.component('dvi-command', {
+  props: ['command'],
+  template: `
+    <div>
+      <div>Bytes:
+        <tt>xx xx xx</tt>
+      </div>
+      <table class="opTable">
+        <tr>
+          <th class="opTable">Operator</th>
+          <th class="opTable">Parameters</th>
+        </tr>
+        <tr>
+          <td class="opTable">
+            <div>
+              <tt class="bytes">xx</tt>
+              <tt class="symbolicName">{{ command.op[0] }}</tt><br>
+              <span class="operationName">{{ command.op[1] }}</span>
+            </div>
+          </td>
+          <td>
+          <dvi-parameter-list v-bind:parameters="command.params"></dvi-parameter-list>
+          </td>
+        </tr>
+      </table>
+    </div>
+  `,
+});
+const commandList = new Vue({
+  el: '#dvi-commands',
+  data: {
+    commandList: [],
+  },
+});
+Vue.config.productionTip = false;
 
 function encodeForHtml(s) {
   let text = `${s}`;  // In case it's not a string
@@ -60,15 +120,15 @@ function annotatedDviBytes(/* Uint8Array */ byteArray) {
   let i = 0;
   while (i < byteArray.length) {
     const n = byteArray[i];
-    const tmp = (`00${n.toString(16)}`).substr(-2);
-    let s = ` <span data-byte="${i}">${tmp}`;
     i += 1;
+    if (i % 100 === 0) { console.log(`Done reading ${i} bytes.`); }
+    const byteHex = (`00${n.toString(16)}`).substr(-2);
+    t.innerHTML += ` <span data-byte="${i}">${byteHex}</span>`;
     if (i % 16 === 8) {
-      s += ' ';
+      t.innerHTML += ' ';
     } else if (i % 16 === 0) {
-      s += '\n';
+      t.innerHTML += '\n';
     }
-    t.innerHTML += s;
   }
   t.innerHTML += '\n    (End of hexdump)';
   return t;
@@ -87,8 +147,15 @@ function populateHexdump() {
 
   const dviBuffer = new DVIBuffer(bufferBeingUsed);
   while (dviBuffer.more()) {
-    const op = dviBuffer.readOp();
-    console.dir(op, { depth: null });
+    const command = dviBuffer.readCommand();
+    if (command.op[0] === 'pre') {
+      // debugger;
+    }
+    commandList.commandList.push(command);
+    // const commandStr = JSON.stringify(command, null, 0);
+    // const pre = document.createElement('pre');
+    // pre.innerHTML += commandStr;
+    // hexdump.appendChild(pre);
   }
 }
 window.addEventListener('load', populateHexdump);

@@ -1,3 +1,10 @@
+// This somehow miraculously works:
+// https://stackoverflow.com/questions/17191945/conversion-between-utf-8-arraybuffer-and-string/17192845#17192845
+function Uint8ArrayToText(array) {
+  const fake = String.fromCharCode.apply(null, array);
+  return decodeURIComponent(escape(fake));
+}
+
 class DVIBuffer {
   constructor(buffer) {
     this.f = buffer;
@@ -52,7 +59,11 @@ class DVIBuffer {
   }
 
   readString(n) {
-    const ret = this.f.toString('utf8', this.pos, this.pos + n);
+    // This would work with NodeJS Buffer but does not convert to text with Uint8Array
+    // const ret = this.f.toString('utf8', this.pos, this.pos + n);
+    const arr = this.f.slice(this.pos, this.pos + n);
+    // const ret = new TextDecoder('utf-8').decode(arr);
+    const ret = Uint8ArrayToText(arr);
     this.pos += n;
     return ret;
   }
@@ -63,7 +74,7 @@ class DVIBuffer {
     return ret;
   }
 
-  readOp() {
+  readCommand() {
     const opCode = this.readByte();
     // pre
     if (opCode === 247) {
@@ -126,7 +137,7 @@ class DVIBuffer {
         // TODO: Do something better here
         console.log('Invalid');
       }
-      console.log('All OK!');
+      // console.log('All OK!');
       return {
         op: ['post_post', 'End of the postamble'],
         params: [
