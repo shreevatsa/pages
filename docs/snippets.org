@@ -1,0 +1,17 @@
+Quite stunning, with Emscripten:
+- https://manuels.github.io/texlive.js/ (https://github.com/manuels/texlive.js)
+- https://github.com/lyze/xetex-js
+
+--------------------------------------------------------------------------------
+
+https://tex.stackexchange.com/questions/361104/learning-latex
+
+I think this is a genuine question, and the problem is real. I'm sure that in practice, most people _do_ learn LaTeX by copying examples. To add to the problem, many examples do not come with explanations, so people end up with weird mental models and misconceptions about LaTeX (such as for instance, that it is a programming language). Introductory LaTeX books are also written "helpfully", telling the user how to get things done in the ideal case, rather than revealing what is actually happening. When the user's mental model doesn't match the program, the user experience suffers eventually.
+
+To put it differently, LaTeX is a leaky abstraction. Because of its excellent set of macros which are very close to the human side of things (expressing what is the author's mind), the user can fall into the illusion that they express things abstractly and LaTeX magically produces “ideal” output, rather than the reality: LaTeX is an impressive edifice of macros with poor error-checking (because of the limitations of the time), written in a language that is not very good, on top of a typesetting system (TeX) fundamentally concerned with the page and where to put down ink and characters on it.
+
+Of the example “problems” in the question: the solution to “printing a bibliography in a specific order” would probably involve knowledge of the macros (a program) that someone has written for bibliographies, that for “creating a table” has probably more to do with typesetting, “changing the fonts” is a different part of the TeX typesetting engine + ecosystem of related programs, and “formatting a document” may be a question about page design. These are all very different things, though it's impressive that LaTeX is good enough to give the illusion that the user is working with one system.
+
+The antidote for all this, IMO, is to spend some time and learn TeX. The best book I've found for this, which is at the same time a gentle introduction and reveals what's going on in enough detail to make you practically an expert, is Seroul & Levy's _A Beginner's Book of TeX_. Then, having learned TeX, and having the confidence that you'll more or less be able to reproduce any printed page you see (though not always with elegant input), you can better appreciate LaTeX for what it is. And know enough about TeX macros to understand examples (but it's taste whether you enjoy or avoid them).
+
+--------------------------------------------------------------------------------
