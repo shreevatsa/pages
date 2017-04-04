@@ -1,0 +1,700 @@
+* Sources
+http://homepages.wmich.edu/~cooneys/poems/pangur.oldirish.html
+
+http://homepages.wmich.edu/~cooneys/poems/pangur.ban.html (Posted 19 October 1996 by Seamus Cooney) [Both of these are part of http://homepages.wmich.edu/~cooneys/poems/index.html Seamus Cooney "A Small Anthology of Poems" ("Works best with Netscape", "This page requires a browser that can view tables.")]
+
+http://www.thegreatcat.org/history-of-the-cat-in-the-dark-ages-part-4/
+
+http://www.sky-net.org.uk/canals/pangurban/name/
+
+http://faculty.georgetown.edu/jod/pangur.html
+
+https://en.wikisource.org/wiki/Pangur_B%C3%A1n
+
+https://wikisource.org/wiki/Pangur_B%C3%A1n
+
+https://www.ling.upenn.edu/~beatrice/pangur-ban.html
+
+https://www.poetryfoundation.org/poetrymagazine/poems/detail/48267 / https://www.poetryfoundation.org/poems-and-poets/poems/translator-notes/detail/48267
+
+https://www.fisheaters.com/pangurban.html
+
+https://suburbanbanshee.wordpress.com/2009/05/17/pangur-ban-mss-still-in-existence/
+
+* Intro
+#+BEGIN_QUOTE (http://homepages.wmich.edu/~cooneys/poems/pangur.oldirish.html / http://homepages.wmich.edu/~cooneys/poems/pangur.ban.html)
+This poem was found in the margins of a manuscript in the Monastery of St Paul, Carinthia, Austria. It seems to have been written by an Irish monk, sometime around the ninth century.
+#+END_QUOTE
+
+#+BEGIN_QUOTE (http://www.thegreatcat.org/history-of-the-cat-in-the-dark-ages-part-4/)
+Because Viking raids continued into the 9<sup>th</sup> century, <a title="Hiberno-Scottish mission" href="http://en.wikipedia.org/wiki/Hiberno-Scottish_mission">Irish monks</a> continued to flee the on-going invasions by travelling to far off havens. One such monk exiled in <a title="Monastic Island of Reichenau" href="http://whc.unesco.org/en/list/974">Reichenau</a> on <a title="Lake Constance" href="http://maps.google.com/maps?ll=47.55,9.70388888889&amp;spn=0.1,0.1&amp;q=47.55,9.70388888889 (Lake%20Constance)&amp;t=h">Lake Constance</a> is immortalized for writing a now famous poem in honor of his cat, <a title="Pangur Bán" href="http://en.wikipedia.org/wiki/Pangur_B%C3%A1n">Pangur Bán</a> [Pangur is a traditional Irish name; while Bán means white]. The cat, not yet completely identified with the devil and demonized, found its way into the heart of this lonely exiled monk.
+#+END_QUOTE
+
+#+BEGIN_QUOTE (http://www.thegreatcat.org/history-of-the-cat-in-the-dark-ages-part-4/)
+http://www.thegreatcat.org/wp-content/uploads/2012/12/Pangur-Ban-Reichenauer_Schulheft_1v_2r_kl1.jpg
+http://www.thegreatcat.org/wp-content/uploads/2012/12/Pangur-Ban-Reichenauer_Schulheft_1v_2r_kl1-300x216.jpg
+Pangur Ban Reichenauer_Schulheft_1v_2r_kl1
+Pangur Bán Original Text
+St. Paul’s Abbey
+Lavanttal
+#+END_QUOTE
+
+#+BEGIN_QUOTE (http://www.sky-net.org.uk/canals/pangurban/name/)
+Written by an unknown Irish Monk, a student of the monastery
+
+of Carinthia, on a copy of St Paul's Epistles
+
+8th Century.
+#+END_QUOTE
+
+#+BEGIN_QUOTE (https://en.wikisource.org/wiki/Pangur_B%C3%A1n)
+Pangur Bán  (1903)
+Anonymous, translated by Whitley Stokes and John Strachan
+This translation of the Old Irish poem (see w:Pangur Bán and mul:Pangur Bán) was published in the Thesaurus Palaeohibernicus
+#+END_QUOTE
+
+#+BEGIN_QUOTE (https://wikisource.org/wiki/Pangur_B%C3%A1n)
+Pangur Bán (ca. 9th century)
+"Pangur Bán" is an Old Irish poem, written about the 9th century at or around Reichenau Abbey. It was written by an Irish monk, and is about his cat. Although the poem is anonymous, it bears similarities to the poetry of Sedulius Scottus, prompting speculation that Sedulius is the author. In 8 verses of four lines, the author compares the cat's activities with his own scholarly pursuits.
+#+END_QUOTE
+
+https://wikisource.org/wiki/File:Reichenauer_Schulheft_1v_2r_kl1.jpg
+
+#+BEGIN_QUOTE (https://www.poetryfoundation.org/poems-and-poets/poems/translator-notes/detail/48267)
+Translator's Notes: Pangur Bán
+by Seamus Heaney
+
+This poem, found in a ninth-century manuscript belonging to the monastery of St. Paul in Carinthia (southern Austria), was written in Irish and has often been translated. For many years I have known by heart Robin Flower’s version, which keeps the rhymed and endstopped movement of the seven-syllable lines, but changes the packed, donnis/monkish style of the original into something more like a children’s poem, employing an idiom at once wily and wilfully faux-naif: “I and Pangur Bán, my cat,/’Tis a like task we are at...,” “’Tis a merry thing to see/At our tasks how glad are we/When we sit at home and find/Entertainment for our mind,” and so on.
+
+Sometimes known as “Pangur Bán” (“white pangur”—“pangur” being an old spelling of the Welsh word for “fuller,” the man who works with white fuller’s earth), sometimes known as “The Scholar/Monk and his Cat,” the poem pads naturally out of Irish into the big-cat English of “The Tyger.” And since Blake’s meter acted as Flower’s tuning fork, and as Yeats’s when Yeats came to write his exhortations to Irish poets, I was glad to “keep the accent” and thereby instate the author of “Pangur Bán” at the head of the line of those Irish poets who are meant to have “learned their trade.”
+
+Like many other early Irish lyrics—“The Blackbird of Belfast Lough,” “The Scribe in the Woods,” and various “season songs” by the hermit poets—“Pangur Bán” is a poem that Irish writers like to try their hand at, not in order to outdo the previous versions, but simply to get a more exact and intimate grip on the canonical goods. Nevertheless, had it not been for the editor’s invitation to contribute to this issue, it’s unlikely that I would ever have made bold to face the job: the tune of the Flower version is ineradicably lodged in my ear, and I just assumed that for me “Pangur Bán” would always be a no-go area.
+
+A hangover helped. Not so much “tamed by Miltown” as dulled by Jameson, I applied myself to the glossary and parallel text in the most recent edition of Gerard Murphy’s Early Irish Lyrics (Four Courts Press, 1998) and was happy to find that I had enough Irish and enough insulation (thanks to Murphy’s prose and whiskey’s punch) to get started.
+#+END_QUOTE
+
+#+BEGIN_QUOTE (https://www.fisheaters.com/pangurban.html)
+But let's end this digression and move on to the absolutely delightful poem, Pangur Ban. It was written in the 8th or 9th century, on a 4-page manuscript (see picture at the bottom of the page) by an anonymous Irish Benedictine monk who lived in the extant St. Paul's Monastery on Reichenau Island in Lake Constance (Bodensee), where Germany meets with Carinthia, Austria. Imagine the monk at night in his candlelit cell, delving into Sacred Scripture's eternal Truths, together and happy with his kitty, who went about his own business. Little did he know that 1,200 years later, others would fall in love with Pangur Ban, too.
+#+END_QUOTE
+
+https://www.fisheaters.com/pangurban3.jpg (https://www.fisheaters.com/pangurban.html)
+
+#+BEGIN_QUOTE (https://newdialectic.blogspot.com/2005/05/found-while-trolling.html also https://suburbanbanshee.wordpress.com/2009/05/17/pangur-ban-mss-still-in-existence/)
+From a lecture by Seamus Heaney(?? probably not)
+
+There is a fragmentary ninth century manuscript belonging to the monastery of St. Paul, Unterdrauberg (in southern Austria). Preserved in that manuscript, along with a Virgil commentary and some Greek paradigms, are Irish language poems – including the little poem about the scholar and his cat, Pangur Ban – perhaps noted down by a bored monkish copyist. That poem had no readership, and no influence, for one thousand years – until it was published by Stokes and Strachan in 1902.
+
+It is now the most famous poem in the Irish language, and one of the best known and the best loved poems in the world – the various translations have been much anthologised, and practically every Irish poet has made her or his version.
+
+The Robin Flower translation was chosen by Seamus Heaney and Ted Hughes for their successful children's anthology The Rattle Bag. A new translation, by Sean Hutton, Chair of the British Association for Irish Studies, will be found in Shaun Traynor, The Poolbeg Book of Irish Poetry for Children.
+
+In fact, in these days of the Internet, a simple way of discovering Irish language enthusiasts throughout the world is to start a Web search for 'Pangur Ban'.
+#+END_QUOTE
+
+* Text
+#+BEGIN_QUOTE (http://homepages.wmich.edu/~cooneys/poems/pangur.oldirish.html)
+Messe [ocus] Pangur bán,
+cechtar nathar fria saindán;
+bíth a menma-sam fri seilgg,
+mu menma céin im saincheirdd
+
+Caraim-se fós, ferr cach clú,
+oc mu lebrán léir ingnu;
+ní foirmtech frimm Pangur bán,
+caraid cesin a maccdán.
+
+Ó ru-biam ­ scél cén scis ­
+innar tegdias ar n-oéndis,
+táithiunn ­ dichríchide clius ­
+ní fris 'tarddam ar n-áthius.
+
+Gnáth-huaraib ar greassaib gal
+glenaid luch ina lín-sam;
+os me, du-fuit im lín chéin
+dliged ndoraid cu n-dronchéill.
+
+Fúachaid-sem fri freaga fál
+a rosc a nglése comlán;
+fúachimm chéin fri fégi fis
+mu rosc réil, cesu imdis.
+
+Fáelid-sem cu n-déne dul,
+hi nglen luch ina gérchrub;
+hi-tucu cheist n-doraid n-dil,
+os mé chene am fáelid.
+
+Cia beimini amin nach ré
+ní derban cách a chéle;
+mait le cechtar nár a dán
+subaigthiud a óenurán.
+
+Hé fesin as choimsid dáu
+in muid du-n-gní cach óenláu;
+do thabairt doraid du glé
+for mumud céin am messe.
+#+END_QUOTE
+
+#+BEGIN_QUOTE http://homepages.wmich.edu/~cooneys/poems/pangur.ban.html
+"The Scholar and the Cat"
+
+by Frank O'Connor
+
+Each of us pursues his trade,
+I and Pangur my comrade,
+His whole fancy on the hunt,
+And mine for learning ardent.
+More than fame I love to be
+Among my books and study,
+Pangur does not grudge me it,
+Content with his own merit.
+
+When ­ a heavenly time! ­ we are
+In our small room together
+Each of us has his own sport
+And asks no greater comfort.
+
+While he sets his round sharp eye
+On the wall of my study
+I turn mine, though lost its edge,
+On the great wall of knowledge.
+
+Now a mouse drops in his net
+After some mighty onset
+While into my bag I cram
+Some difficult darksome problem.
+
+When a mouse comes to the kill
+Pangur exults, a marvel!
+I have when some secret's won
+My hour of exultation.
+
+Though we work for days and years
+Neither the other hinders;
+Each is competent and hence
+Enjoys his skill in silence.
+
+Master of the death of mice,
+He keeps in daily practice,
+I too, making dark things clear,
+Am of my trade a master.
+#+END_QUOTE
+
+#+BEGIN_QUOTE http://homepages.wmich.edu/~cooneys/poems/pangur.ban.html
+"From the Irish of Pangur Ban"
+
+by Eavan Boland
+
+Myself and Pangur, cat and sage
+Go each about our business;
+I harass my beloved page,
+He his mouse.
+Fame comes second to the peace
+Of study, a still day
+Unenvying, Pangur's choice
+Is child's play.
+
+Neither bored, both hone
+At home a separate skill
+Moving after hours alone
+To the kill
+
+When at last his net wraps
+After a sly fight
+Around a mouse; mine traps
+Sudden insight.
+
+On my cell wall here,
+His sight fixes, burning,
+Searching; my old eyes peer
+At new learning,
+
+And his delight when his claws
+Close on his prey
+Equals mine when sudden clues
+Light my way.
+
+So we find by degrees
+Peace in solitude,
+Both of us, solitaries,
+Have each the trade
+
+He loves: Pangur, never idle
+Day or night
+Hunts mice; I hunt each riddle
+From dark to light.
+#+END_QUOTE
+
+#+BEGIN_QUOTE (http://www.thegreatcat.org/history-of-the-cat-in-the-dark-ages-part-4/)
+(Attributed by the site to Rowling, 1979, but actually an abridged version of Robin Flower's translation)
+
+Pangur Bán
+
+I and Pangur Bán my cat,
+‘Tis a like task we are at,
+ Hunting mice is his delight,
+Hunting words I sit all night
+
+‘Tis a merry thing to see,
+At our task how glad are we
+When at home we sit and find,
+Entertainment to our mind.
+
+‘Gainst the wall he sets his eye,
+ Full and fierce and sharp and sly,
+‘Gainst the wall of knowledge I,
+ All my little wisdom try.
+
+ So in peace our task we ply:
+ Pangur Bán my cat and I
+ In our arts and in our bliss,
+ I have mine and he has his.
+#+END_QUOTE
+
+#+BEGIN_QUOTE (http://www.sky-net.org.uk/canals/pangurban/name/)
+Gaelic
+
+Messe agus Pangur Bán,
+cechtar nathar fria shaindán:
+bíth a menmasam fri seilgg,
+mu menma céin im shaincheirdd.
+
+Caraimse fos, ferr cach clú
+oc mu lebrán, léir ingnu;
+ní foirmtech frimm Pangur bán
+caraid cesin a maccdán
+
+Ó ru biam, scél gan scís
+innar tegdais, ar n-óendís,
+táithiunn, díchríchide clius
+ní fris tarddam ar n-áthius
+
+Gnáth, húaraib, ar gressaib gal
+glenaid luch inna línsam;
+os mé, du-fuit im lín chéin
+dliged ndoraid cu ndronchéill
+
+Fúachaidsem fri frega fál
+a rosc, a nglése comlán;
+fúachimm chéin fri fégi fis
+mu rosc réil, cesu imdis.
+
+Fáelidsem cu ndéne dul
+hi nglen luch inna gérchrub;
+hi tucu cheist ndoraid ndil
+os mé chene am fáelid.
+
+Cia beimmi a-min nach ré
+ní derban cách a chéile
+maith la cechtar nár a dán;
+subaigthius a óenurán
+
+Hé fesin as choimsid dáu;
+in muid du-ngní cach óenláu;
+du thabairt doraid du glé
+for mu muid céin am messe.
+
+Aistrithe ag Robin Flower
+#+END_QUOTE
+
+#+BEGIN_QUOTE (http://www.sky-net.org.uk/canals/pangurban/name/)
+English
+
+I and Pangur Bán, my cat
+'Tis a like task we are at;
+Hunting mice is his delight
+Hunting words I sit all night.
+
+Better far than praise of men
+'Tis to sit with book and pen;
+Pangur bears me no ill will,
+He too plies his simple skill.
+
+'Tis a merry thing to see
+At our tasks how glad are we,
+When at home we sit and find
+Entertainment to our mind.
+
+Oftentimes a mouse will stray
+In the hero Pangur's way:
+Oftentimes my keen thought set
+Takes a meaning in its net.
+
+'Gainst the wall he sets his eye
+Full and fierce and sharp and sly;
+'Gainst the wall of knowledge I
+All my little wisdom try.
+
+When a mouse darts from its den,
+O how glad is Pangur then!
+O what gladness do I prove
+When I solve the doubts I love!
+
+So in peace our tasks we ply,
+Pangur Bán, my cat, and I;
+In our arts we find our bliss,
+I have mine and he has his.
+
+Practice every day has made
+Pangur perfect in his trade;
+I get wisdom day and night
+Turning darkness into light.
+
+Translated by Robin Flower
+#+END_QUOTE
+
+#+BEGIN_QUOTE (http://faculty.georgetown.edu/jod/pangur.html)
+Irish version:
+
+Messe ocus Pangur Bán
+cechtar náthar fria saindán:
+bíth a menma-sam fri seilgg,
+mu menma céin im saincheirdd.
+#+END_QUOTE
+
+#+BEGIN_QUOTE (http://faculty.georgetown.edu/jod/pangur.html)
+Version by W.H. Auden:
+
+Pangur, white Pangur, How happy we are
+Alone together, scholar and cat
+Each has his own work to do daily;
+For you it is hunting, for me study.
+Your shining eye watches the wall;
+My feeble eye is fixed on a book.
+You rejoice, when your claws entrap a mouse;
+I rejoice when my mind fathoms a problem.
+Pleased with his own art, neither hinders the other;
+Thus we live ever without tedium and envy.
+#+END_QUOTE
+
+#+BEGIN_QUOTE (http://faculty.georgetown.edu/jod/pangur.html)
+Version by J. Marchand:
+
+The Scholar and his Cat
+
+1. I and White Pangur, each of us in his special craft. His mind is set on hunting; my mind is on my special subject.
+
+2. I love resting (better than any fame) at my book, with diligent understanding; White Pangur is not envious of me; he loves his childish craft.
+
+3. When we are (tale without tiredness), in our house, being alone, we have an endless sport, a thing to which we may apply our skill.
+
+4. It is usual, at times, by feats of valor, that a mouse sticks in his net. As for me, there falls into my net, a difficult rule with hard meaning.
+
+5. He points fiercely against an enclosing wall his eye, bright, perfect. I myself direct against the keenness of knowledge my sharp eye, though it be quite weak.
+
+6. He is happy with swiftness of movement upon a mouse sticking in his sharp paws. Which I understand a difficult pleasant problem, as for me, I am happy, too.
+
+7. Though we may be indeed (like this) at any time, neither disturbs his partner; good to each of us is his art, each rejoices in them.
+
+8. He himself is master of it, the work which he does every day. To bring clarity to difficulty, I am at my own work.
+#+END_QUOTE
+
+#+BEGIN_QUOTE (http://faculty.georgetown.edu/jod/pangur.html)
+I & Pangur Ban my cat
+'Tis a like task we are at:
+Hunting mice is his delight,
+Hunting words I sit all night.
+
+'Tis a merry thing to see
+At our tasks how glad are we,
+When at home we sit & find
+Entertainment to our mind.
+
+'Gainst the wall he sets his eye,
+Full & fierce & sharp & sly;
+'Gainst the wall of knowledge I
+All my little wisdom try.
+
+So in peace our task we ply
+Pangur Ban my cat & I;
+In our arts we find our bliss,
+I have mine & he has his.
+#+END_QUOTE
+
+#+BEGIN_QUOTE (https://en.wikisource.org/wiki/Pangur_B%C3%A1n)
+translated by Whitley Stokes and John Strachan
+
+I and Pangur Bán, each of us two at his special art:
+his mind at hunting (mice), my own mind is in my special craft.
+
+I love to rest—better than any fame—at my booklet with diligent science:
+not envious of me is Pangur Bán: he himself loves his childish art.
+
+When we are—tale without tedium—in our house, we two alone,
+we have—unlimited (is) feat-sport—something to which to apply our acuteness.
+
+It is customary at times by feat of valour, that a mouse sticks in his net,
+and for me there falls into my net a difficult dictum with hard meaning.
+
+His eye, this glancing full one, he points against the wall-fence:
+I myself against the keenness of science point my clear eye, though it is very feeble.
+
+He is joyous with speedy going where a mouse sticks in his sharp-claw:
+I too am joyous, where I understand a difficult dear question.
+
+Though we are thus always, neither hinders the other:
+each of us two likes his art, amuses himself alone.
+
+He himself is the master of the work which he does every day:
+while I am at my own work, (which is) to bring difficulty to clearness.
+#+END_QUOTE
+
+#+BEGIN_QUOTE (https://wikisource.org/wiki/Pangur_B%C3%A1n)
+Version from the Old Irish Verse section of Thesaurus Palaeohibernicus (https://wikisource.org/wiki/Page:Thesaurus_Palaeohibernicus_2.djvu/339, https://wikisource.org/wiki/Page:Thesaurus_Palaeohibernicus_2.djvu/340)
+1. Messe ocus Pangur Bán, · cechtar nathar fria saindan
+  bíth a menmasam fri seilgg · mu menma céin im saincheirdd.
+2. Caraimse fos ferr cach clú · oc mu lebran leir ingnu
+  ni foirmtech frimm Pangur Bán · caraid cesin a maccdán.
+3. Orubiam scél cen scís · innar tegdais ar noendís
+  taithiunn dichrichide clius · ni fristarddam arnáthius.
+4. Gnáth huaraib ar gressaib gal · glenaid luch inna línsam
+  os mé dufuit im lín chéin · dliged ndoraid cu ndronchéill.
+5. Fuachaidsem fri frega fál · a rosc anglése[1] comlán
+  fuachimm chein fri fegi fis · mu rosc reil cesu imdis.
+6. Faelidsem cu ndene dul · hinglen luch inna gerchrub
+  hi tucu cheist ndoraid ndil · os me chene am faelid.
+7. Cia beimmi amin nach ré, · ni derban cách a chele
+  maith la[2] cechtar nár a dán, · subaigthius a óenurán.
+8. He fesin as choimsid dáu · in muid dungní cach oenláu
+  du thabairt doraid du glé · for mu mud cein am messe.
+Notes
+[1] ↑ rosc is neuter (rosc n-airard n-adanta, LL. 253a45); hence the neut. article before glé
+[2] ↑ maith la is written over a cancelled caraid
+#+END_QUOTE
+
+#+BEGIN_QUOTE (https://wikisource.org/wiki/Pangur_B%C3%A1n)
+Version from Ernst Windisch’s Irische Texte
+[ 316 ]
+
+Messe ocus Pangur Bán, cechtar náthar[1] fria saindán
+bíth a menma-sam fri seilgg mu menma céin im saincheirdd.
+
+Caraim-se fos ferr cach clú oc mu lebran leir ingnu
+ni foirmtech frimm Pangur Bán caraid cesin a maccdán.
+
+O ru biam scél cen scís innar tegdais ar n-oendís
+taithiunn dichrichide clius ni fristarddam arnáthius.
+
+Gnáth huaraib ar gressaib gal glenaid[2] luch inna lín-sam
+os mé dufuit im lín chéin dliged n-doraid cu n-dronchéill.
+
+Fuachaid-sem fri frega fál a rosc anglése comlán
+fuachimm chein fri fegi fis mu rosc reil cesu imdis.
+
+Faelid-sem cu n-dene dul hi n-glen luch inna gerchrub
+hi tucu cheist n-doraid n-dil os me chene am faelid.
+
+Cia beimmi amin nach ré ni derban cách a chele
+caraid[3] cechtar nár a dán, subaigthius a óenurán.
+
+He fesin as choim sid dáu in muid dun gní cach oen láu
+du thabairt doraid du glé for mu mud cein am messe.
+Notes
+Jump up ↑ nádar mit Punktum delens unter d, und th über dem d Ms.
+Jump up ↑ zwischen glen und aid ein kleines Loch im Ms.
+Jump up ↑ caraid ist ausgestrichen und darüber von derselben Hand maith la geschrieben.
+#+END_QUOTE
+
+#+BEGIN_QUOTE (https://www.ling.upenn.edu/~beatrice/pangur-ban.html)
+The scholar and his cat, Pangur Bán
+
+(from the Irish by Robin Flower)
+
+I and Pangur Ban my cat,
+'Tis a like task we are at:
+Hunting mice is his delight,
+Hunting words I sit all night.
+
+Better far than praise of men
+'Tis to sit with book and pen;
+Pangur bears me no ill-will,
+He too plies his simple skill.
+
+'Tis a merry task to see
+At our tasks how glad are we,
+When at home we sit and find
+Entertainment to our mind.
+
+Oftentimes a mouse will stray
+In the hero Pangur's way;
+Oftentimes my keen thought set
+Takes a meaning in its net.
+
+'Gainst the wall he sets his eye
+Full and fierce and sharp and sly;
+'Gainst the wall of knowledge I
+All my little wisdom try.
+
+When a mouse darts from its den,
+O how glad is Pangur then!
+O what gladness do I prove
+When I solve the doubts I love!
+
+So in peace our task we ply,
+Pangur Ban, my cat, and I;
+In our arts we find our bliss,
+I have mine and he has his.
+
+Practice every day has made
+Pangur perfect in his trade;
+I get wisdom day and night
+Turning darkness into light.
+#+END_QUOTE
+
+#+BEGIN_QUOTE (https://www.poetryfoundation.org/poetrymagazine/poems/detail/48267)
+TRANSLATED BY SEAMUS HEANEY
+
+Pangur Bán and I at work,
+Adepts, equals, cat and clerk:
+His whole instinct is to hunt,
+Mine to free the meaning pent.
+
+More than loud acclaim, I love
+Books, silence, thought, my alcove.
+Happy for me, Pangur Bán
+Child-plays round some mouse’s den.
+
+Truth to tell, just being here,
+Housed alone, housed together,
+Adds up to its own reward:
+Concentration, stealthy art.
+
+Next thing an unwary mouse
+Bares his flank: Pangur pounces.
+Next thing lines that held and held
+Meaning back begin to yield.
+
+All the while, his round bright eye
+Fixes on the wall, while I
+Focus my less piercing gaze
+On the challenge of the page.
+
+With his unsheathed, perfect nails
+Pangur springs, exults and kills.
+When the longed-for, difficult
+Answers come, I too exult.
+
+So it goes. To each his own.
+No vying. No vexation.
+Taking pleasure, taking pains,
+Kindred spirits, veterans.
+
+Day and night, soft purr, soft pad,
+Pangur Bán has learned his trade.
+Day and night, my own hard work
+Solves the cruxes, makes a mark.
+#+END_QUOTE
+
+#+BEGIN_QUOTE (https://www.fisheaters.com/pangurban.html)
+Pangur Ban
+
+I and Pangur Ban my cat,
+Tis a like task we are at:
+Hunting mice is his delight,
+Hunting words I sit all night.
+
+Better far than praise of men
+Tis to sit with book and pen;
+Pangur bears me no ill will,
+He too plies his simple skill.
+
+Tis a merry thing to see
+At our tasks how glad are we,
+When at home we sit and find
+Entertainment to our mind.
+
+Oftentimes a mouse will stray
+In the hero Pangur's way;
+Oftentimes my keen thought set
+Takes a meaning in its net.
+
+'Gainst the wall he sets his eye
+Full and fierce and sharp and sly;
+'Gainst the wall of knowledge I
+All my little wisdom try.
+
+When a mouse darts from its den
+O how glad is Pangur then!
+O what gladness do I prove
+When I solve the doubts I love!
+
+So in peace our tasks we ply,
+Pangur Ban, my cat, and I;
+In our arts we find our bliss,
+I have mine and he has his.
+
+Practice every day has made
+Pangur perfect in his trade;
+I get wisdom day and night
+Turning darkness into light.
+#+END_QUOTE
+
+#+BEGIN_QUOTE (https://www.fisheaters.com/pangurban.html)
+Pangur Ban
+
+Messe ocus Pangur Bán,
+cechtar nathar fria saindan:
+bíth a menmasam fri seilgg,
+mu memna céin im saincheirdd.
+
+Caraimse fos (ferr cach clu)
+oc mu lebran, leir ingnu;
+ni foirmtech frimm Pangur Bán:
+caraid cesin a maccdán.
+
+O ru biam (scél cen scís)
+innar tegdais, ar n-oendís,
+taithiunn, dichrichide clius,
+ni fris tarddam ar n-áthius.
+
+Gnáth, huaraib, ar gressaib gal
+glenaid luch inna línsam;
+os mé, du-fuit im lín chéin
+dliged ndoraid cu ndronchéill.
+
+Fuachaidsem fri frega fál
+a rosc, a nglése comlán;
+fuachimm chein fri fegi fis
+mu rosc reil, cesu imdis.
+
+Faelidsem cu ndene dul
+hi nglen luch inna gerchrub;
+hi tucu cheist ndoraid ndil
+os me chene am faelid.
+
+Cia beimmi a-min nach ré
+ni derban cách a chele:
+maith la cechtar nár a dán;
+subaigthius a óenurán.
+
+He fesin as choimsid dáu
+in muid du-ngni cach oenláu;
+du thabairt doraid du glé
+for mu mud cein am messe.
+#+END_QUOTE
+
+* Unused
+https://www.amazon.com/White-Cat-Monk-Retelling-Pangur/dp/1554987806/
+The White Cat and the Monk: A Retelling of the Poem "Pangur Bán" Hardcover – March 30, 2016
+by Jo Ellen Bogart (Author), Sydney Smith (Illustrator)
+
+https://www.amazon.com/Medieval-Times-Perigee-Marjorie-Rowling/dp/0399502580/
+Life in Medieval Times (Perigee) Reissue Edition
+by Marjorie Rowling (Author)
+
+https://wikisource.org/wiki/Pangur_B%C3%A1n
+
+https://suburbanbanshee.wordpress.com/2009/05/17/pangur-ban-mss-still-in-existence/ (lots of links)
+
+http://stonestreetpress.com/1306/more-on-pangur-ban-ban-means-white-but-what-on-fullers-earth-does-pangur-mean/ (rambling comment)
+
+http://www.ceantar.org/pangur.html (has a text to use)
+
+https://en.wikipedia.org/wiki/Pangur_B%C3%A1n
+
+http://www.irishcultureandcustoms.com/Poetry/PangurBan.html (has some intro, of dubious reliability)
+
+http://www.poetryarchive.org/poem/pangur-ban ("retelling" of the poem?!)
+
+https://newdialectic.blogspot.com/2005/05/found-while-trolling.html
+
+https://whyevolutionistrue.wordpress.com/2013/02/25/pawprints-4-ancient-monk-immortalizes-his-cat/
