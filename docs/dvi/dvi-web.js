@@ -27,29 +27,27 @@ Vue.component('dvi-parameter-list', {
 Vue.component('dvi-command', {
   props: ['command'],
   template: `
-    <div>
-      <div>Bytes:
-        <tt>xx xx xx</tt>
-      </div>
-      <table class="opTable">
-        <tr>
-          <th class="opTable">Operator</th>
-          <th class="opTable">Parameters</th>
-        </tr>
-        <tr>
-          <td class="opTable">
-            <div>
-              <tt class="bytes">xx</tt>
-              <tt class="symbolicName">{{ command.op[0] }}</tt><br>
-              <span class="operationName">{{ command.op[1] }}</span>
-            </div>
-          </td>
-          <td>
+    <tbody class="opTable">
+      <tr>
+        <td colspan="2">
+          <div>Bytes:
+            <tt>xx xx xx</tt>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="opTable">
+          <div>
+            <tt class="bytes">xx</tt>
+            <tt class="symbolicName">{{ command.op[0] }}</tt><br>
+            <span class="operationName">{{ command.op[1] }}</span>
+          </div>
+        </td>
+        <td class="opTable">
           <dvi-parameter-list v-bind:parameters="command.params"></dvi-parameter-list>
-          </td>
-        </tr>
-      </table>
-    </div>
+        </td>
+      </tr>
+    </tbody>
   `,
 });
 const commandList = new Vue({

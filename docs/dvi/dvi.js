@@ -88,8 +88,8 @@ class DVIBuffer {
         op: ['pre', 'Preamble'],
         params: [
           { i: [parI, 'The DVI version (always 2)'] },
-          { num: [parNum, 'The numerator of the fraction to multiply measurements by, to get distances in units of 100 nm (usually: 2.54 x 10^7)'] },
-          { den: [parDen, 'The denominator of the fraction to multiply measurements by, to get distances in units of 100 nm (usually: 2^16)'] },
+          { num: [parNum, 'The numerator of the fraction to multiply measurements by, to get distances in units of 10⁻⁷ m (usually: 25400000)'] },
+          { den: [parDen, 'The denominator of the fraction to multiply measurements by, to get distances in units of 100 nm (usually: 7227×2¹⁶ = 473628672)'] },
           { mag: [parMag, 'A thousand times the desired magnification (usually: 1000)'] },
           { k: [parK, 'The length of the comment'] },
           { x: [parX, 'The comment'] },

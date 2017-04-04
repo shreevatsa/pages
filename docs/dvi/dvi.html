@@ -5,10 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Is this right? Have to test the page on mobile to be sure. -->
     <title>DVI structure explainer</title>
     <style>
+      body {
+      /* Some fonts that show superscript "-7" and superscript "16" properly */
+      font-family: Noto Serif, Seravek, Palatino Linotype, Palatino, Noto Sans, Meiryo, Lucida Grande, Georgia, Gentium Plus, FreeSerif, Corbel, Constantia, Charis SIL, Cambria, Calibri, Athelas;
+      }
+
       #file, #intro, #hexdump {
         display: block;
       }
-      table.opTable, th.opTable, td.opTable
+      #hexdump {
+          overflow-y: scroll; max-height:30vh;
+      }
+      #dvi-commands {
+          overflow-y: scroll; max-height:40vh;
+      }
+      table.opTable {
+          border-collapse: collapse;
+          padding: 5px;
+          border: 1px solid black;
+      }
+      table.opTable, th.opTable, tbody.opTable
       {
           padding: 5px;
           border: 1px solid black;
@@ -31,10 +47,18 @@
     <output id="intro">Intro goes here</output>
     <hr>
     <output id="hexdump">The hexdump of this file is below. <div></div></output>
-    <hr>
     <div id="dvi-commands">
-      <dvi-command v-for="item in commandList" v-bind:command="item" :key="item.id"></dvi-command>
+      <table class="opTable">
+        <thead>
+          <tr>
+            <th class="opTable">Operator</th>
+            <th class="opTable">Parameters</th>
+          </tr>
+        </thead>
+        <tbody is="dvi-command" v-for="item in commandList" v-bind:command="item" :key="item.id"></tbody>
+      </table>
     </div>
+
     <script src="https://unpkg.com/vue"></script>
     <script src="dvi.js"></script>
     <script src="dvi-web.js"></script>
