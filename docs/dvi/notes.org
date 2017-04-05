@@ -1,0 +1,31 @@
+* For reading later
+
+FileReader chunking
+- https://stackoverflow.com/questions/25810051/filereader-api-on-big-files
+- https://stackoverflow.com/questions/21128785/filereader-onprogress-chunk-size
+- https://stackoverflow.com/questions/14438187/javascript-filereader-parsing-long-file-in-chunks
+
+Web workers (but see below)
+- https://code.tutsplus.com/tutorials/getting-started-with-web-workers--net-27667
+- https://www.html5rocks.com/en/tutorials/workers/basics/
+
+Node JS
+- (Done, meh) +http://stackoverflow.com/questions/10773564/which-would-be-better-for-concurrent-tasks-on-node-js-fibers-web-workers-or-t+
+
+Generators
+- https://nemisj.com/using-generators-for-node-js-style-callbacks/
+- https://stackoverflow.com/questions/21892319/wrapping-fs-readfile-in-a-generator-yield
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators
+- Can probably combine the "FileReader chunking" and "Generators" solutions here??
+
+* Plan
+
+The dvi.js should take the buffer (as a stream) and return a stream
+where each element specifies the op and parameters (and the bytes in
+each).
+
+dviRead :: [Byte]s -> [Command]s
+
+Each "Command" is a pair: (Op, [Parameter]s)
+
+Each "Op" is
