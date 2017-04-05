@@ -1,0 +1,1337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>How Frank Nelson Cole factored \( M_{67} = 2^{67} - 1 \) in 1903</title>
+<!-- 2016-05-15 Sun 19:45 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Shreevatsa Rajagopalan" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full"></script>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+    MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
+        displayAlign: "center",
+        displayIndent: "2em",
+
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
+             }
+        }
+    });
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">How Frank Nelson Cole factored \( M_{67} = 2^{67} - 1 \) in 1903</h1>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> The story</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+The mathematician <a href="https://www.umass.edu/wsp/resources/poisson/bell.html">Eric Temple Bell</a> is famous for the Bell numbers and for his biographical work such as the classic <i>Men of Mathematics</i>. In his <i>The Queen of Mathematics</i>,<sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup> he <a href="https://archive.org/stream/MathematicsQueenAndServantOfScience/Bell-MathematicsQueenAndServantOfScience#page/n126/mode/1up">includes</a> the following story:
+</p>
+
+
+<div class="figure">
+<p><img src="./Bell-legend-Queen.of.Mathematics.png" alt="First" style="float:right;width:300px;margin:20px 20px 20px 20px;border:2px solid black;" />
+</p>
+</div>
+
+<blockquote>
+<p>
+Mersenne's numbers \(M_p\) are as famous as Fermat's. They are defined by
+$$M_p = 2^p - 1, p = 2, 3, 5, 7, 11, 13, \dots, 257, \dots,$$
+<i>where \(p\) is prime</i>. Mersenne asserted (1644) that the only \(p\)'s for which \(M_p\) <i>is prime</i> are
+$$p = 2, 3, 5, 7, 13, 17, 19, 31, 67, 127, 257.$$
+(If \(p\) were composite, \(2^p - 1\) would be immediately factorable. For example, \(2^6 - 1 = (2^3 + 1)(2^3 - 1)\), and so on.) There are 44 other primes \(p\) less than \(257\). So, according to Mersenne, \(M_p\) is not prime for any of these. It would be of great interest to know what grounds Mersenne thought he had for his assertions. It seems unlikely that he was just crudely guessing. He was an honest man and he was not a fool. Nevertheless he was far wrong. His first error was detected in the 1880s, when \(M_{61}\) was proved to be prime. This was shrugged off by those who still believed that the mysterious Father Mersenne really knew what he was talking about; 61 was just some careless copyist's mistake for 67. But in 1903 F. N. Cole (1861–1927) proved that M<sub>67</sub> is not prime.
+</p>
+
+<p>
+I should like here to preserve a small bit of history before all the American mathematicians of the first half of the twentieth century are gone. When I asked Cole in 1911 how long it had taken him to crack M<sub>67</sub> he said “three years of Sundays.” But this, though interesting, is not the history. At the October, 1903, meeting in New York of the American Mathematical Society, Cole had a paper on the program with the modest title <i>On the factorization of large numbers</i>. When the chairman called on him for his paper, Cole—who was always a man of very few words—walked to the board and, saying nothing, proceeded to chalk up the arithmetic for raising 2 to the sixty-seventh power. Then he carefully subtracted 1. Without a word, he moved over to a clear space on the board and multiplied out, by longhand,
+$$193{,}707{,}721 \times 761{,}838{,}257{,}287.$$
+The two calculations agreed Mersenne's conjecture—if such it was—vanished into the limbo of mathematical mythology. For the first and only time on record, an audience of the American Mathematical Society vigorously applauded the author of a paper delivered before it. Cole took his seat without having uttered a word. Nobody asked him a question.
+</p>
+</blockquote>
+
+<p>
+This story has been widely repeated. You can find it on several Wikipedia pages, and it also made an appearance in <a href="http://www.thisamericanlife.org/radio-archives/episode/450/so-crazy-it-just-might-work">an episode of <i>This American Life</i></a> as a conversation between Paul Hoffman and the host Ira Glass. According to this conversation, Mersenne's conjecture was a "formula" to spit out prime numbers, his paper ended with \(M_{67}\) being prime, and 1903 Cole "shows up" at a mathematical conference, multiplies the numbers without saying a word, shows Mersenne's 250-year old formula is wrong, gets applause, and Paul Hoffman thinks they were spent in trial division, trying to divide by every single number.
+</p>
+
+<p>
+Doubt by Corey&#x2026;
+</p>
+
+<p>
+The doubt itself is doubtful&#x2026;
+</p>
+
+<p>
+<a href="https://hsm.stackexchange.com/questions/2105/whats-the-famous-story-about-a-mathematician-who-gave-a-talk-without-saying-a-w">https://hsm.stackexchange.com/questions/2105/whats-the-famous-story-about-a-mathematician-who-gave-a-talk-without-saying-a-w</a>
+<a href="http://mathforum.org/kb/message.jspa?messageID=66462">http://mathforum.org/kb/message.jspa?messageID=66462</a>
+<a href="https://mathoverflow.net/questions/207321/how-did-cole-factor-267-1-in-1903">https://mathoverflow.net/questions/207321/how-did-cole-factor-267-1-in-1903</a>
+<a href="https://books.google.com/books?id=DQXvAAAAMAAJ&dq=dickson%20history%20of%20the%20theory%20of%20numbers%20seelhoff&pg=PA365#v=onepage&q=seelhoff&f=false">https://books.google.com/books?id=DQXvAAAAMAAJ&dq=dickson%20history%20of%20the%20theory%20of%20numbers%20seelhoff&pg=PA365#v=onepage&q=seelhoff&f=false</a>
+<a href="http://www.prothsearch.net/fermat.html#Summary">http://www.prothsearch.net/fermat.html#Summary</a> (mentions of Seelhoff)
+</p>
+</div>
+
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> What we know from Bell's life</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Constance Reid's meticulous investigations have thrown a lot of light on the life of E. T. Bell.
+</p>
+
+<p>
+He left Britain in the beginning of July 1902 (p. 95), and enrolled in Stanford at the beginning of September 1902 (p. 97). He joined "on probation" (p. 98): if he passed the term examinations he could continue. He registered for seven courses in his first semester, passed in all of them, and in January 1903 he was granted "full entrance standing" (p. 100). While at stanford he supported himself by tutoring students for examinations (p. 103). Given this background, October 1903 would have been during term of his second year as an undergraduate at Stanford.
+</p>
+
+<p>
+From the clear impression one gets from Reid's book of life at the time, it seems rather likely is it that a second-year undergraduate student from California would make a trip to New York to attend the meeting of the American Mathematical Society, or even would be permitted to.
+</p>
+
+<p>
+After getting an undergraduate degree (AB) from Stanford and working briefly in San Francisco in a telephone company, he did however, in February 1907, attend the meeting of the San Francisco section of the AMS, and presented <i>A Note on linear congruences</i> (p. 117).
+</p>
+
+<p>
+He was to go on and receive an AM from Washington, work for a few years teaching at a rural highschool, and only at 28 (almost ten years later) join Columbia university and get a PhD (in June 1912, ten months after he arrived in NYC). At that university, his advisor may have been Frank Nelson Cole &#x2013; speculates Constance Reid.
+</p>
+
+<p>
+The AMS began in 1888 as the New York Mathematical Society &#x2013; the meetings were always held in New York (and Bell was at Stanford in 1903, in a precarious position). The first time Bell presented a paper was at the October 1912 meeting, and that too was <i>in absentia</i> as he had moved to Seattle (University of Washington) after getting a PhD in June 1912 and joined faculty of Columbia in September 1912. Even in spring 1914, when the San Francisco section of the AMS held a meeting in Seattle, Bell was still not a member of the AMS. It is only in 1917 that his name first appears on the membership list of the AMS (p. 171).
+</p>
+
+<p>
+In his earlier <span class="underline">Queen of the Sciences</span> there is no mention of this topic (or factorization/Mersenne at all): <a href="https://archive.org/details/queenofthescienc031537mbp">https://archive.org/details/queenofthescienc031537mbp</a>
+</p>
+
+<p>
+His later (1937) <span class="underline">Handmaiden of the Sciences</span>, and this book, were together merged into that 1951 book.
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> The history of factorization</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+(It turns out that the first few primes \(p\) for which \(M_p\) is prime are:
+$$2, 3, 5, 7, 13, 17, 19, 31, 61, 89, 107, 127, 521, 607, 1279, \dots$$
+and the largest known primes as of today are Mersenne primes.)
+</p>
+
+<p>
+Fermat: difference of squares &#x2013; forgotten
+</p>
+
+<p>
+Fermat: little theorem, not generally helps with factorization, but helps restrict primes for this particular number
+</p>
+
+<p>
+Legendre: quadratic residues give more restrictions
+</p>
+
+<p>
+Gauss: Finding small quadratic residues by combining different quadratic residues which factor over small primes.
+</p>
+
+<p>
+Seelhoff:
+(1) Extends Lagrange's and Gauss's method to find small quadratic residues
+(2) Extends Fermat's difference of squares to a congruence of squares.
+</p>
+
+<p>
+Cole:
+(1) Uses Lagrange/Gauss/Seelhoff method to find small quadratic residues and thereby exclude a lot of primes
+(2) Then changes tack
+</p>
+
+
+
+<p>
+Cole, <i>On The Factorization of Large Numbers</i> <a href="https://projecteuclid.org/download/pdf_1/euclid.bams/1183417760">https://projecteuclid.org/download/pdf_1/euclid.bams/1183417760</a>
+</p>
+
+<p>
+<a href="https://books.google.com/books?id=jUvkAAAAMAAJ&lpg=PA169&dq=5045995048467&pg=PA166#v=onepage&q&f=true">https://books.google.com/books?id=jUvkAAAAMAAJ&lpg=PA169&dq=5045995048467&pg=PA166#v=onepage&q&f=true</a>
+<a href="https://books.google.com/books?lpg=PA169&dq=5045995048467&pg=PA166&id=jUvkAAAAMAAJ&output=text">https://books.google.com/books?lpg=PA169&dq=5045995048467&pg=PA166&id=jUvkAAAAMAAJ&output=text</a>
+<a href="https://books.google.com/books?id=udU4AAAAIAAJ&lpg=PA169&dq=5045995048467&pg=PA306#v=onepage&q=5045995048467&f=false">https://books.google.com/books?id=udU4AAAAIAAJ&lpg=PA169&dq=5045995048467&pg=PA306#v=onepage&q=5045995048467&f=false</a>
+</p>
+
+<p>
+Another mention of Seelhoff:
+<a href="https://books.google.com/books?id=g2kyAQAAMAAJ&pg=PA249&lpg=PA249&dq=lucas+th%C3%A9orie+des+nombres+translation&source=bl&ots=pAXZVbqa-B&sig=7uLsAoX3_LtWY2Zp3Hws8t8UKzE&hl=en&sa=X&ved=0ahUKEwjD0LPx8IDMAhVJ72MKHRr9B3MQ6AEIQjAI#v=onepage&q=lucas%20th%C3%A9orie%20des%20nombres%20translation&f=false">https://books.google.com/books?id=g2kyAQAAMAAJ&pg=PA249&lpg=PA249&dq=lucas+th%C3%A9orie+des+nombres+translation&source=bl&ots=pAXZVbqa-B&sig=7uLsAoX3_LtWY2Zp3Hws8t8UKzE&hl=en&sa=X&ved=0ahUKEwjD0LPx8IDMAhVJ72MKHRr9B3MQ6AEIQjAI#v=onepage&q=lucas%20th%C3%A9orie%20des%20nombres%20translation&f=false</a>
+</p>
+
+<p>
+Factoring and primality are closely related.
+</p>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Order theorem</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Claim: If a<sup>m</sup> = 1 mod N, then d divides m.
+</p>
+
+<p>
+Consider any number N &gt; 1, and any \(a\) such that gcd(N, a) = 1. We can prove that the powers of a look like:
+</p>
+
+<p>
+   1,        a,      a<sup>2</sup>, &#x2026;,  a<sup>d-1</sup>,
+ a<sup>d</sup>,  a<sup>d+1</sup>,  a<sup>d+2</sup>, &#x2026;, a<sup>2d-1</sup>,
+a<sup>2d</sup>, a<sup>2d+1</sup>, a<sup>2d+2</sup>, &#x2026;, a<sup>3d-1</sup>,
+</p>
+
+<p>
+and so on, where d is the smallest positive exponent for which a<sup>d</sup> = 1, and 1, a, &#x2026;, a<sup>d-1</sup> are all distinct mod N.
+</p>
+
+<p>
+We have proved:
+Order theorem: If a<sup>m</sup> = 1, then d divides m.
+</p>
+</div>
+
+<div id="outline-container-sec-2-1-1" class="outline-4">
+<h4 id="sec-2-1-1"><span class="section-number-4">2.1.1</span> Proof</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<p>
+Consider the sequence
+1, a, a<sup>2</sup>, a<sup>3</sup>, a<sup>4</sup>, &#x2026;. modulo n.
+That sequence must repeat at some point, i.e. you must have a<sup>j</sup> ≡ a<sup>k</sup> for some j and k. This gives a<sup>(k-j)</sup> ≡ 1, so there exists some power of a that is equal to 1 mod n. Consider the smallest such power &gt; 0, call it d (so a<sup>d</sup> ≡ 1 but no smaller power of a is 1). Then a<sup>(i+d)</sup> = a<sup>i</sup> for all i, i.e. the sequence of powers of a (the sequence above) repeats every d elements.
+We can write the sequence as:
+1, a, a<sup>2</sup>, a<sup>3</sup>, &#x2026;, a<sup>(d-1)</sup>,
+a<sup>d</sup>, a<sup>(d+1)</sup>, a<sup>(d+2)</sup>, &#x2026;, a<sup>(2d-1)</sup>,
+a<sup>2d</sup>, a<sup>(2d+1)</sup>, a<sup>(2d+2)</sup>, &#x2026;, a<sup>(3d-1)</sup>,
+&#x2026;.
+where in each column all the elements are equal (or in other words, all the rows are the same).
+Moreover, in the first row (and thus in every row), all elements are distinct.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Fermat theorem</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+If these \(d\) powers of \(a\) don't cover all numbers relatively prime to N, then pick some b not covered, and look at
+{b, ab, a<sup>2b</sup>, a<sup>3b</sup>, &#x2026;, a<sup>d-1</sup>b}.
+They are all distinct, and distinct from already seen numbers. If anything's still not covered, pick a c and look at {c, ac, a<sup>2c</sup>, &#x2026;, a<sup>d-1</sup>c}.
+Repeating this, we get that d divides the total number of elements, the order of the group.
+</p>
+
+<p>
+In particular if N is prime, then d divides N-1, so a<sup>N-1</sup> = 1.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Fermat's trick: For N = 2<sup>67</sup> - 1, gives p = 134k + 1.</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+If N = 2<sup>67</sup> - 1 and p divides N, then
+</p>
+
+<p>
+2<sup>67</sup> = 1 mod p (from p dividing N)
+</p>
+
+<p>
+with the order theorem gives d divides 67 and therefore d = 67.
+Next,
+</p>
+
+<p>
+2<sup>(p-1)</sup> = 1 mod p (from Fermat)
+</p>
+
+<p>
+gives 67 divides p - 1, and obviously so does 2, so 134 divides p-1.
+</p>
+
+<p>
+In general, if p is any prime divisor of 2<sup>q</sup> - 1 (where q is an odd prime), then q = 1 (mod 2p).
+This was known to Fermat!
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> Historical aside: Wilson's theorem as example of primality test</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+n is prime iff (n-1)! = -1 (mod n).
+The proof:
+  If n is composite and has a factor p &gt; 1, then (n-1)! has p as a factor in it so it's 0 mod p, so it can't also be -1 mod p.
+  And if n is prime, then for every k ≠ 1, -1, the inverse of k (namely k' such that kk' = 1 (mod n)) is distinct from k, so in the 2…(n-2) part of (n-1)! all the inverses are paired up, leaving 1*(n-1) = -1 (mod n).
+  QED.
+This is in some sense a primality test, if only (n-1)! was easy to compute. Which it is not! So moving on…
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> Reuschle</h3>
+<div class="outline-text-3" id="text-2-5">
+<p>
+In 1856, Reuschle published (among other items) a table of factors of 2<sup>n</sup> - 1 and 10<sup>n</sup> - 1 for all n ≤ 42,
+and in 1869, Landry published a table of factors of 2<sup>n</sup> ± 1 for n ≤ 64.
+The "holes" in these and other tables provided a source of challenges in factoring and primality testing…
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-6" class="outline-3">
+<h3 id="sec-2-6"><span class="section-number-3">2.6</span> Lucas test</h3>
+<div class="outline-text-3" id="text-2-6">
+<p>
+This basically verifies that \(a\) has order (N-1) mod N, i.e. that \(a\) is a generator (primitive root) mod N.
+</p>
+
+<p>
+Suppose a<sup>(N-1)</sup> = 1. This immediately means that (N-1) is a multiple of d, whatever it is.
+Further, suppose we have a prime factorization of (N-1), and that for every prime q dividing (N-1), we have a<sup>((N-1)/q)</sup> ≠ 1 mod N.
+This means that d has to be (N-1) itself. This means that N is prime.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-7" class="outline-3">
+<h3 id="sec-2-7"><span class="section-number-3">2.7</span> Pratt certificates</h3>
+<div class="outline-text-3" id="text-2-7">
+<p>
+Given N, show
+(1) an a such that a<sup>(N-1)</sup> = 1
+(2) a prime factorization of (N-1) along with Pratt certificates for those primes
+Verify: For every q in that prime factorization, a<sup>((N-1)/q)</sup> ≠ 1.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-8" class="outline-3">
+<h3 id="sec-2-8"><span class="section-number-3">2.8</span> Quadratic residues</h3>
+<div class="outline-text-3" id="text-2-8">
+<p>
+When is the number \(a\) a quadratic residue mod \(p\)?
+</p>
+
+<p>
+One method is to just square all numbers 1 to p-1 (or the first half of them) and see if any of them give \(a\).
+A faster method is Euler's criterion (<a href="https://en.wikipedia.org/wiki/Euler's_criterion">https://en.wikipedia.org/wiki/Euler's_criterion</a>): compute a<sup>((p-1)/2)</sup> mod p, and check whether you get 1.
+</p>
+
+<p>
+By quadratic reciprocity magic, one gets some congruence conditions: e.g. 2 is a quadratic residue mod p only when p = ± 1 mod 8, rather than being ± 3 mod 8.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-9" class="outline-3">
+<h3 id="sec-2-9"><span class="section-number-3">2.9</span> Largest known primes by year</h3>
+<div class="outline-text-3" id="text-2-9">
+<p>
+<a href="http://primes.utm.edu/notes/by_year.html">http://primes.utm.edu/notes/by_year.html</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-10" class="outline-3">
+<h3 id="sec-2-10"><span class="section-number-3">2.10</span> 1588 Cataldi 2<sup>19</sup> - 1</h3>
+<div class="outline-text-3" id="text-2-10">
+<p>
+In 1588, Cataldi (<a href="https://en.wikipedia.org/wiki/Pietro_Cataldi">https://en.wikipedia.org/wiki/Pietro_Cataldi</a>) proved that N<sub>1</sub> = 2<sup>19</sup> - 1 = 524287 is prime, by trial division (trying all primes &lt; √N).
+Until 1772, this seems to have been the largest prime known!
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-11" class="outline-3">
+<h3 id="sec-2-11"><span class="section-number-3">2.11</span> 1747 Euler 2<sup>32</sup> + 1</h3>
+<div class="outline-text-3" id="text-2-11">
+<p>
+Disproves Fermat number conjecture by showing that 641 divides 2<sup>32</sup> + 1.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-12" class="outline-3">
+<h3 id="sec-2-12"><span class="section-number-3">2.12</span> 1772 Euler 2<sup>31</sup> - 1</h3>
+<div class="outline-text-3" id="text-2-12">
+<p>
+In 1772, Euler proved that N2 = 2<sup>31</sup> - 1 = 2147483647 is prime. He used:
+</p>
+</div>
+
+<div id="outline-container-sec-2-12-1" class="outline-4">
+<h4 id="sec-2-12-1"><span class="section-number-4">2.12.1</span> Fermat's trick:</h4>
+<div class="outline-text-4" id="text-2-12-1">
+<p>
+If p divides 2<sup>31</sup> - 1, then 62 divides p - 1.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-12-2" class="outline-4">
+<h4 id="sec-2-12-2"><span class="section-number-4">2.12.2</span> Euler's trick:</h4>
+<div class="outline-text-4" id="text-2-12-2">
+<p>
+If p divides N2 = 2<sup>31</sup> - 1, then it also divides
+2N2 = 2<sup>32</sup> - 2 = (2<sup>16</sup>)<sup>2</sup> - 2.
+This means that 2 is a quadratic residue mod p.
+Now we can look up a quadratic residue table, and find out that this means p is 1 or 7 mod 8 (instead of being 3 or 5 mod 8).
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-12-3" class="outline-4">
+<h4 id="sec-2-12-3"><span class="section-number-4">2.12.3</span> Putting them together:</h4>
+<div class="outline-text-4" id="text-2-12-3">
+<p>
+Together the two tricks give p = 1 mod 31 and ±1 mod 8, which turn out to imply that it's 1 or 63 mod (31*8).
+This has cut down the set of numbers we need to check by a factor of 124, which is a lot!
+Further he only needs to check primes, so this is the list of 85 primes to try dividing by:
+[1, 311, 1303, 1489, 2543, 2729, 2791, 4217, 5023, 5209, &#x2026;, 42409, 42719, 42967, 43649, 43711, 44207, 44641, 45137, 45943]
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-13" class="outline-3">
+<h3 id="sec-2-13"><span class="section-number-3">2.13</span> 1851 Looff 999999000001</h3>
+<div class="outline-text-3" id="text-2-13">
+<p>
+This is a factor of 10<sup>18</sup> + 1 = 101 * 9901 * 999999000001
+According to Reuschle.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-14" class="outline-3">
+<h3 id="sec-2-14"><span class="section-number-3">2.14</span> 1859 Landry 2<sup>31</sup> - 1</h3>
+<div class="outline-text-3" id="text-2-14">
+<p>
+Believing that 2<sup>31</sup> was still the largest prime known, Landry tried to give a shorter proof than Euler's.
+He used many clever tricks and said he had a proof that would fit on a single page.
+He also states he proved that in the factorization of 2<sup>75</sup> + 1 = 3 3 11 251 331 4051 1133836730401, the last factor 1133836730401 was prime.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-15" class="outline-3">
+<h3 id="sec-2-15"><span class="section-number-3">2.15</span> 1869 Landry (2<sup>53</sup> + 1)/(3 * 107) (has 14 digits)</h3>
+<div class="outline-text-3" id="text-2-15">
+<p>
+Technique was known to Fermat. (Will come back to this later.)
+</p>
+
+<p>
+At this point, the only numbers 2<sup>n</sup> ± 1 for n &lt;= 64 that were not yet factored were:
+2<sup>59</sup> - 1, 2<sup>61</sup> - 1, 2<sup>61</sup> + 1, 2<sup>64</sup> + 1.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-16" class="outline-3">
+<h3 id="sec-2-16"><span class="section-number-3">2.16</span> 1878 Landry factors 2<sup>59</sup> - 1.</h3>
+<div class="outline-text-3" id="text-2-16">
+<p>
+According to Lucas.
+</p>
+
+<p>
+He did suspect that 2<sup>61</sup>-1, (2<sup>61</sup>+1)/3, and 2<sup>64</sup>+1 were all primes, but he did not say he has proved any of them.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-17" class="outline-3">
+<h3 id="sec-2-17"><span class="section-number-3">2.17</span> 1876 Lucas 2<sup>127</sup> - 1 (is huge, 39 digits!)</h3>
+<div class="outline-text-3" id="text-2-17">
+<p>
+A lot of genius theorems that are still used today.
+Also an extremely clever reduction of the problem to a "game" of moving around pawns on a 127x127 chessboard. No writing ever. Have only a binary answer yes/no at the end. Mistakes likely.
+With all this, the authors (&#x2026;&amp; Shallit) estimate he did this in 170-300 hours.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-18" class="outline-3">
+<h3 id="sec-2-18"><span class="section-number-3">2.18</span> 1877 Reuss shows M<sub>89</sub> composite</h3>
+<div class="outline-text-3" id="text-2-18">
+<p>
+Says it took him 240 hours of work.
+1888 he says he's shown M<sub>67</sub> is composite, but the correct conclusion is via a mistake in his calculations.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-19" class="outline-3">
+<h3 id="sec-2-19"><span class="section-number-3">2.19</span> 1883 Pervouchine / 1886 Seelhoff / 1887 Hudelot: 2<sup>61</sup> - 1</h3>
+<div class="outline-text-3" id="text-2-19">
+<p>
+Seelhoff only sort of: appears to have just proved that 3<sup>N-1</sup> = 1 mod N, for N = M<sub>61</sub>.
+But confirmed 1887 by Hudelot with 54 hours of work (using Lucas's theorems).
+And same earlier by Pervouchine.
+</p>
+
+<p>
+Used this by Lucas:
+Theorem: If p = 2<sup>4m+1</sup> - 1 where (4m+1) is a prime, then p is a prime if p|S<sub>4m</sub> where S<sub>1</sub> = 4 and S<sub>k</sub> = S<sub>k-1</sub><sup>2</sup> - 2 (mod p).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-20" class="outline-3">
+<h3 id="sec-2-20"><span class="section-number-3">2.20</span> 1894 Fauqembergue declares M<sub>67</sub> composite</h3>
+<div class="outline-text-3" id="text-2-20">
+<p>
+(In 1912 he says he used a machine he built, and it took only 20 hours on it.)
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-21" class="outline-3">
+<h3 id="sec-2-21"><span class="section-number-3">2.21</span> ???? Lucas shows 2<sup>64</sup> + 1 = F<sub>6</sub> is composite</h3>
+</div>
+
+<div id="outline-container-sec-2-22" class="outline-3">
+<h3 id="sec-2-22"><span class="section-number-3">2.22</span> ???? Landry learns the above and factorizes 2<sup>64</sup> + 1</h3>
+</div>
+
+<div id="outline-container-sec-2-23" class="outline-3">
+<h3 id="sec-2-23"><span class="section-number-3">2.23</span> 1930 Lucas-Lehmer test</h3>
+<div class="outline-text-3" id="text-2-23">
+<p>
+Lehmer completed the proof of necessity which Lucas never explicitly claimed (though it was already proved in his works, in 1878).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-24" class="outline-3">
+<h3 id="sec-2-24"><span class="section-number-3">2.24</span> Prolific Lucas</h3>
+<div class="outline-text-3" id="text-2-24">
+<p>
+His work is in 13 papers published between January 1876 and January 1878, during which time he wrote at least 70 papers on many other subjects.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-25" class="outline-3">
+<h3 id="sec-2-25"><span class="section-number-3">2.25</span> Factoring is harder</h3>
+<div class="outline-text-3" id="text-2-25">
+<p>
+Lucas verified a 39-digit number (2<sup>127</sup> - 1) to be prime in 1876, but it was only in 1970 with a computer that it became possible to factor a 39-digit number.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-26" class="outline-3">
+<h3 id="sec-2-26"><span class="section-number-3">2.26</span> Factoring and difference of squares</h3>
+<div class="outline-text-3" id="text-2-26">
+<p>
+If N is odd and N = rs where 1 &lt; r &lt; √N, then with a = (r+s)/2 and b=(s-r)/2, we have √N &lt; a &lt; (N+1)/2 and N = a<sup>2</sup> - b<sup>2</sup>.
+So b<sup>2</sup> = a<sup>2</sup> - N = x needs to be a square, for some a in [floor(√N) + 1, &#x2026;, (N-1)/2]. Start trying!
+We can go from one value of a<sup>2</sup> - N to the next by adding (2a+1). {Basically we keep adding the next odd number.}
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-27" class="outline-3">
+<h3 id="sec-2-27"><span class="section-number-3">2.27</span> Finding a quadratic residue cuts down by half</h3>
+<div class="outline-text-3" id="text-2-27">
+<p>
+If we find a quadratic residue \(a\) mod N, then this cuts down the number of primes we need to check by a factor of 2.
+</p>
+
+<p>
+E.g.:
+  if 2 is a quadratic residue mod p, then p is 1 or 7 mod 8.
+  if 3 is a quadratic residue mod p, then p is 1 or 11 mod 12.
+  if 5 is a quadratic residue mod p, then p is 1 or 4 mod 5.
+  if 7 is a quadratic residue mod p, then p is 1, 3, 9, 19, 25, 27 (mod 28).
+Legendre had tabulated this many values of a.
+</p>
+
+<p>
+So by finding k quadratic residues mod N, we can cut down the set of primes to check by 2<sup>k</sup> (roughly, test only one in every 2<sup>k</sup> primes, up to √N).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-28" class="outline-3">
+<h3 id="sec-2-28"><span class="section-number-3">2.28</span> How to find a (small) quadratic residue mod N: Legendre</h3>
+<div class="outline-text-3" id="text-2-28">
+<p>
+To find out that \(a\) is a quadratic residue mod N, we can either find some x<sup>2</sup> = a (mod N), or more generally x<sup>2</sup> = a y<sup>2</sup> (mod N).
+N divides (x<sup>2</sup> - a y<sup>2</sup>).
+(x<sup>2</sup> - a y<sup>2</sup>) = kN.
+</p>
+
+<p>
+Legendre proposed a method where from the continued fraction for sqrt(kN), we can find A,B,Q such that A<sup>2</sup> - k*N*B<sup>2</sup> = Q, and we can take \(a\) to be the square-free part of Q.
+</p>
+
+<p>
+"The determination of small (in absolute value) quadratic residues of N is still considered to be a very difficult task."
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-29" class="outline-3">
+<h3 id="sec-2-29"><span class="section-number-3">2.29</span> Filtering an equation: Gauss</h3>
+<div class="outline-text-3" id="text-2-29">
+<p>
+To find integer solutions to a + mx = y<sup>2</sup>, (or more generally to any f(x) = g(y) where f and g are integer polynomials),
+we can look at it modulo various primes, and come up with congruence constraints on x.
+(In the case of a + mx = y<sup>2</sup>, each such constraint cuts down our search space in half.)
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-30" class="outline-3">
+<h3 id="sec-2-30"><span class="section-number-3">2.30</span> Getting small residues: motivation</h3>
+<div class="outline-text-3" id="text-2-30">
+<p>
+I had an idea: hey for large N, we already know a lot of small quadratic residues: 1, 4, 9, 16, 25, 36, 49, &#x2026;!
+But all of them have square-free part 1, so they don't give any new information.
+By contrast, a residue like 363 = 11<sup>2</sup> * 3 gives that 3 is a quadratic residue, which actually gives us some useful constraints.
+</p>
+
+<p>
+Just as we can get small residues from the equations
+0 = 2<sup>2</sup> - 4
+0 = 3<sup>2</sup> - 9
+0 = 4<sup>2</sup> - 16, etc.
+These equations can also be written
+N = 2<sup>2</sup> + (N - 4)     &lt;=&gt; (4-N) = 2<sup>2</sup> - N
+N = 3<sup>2</sup> + (N - 9)     &lt;=&gt; (9-N) = 3<sup>2</sup> - N
+N = 4<sup>2</sup> + (N - 16)    &lt;=&gt; (16-N)= 4<sup>2</sup> - N etc.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-2-31" class="outline-3">
+<h3 id="sec-2-31"><span class="section-number-3">2.31</span> Small quadratic residues: Seelhoff</h3>
+<div class="outline-text-3" id="text-2-31">
+<p>
+Cole refers to these papers, but as Williams &amp; Shallit say, it's not clear whether other mathematicians really took proper notice of these papers. (Except Kraitchik.)
+</p>
+
+<p>
+He has a method of factorization that requires small quadratic residues mod N, which he finds as follows.
+</p>
+
+<p>
+Write N = m<sup>2</sup> + r, where m = floor(sqrt(N)).
+</p>
+</div>
+
+<div id="outline-container-sec-2-31-1" class="outline-4">
+<h4 id="sec-2-31-1"><span class="section-number-4">2.31.1</span> My motivation</h4>
+<div class="outline-text-4" id="text-2-31-1">
+<p>
+We want small quadratic residues mod N.
+</p>
+
+<p>
+One observation is that for any quadratic residue, its squarefree part is also a quadratic residue: if b = a<sup>2</sup> r, and if b = x<sup>2</sup> mod N, then x<sup>2</sup> = a<sup>2</sup> r (mod N) gives r = (x/a)<sup>2</sup> (mod N).
+So we only need to look at the squarefree part of any residue.
+</p>
+
+<p>
+So the "small" residues 1, 4, 9, 16, 25, 36, 49&#x2026; all just say that 1 is a residue mod N.
+</p>
+
+<p>
+We have another starting point though: starting with N = m<sup>2</sup> + r, this gives one quadratic residue -r = m<sup>2</sup> (mod N), and of course we'll remove squares from -r.
+We want other such residues in place of -r, so we want to vary m.
+We can just keep changing m to m±1, m±2, m±3, &#x2026;, look at the correspoding residues, and remove their square parts (for which we need to at least partially factorize them).
+</p>
+
+<p>
+Seelhoff has a further trick, which helps us look at only specific m ± alpha, and further get a headstart in factorizing the corresponding residues (m ± alpha)<sup>2</sup> - N.
+This trick is to make those residues divisible by some known p<sup>k</sup>.
+</p>
+
+<p>
+Note that in N = (m + alpha)<sup>2</sup> - r,
+the residue r is divisible by p<sup>k</sup> iff (m + alpha)<sup>2</sup> = N (mod p<sup>k</sup>).
+</p>
+
+<p>
+Pick a prime p modulo which N is a quadratic residue.
+We will try to get a quadratic residue mod N that is divisible by p (or even a higher power of it).
+A quadratic residue mod N is a number q such that for some x, N divides q - x<sup>2</sup> (or x<sup>2</sup> - q).
+</p>
+
+<p>
+Solve x<sup>2</sup> = N (mod p).
+To get a residue mod N out of the square of a number that is congruent to x mod p, we'd have to take a large such number.
+Say we take x' = x + yp. Then (x + yp)<sup>2</sup> = N (mod p). And the residue mod N is (x + yp)<sup>2</sup> - N, which we want to be a small positive number.
+So we want (x + yp) to be a little less than m. How much less? Say alpha less.
+(x + yp) = (m - alpha).
+N = (m - alpha)<sup>2</sup> + (N - (m - alpha)<sup>2</sup>). The latter number, (N - (m-alpha)<sup>2</sup>), is the residue, and it is also divisible by p.
+We can do this even for a larger power of p.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-31-2" class="outline-4">
+<h4 id="sec-2-31-2"><span class="section-number-4">2.31.2</span> Seelhoff</h4>
+<div class="outline-text-4" id="text-2-31-2">
+<p>
+Pick a prime p modulo which N is a quadratic residue, and find x<sup>2</sup> = N (mod p).
+Put alpha = m ± (x + y p<sup>k</sup>).
+Now, apart from being N = m<sup>2</sup> + r, it is also
+N = (m - alpha)<sup>2</sup> + b = (x + y p<sup>k</sup>)<sup>2</sup> + b
+</p>
+
+<p>
+Here what is b? It is
+b = N - (m - alpha)<sup>2</sup>
+  = m<sup>2</sup> + r - (m<sup>2</sup> + alpha<sup>2</sup> - 2m alpha)
+  = r - alpha<sup>2</sup> + 2m alpha
+  = alpha(2m - alpha) + r.
+</p>
+
+<p>
+And of course as b = N - (m - alpha)<sup>2</sup>, we have -b is a quadratic residue mod N.
+What's the point of all this? The point is that our residue b is now divisible by p<sup>k</sup>: we have
+b = N - (x + yp<sup>k</sup>)<sup>2</sup> = N - x<sup>2</sup> (mod p<sup>k</sup>).
+</p>
+
+<p>
+Moreover, the size of b is about alpha(2m - alpha) which is about p<sup>k</sup> * 2√N.
+And it's already divisible by p<sup>k</sup>.
+So the remaining part to factorize is only about 2√N. Hopefully that will be easier.
+</p>
+
+<p>
+Remove the square part from \(b\), and the squarefree part is a (relatively) small residue.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-31-3" class="outline-4">
+<h4 id="sec-2-31-3"><span class="section-number-4">2.31.3</span> Example</h4>
+<div class="outline-text-4" id="text-2-31-3">
+<p>
+Let's work with \(N = 7 \cdot 2 ^ {34} + 1 = 120259084289\) (we probably don't have to calculate this number?), as Seelhoff did.
+Let m = floor(sqrt(N)) = 346783, so that N = m<sup>2</sup> + r for r = 635200.
+</p>
+
+<p>
+Mod 2: x<sup>2</sup> = N (mod 2) has solution x = 1, so we want an odd number close to m. m itself will do.
+This means that for m, m ± 2, m ± 4, m ± 6, &#x2026;, the corresponding residues are always divisible by 2.
+</p>
+
+<p>
+Mod 4: x<sup>2</sup> = N (mod 4) has solution x = ±1, and m is -1 mod 4.
+This means that for m, m ± 2, m ± 4, m ± 6, &#x2026;, the corresponding residues are always divisible by 4.
+</p>
+
+<p>
+Mod 8: x<sup>2</sup> = N (mod 8) has solution x = ±1, ±3, and m is -1 mod 8.
+This means that for m, m ± 2, m ± 4, m ± 6, &#x2026;, the corresponding residues are always divisible by 8.
+</p>
+
+<p>
+Mod 16: x<sup>2</sup> = N (mod 16) has solution x = [1, 7, 9, 15] mod 16, and m is 15 mod 16.
+This means that for m, m + 2, m + 8, m + 10, m + 16, &#x2026; and for m - 6, m - 8, m - 14, m - 16, &#x2026;, the corresponding residues are always divisible by 16.
+</p>
+
+<p>
+Mod 3: x<sup>2</sup> = N (mod 3) has no solutions.
+</p>
+
+<p>
+Mod 5: x<sup>2</sup> = N (mod 5) has solutions x = [2, 3], and m is 3 mod 5.
+This means that for m, m ± 5, m ± 10, &#x2026;, and for m -1 ± 5, m - 1 ± 10, m - 1 ± 15, the corresponding residues are always divisible by 5.
+</p>
+
+<p>
+Mod 25: x<sup>2</sup> = N (mod 25) has solutions x = [8, 17], and m is 8 mod 25.
+This means that for m, m ± 25, m ± 50, &#x2026;, and for m + 9 ± 25, m + 9 ± 50, &#x2026;, the corresponding residues are always divisible by 25.
+</p>
+
+<p>
+Mod 7: x<sup>2</sup> = N (mod 7) has solutions x = [1, 6], and m is 3 mod 7.
+This means that for m - 2 ± 7k and for m + 3 ± 7k, the corresponding residues are always divisible by 7.
+</p>
+
+<p>
+Mod 49: x<sup>2</sup> = N (mod 49) has solutions [8, 41] maybe better written as [8, -8], and m is 10 mod 7.
+This means that for m - 2 ± 49k and for m - 18 ± 49k, the corresponding residues are always divisible by 49.
+</p>
+
+<p>
+Mod 11: x<sup>2</sup> = N (mod 11) has solutions [5, 6] and m is 8 mod 11.
+This means that for m - 2 ± 11k and for m - 3 ± 11k, the corresponding residues are always divisible by 11.
+</p>
+
+<p>
+[Skipping ahead to&#x2026;]
+Mod 37: x<sup>2</sup> = N (mod 37) has solutions [7, 30] and m is 19 mod 37.
+This means that for m - 12 ± 37k and for m + 11 ± 37k, the corresponding residues are always divisible by 37.
+</p>
+
+<p>
+Mod 37<sup>2</sup>: x<sup>2</sup> = N (mod 37<sup>2</sup>) has solutions [155, 1214] and m is 426 mod 37.
+This means that for m - 271 ± (37*37)k and for m - 581 ± (37*37)k, the corresponding residues are always divisible by 37*37.
+</p>
+
+<p>
+Mod 127<sup>2</sup>: x<sup>2</sup> = N (mod 127<sup>2</sup>) has solutions
+</p>
+
+
+<p>
+Using m gives N = m<sup>2</sup> + 635200, which means that -635200 is a residue mod N.
+-635200 = - (2**6) * (5**2) * 397, so -397 is a residue as well.
+</p>
+
+<p>
+Using m ± 2 gives:
+    (m-2 gives) N = 346781<sup>2</sup> + 2022328, which means -2022328 is a residue mod N.
+    (m+2 gives) N = 346785<sup>2</sup> - 751936, which means 751936 is a residue mod N.
+Alternatively we can say alpha is ± 2, and so residues are -alpha(2m - alpha) - 635200 = {-2022328,751936}.
+Either way, we have residues
+-2022328 = -2<sup>3</sup>*7<sup>3</sup>*11*67 giving -2*7*11*67 and
+751936 = 2<sup>6</sup> * 31 * 379 giving 31*379.
+m ± 4.
+</p>
+
+
+<p>
+From
+   (1) N = 344833<sup>2</sup> + 2.7.11.2960<sup>2</sup> = 344833<sup>2</sup> + 2.7.11.(2<sup>4</sup>.5.37)<sup>2</sup>
+   (2) N = 203351<sup>2</sup> + 7.106172<sup>2</sup>    = 203351<sup>2</sup> + 7.(2<sup>2</sup>.11.19.127)<sup>2</sup>
+   we try to make the latter (the full factorized) terms equal, so we multiply the first equation by 11.19<sup>2</sup>.127<sup>2</sup> and the second one by 2<sup>5</sup>.5<sup>2</sup>.37<sup>2</sup>, giving new equations:
+   (1') 11.19<sup>2</sup>.127<sup>2</sup> N = 11.19<sup>2</sup>.127<sup>2</sup>.344833<sup>2</sup> + 2<sup>9</sup>.5<sup>2</sup>.7.11<sup>2</sup>.19<sup>2</sup>.37<sup>2</sup>.127<sup>2</sup>
+   (2') 2<sup>5</sup>.5<sup>2</sup>.37<sup>2</sup>  N = 2<sup>5</sup>.5<sup>2</sup>.37<sup>2</sup>.203351<sup>2</sup>  + 2<sup>9</sup>.5<sup>2</sup>.7.11<sup>2</sup>.19<sup>2</sup>.37<sup>2</sup>.127<sup>2</sup>
+   and subtracting them gives:
+   (4) 62953059.N = 11.19<sup>2</sup>.127<sup>2</sup>.344833<sup>2</sup> - 2<sup>5</sup>.5<sup>2</sup>.37<sup>2</sup>.203351<sup>2</sup>
+   which we can view as
+</p>
+
+<p>
+(4') 11.(19.127.344833)<sup>2</sup> = 2(2<sup>4</sup>.5.37.203351)<sup>2</sup> (mod N)
+How do we combine this with
+(3) N = 350619<sup>2</sup> - 2.11.(2.37.149)<sup>2</sup>
+or with
+(3') 350619<sup>2</sup> = 2.11.(2.37.149)<sup>2</sup> (mod N)
+</p>
+
+<p>
+to get the final congruence of squares
+(5) 11<sup>2</sup>.(37.149)<sup>2</sup>.(19.127.344833)<sup>2</sup> = (2.5.37.203351)<sup>2</sup>.(350619)<sup>2</sup>
+?
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-32" class="outline-3">
+<h3 id="sec-2-32"><span class="section-number-3">2.32</span> von P. Seelhoff's publication history</h3>
+<div class="outline-text-3" id="text-2-32">
+<p>
+(Paul Peter Heinrich Seelhoff)
+</p>
+</div>
+
+<div id="outline-container-sec-2-32-1" class="outline-4">
+<h4 id="sec-2-32-1"><span class="section-number-4">2.32.1</span> Prüfung grösserer Zahlen auf ihre Eigenschaft als Primzahlen</h4>
+<div class="outline-text-4" id="text-2-32-1">
+<p>
+April 1885, <span class="underline">American Journal of Mathematics</span> Vol. 7 No. 3, pp 264–269
+<a href="http://www.jstor.org/stable/2369272">http://www.jstor.org/stable/2369272</a>
+Volume toc: <a href="http://www.jstor.org/stable/2369453?seq=2#page_scan_tab_contents">http://www.jstor.org/stable/2369453?seq=2#page_scan_tab_contents</a>
+Vol. 7, No. 3 backmatter: <a href="http://www.jstor.org/stable/2369276?seq=2#page_scan_tab_contents">http://www.jstor.org/stable/2369276?seq=2#page_scan_tab_contents</a> (Note Poincare, C. S. Peirce, MacMahon)
+</p>
+
+<p>
+<i>Examination of larger numbers for the property of being prime numbers</i>
+</p>
+
+<p>
+&gt; The table below contains a compilation of binary quadratic forms whose [discriminant] is negative and whose middle coefficient is zero, while the outer coefficients are relative primes.
+(So ax<sup>2</sup> + cy<sup>2</sup> where where ac &gt; 0 and gcd(a, c) = 1.)
+</p>
+
+<p>
+&gt; As for the characters, which correspond to them, there exists no other reduced form with the same determinant, then must be represented every prime N with the corresponding characters by either one of these forms, if this stands alone, or alternatively by one of two, when they paired happen or through one of four, when connected to four.
+&gt; Because the determinants are partially relatively large, so they present a good way to test even very large numbers without much effort from work to see if they are prime numbers and also to determine the factors, if they are composite latter of course, only in the case when the determinant is a quadratic residue of the number, and therefore also of all its factors.
+&gt; The table contains only the formula for numbers of the form 8n + 1, and it will be found, on closer examination, that these forms cover all possible cases.
+</p>
+
+<p>
+&gt; About setting up the table following should be stated.
+&gt; Since it is necessary that the determinant quadratic residue which is to be tested number N, then it is first necessary as the individual primes which constituiren former to N or vice versa, how N acts as a prime number in this respect.
+&gt; Is now a N congruent quadratic residues modulo after a, then a is registered in the table below +, in the other case under -.
+(I think this means the table has "+" under "a" if N is a quadratic residue mod a.)
+&gt; Thus one finds, for example. in row 33 the prime 3 under - and 5 under +, visit the forms for this individual form (5, 9) or completely (5, 0, 9) and the paired forms (9, 20 / 5, 36) that is N = 1 (3) and N = 1 or 4 (5), so N is a prime number if it can be represented only in one way by the form (5,0,9), or if one chooses the paired forms for testing, if only a representation by either (9, 0, 20) or ( 5, 0, 36) is possible.
+&gt; On line 10, we find that both are 3 and 5 on + and its forms are 4 in number.
+&gt; Thus, if N = 1 (3) and = 1 or 4 (5), so it is a prime number, when it can be displayed again by one of the four forms.
+&gt; Both in the first as in the second case is true, furthermore, that if one finds no representation or more than one for N, this can only be a composite number, and that if there is more than an illustration of these representations, the factors of N can be derived.
+</p>
+
+<p>
+&gt; To also show how advantageous the numbers to four connected can be used for testing very large numbers themselves, i'm voting for an illustrative example, the number N = 2<sup>31</sup> - 1 = 2147470249. As is known, Euler has this number first investigated namely by means of division by the only possible primes of the form 248z + 1 and 248z + 63 up to √N = 46339 and the same determined as prime.
+</p>
+
+<p>
+&gt; If we choose for the same purpose a form which belongs to the table for the numbers of the form 8n + 7.
+&gt; For N = 1 (3) = 1 (7) = 1 (11) = 7 (29) to the associated forms (1, 0, 13398), (22, 0, 609), (42, 0 , 319), (58, 0, 231).
+&gt; One and only one of these has a single representation of N type, if this is a prime number; then any attempt by the others still remaining forms is futile.
+&gt; No representation for all 4 forms would arise, so N would not prime, just not when it turned out more than a representation of the same shape.
+&gt; Now is the first form (1, 0, 13398) no representation, so I'll go straight to the second (22, 0, 609) than to confront you the whole process in general.
+&gt; So there 22x<sup>2</sup> + 609y<sup>2</sup> = N should be, so N must in those two parts be broken, one of which is a multiple of 22, the other is one of 609.
+&gt; Substituting accordingly 22a + 609b = 2147483647
+&gt; then {a = 97612810 - 609k ; b = 3 + 22k}
+</p>
+
+<p>
+&gt; Since a = x<sup>2</sup>, so the values of a' for x must be so taken that 97612810 -a'<sup>2</sup> is divisible by 609.
+&gt; 609 = 3.7.29.
+&gt; 97612810 = 1 (3), = 1 (7), = 28 (29)
+&gt; and since
+&gt; 1<sup>2</sup>=1(3), 1<sup>2</sup>=1(7), 12<sup>2</sup>= 28 (29),
+&gt; so is
+&gt; x = 3t ± 1 = 7u ± 1 = 29v ± 12.
+&gt; From this follow 8 values for x, namely
+&gt; x = 609n + 41, 104, 244, 302, 307, 365, 505, 568
+&gt; up to the bound √97612810 = 9879.
+&gt; Substituting these for x, gives k and therefrom b, as an illustration is found, if b is a perfect square and at x corresponds y=√b.
+&gt; Incidentally, all the even values for x are not eligible, because they deliver 22x<sup>2</sup> + 609y<sup>2</sup> = N only numbers of the form 8n + 1,
+&gt; and fall from the odd ones still with the final number 5, since it can be seen in advance that they can not bring forth perfect square for b.
+&gt; For x = 7001 will then b = 1755625 and y = 1325, so 22.7001<sup>2</sup> + 609.1325<sup>2</sup> = 2147483647.
+&gt; Since there is no further illustration of this form and as the number is thus a prime number, so the investigation is completed.
+</p>
+
+<p>
+&gt; As an example of a composite number may serve N = 165580141.
+&gt; There N=6(7), =1(11), = 12(13),
+&gt; so one can geparten the forms (14, 0, 143) and (26, 0, 77) to use and is replaced with the first:
+&gt; 14.1399<sup>2</sup> + 143.983<sup>2</sup> = 165580141
+&gt; 14.3089<sup>2</sup> + 143.473<sup>2</sup> = 165580141
+&gt; But if &alpha;, &beta; and &gamma;, &delta; are two representations of the number N of the form (m, n),
+&gt; so you set
+&gt; p/q = (&alpha; ± &gamma;) / (&beta; ± &delta;),
+&gt; and reducing the resultant fractions, so that p is equal to the nuemrator and q is the denominator.
+&gt; Then we form further the break-up
+&gt; r/s = mp<sup>2</sup> / nq<sup>2</sup> and reduce, so here r is the numerator and the denominator is equal to s.
+&gt; Then f = r + s (or if it is an even number, half of it) is a factor of N.
+</p>
+
+<p>
+&gt; So in our example p/q = (3089 - 1399)/(983 - 473) = 1690 / 510 = 169 / 51.
+&gt; r / s = 14.169<sup>2</sup> / 143.51<sup>2</sup> = 30758 / 28611.
+&gt; f = r + s = 59369.
+</p>
+
+<p>
+&gt; From p/q = (3089 - 1399)/(983 + 473) = 65 / 56
+&gt; one finds the second factor in 2789, thus
+&gt; 2789.59369 = 165580141
+</p>
+
+<p>
+&gt; The selected number is the 41st member of the series
+&gt; 0, 1, 1, 2, 3, 5, 8, 13, 21 . . .
+(It's F<sub>40</sub>)
+</p>
+
+<p>
+&gt; In conclusion, my communication of I would like to point out that in addition to the tables for the forms, of which the is given here initially serve only as an example, a sufficiently wide-ranging panel of square numbers and the way a small table is necessary, which for occurring in the determinants primes a the roots of the congruence z ^ 2 = r (a) angiebt.
+</p>
+
+<p>
+&gt; The number of determinants used is 170, of which 65 are called by Euler "numeri idonei;" from the other can be found in individual Legendre: Theory of nombres or otherwise in mathematical journals. The majority of them I myself have notice.
+</p>
+
+<p>
+&gt; Bremen in August 1884.
+</p>
+</div>
+</div>
+
+
+
+<div id="outline-container-sec-2-32-2" class="outline-4">
+<h4 id="sec-2-32-2"><span class="section-number-4">2.32.2</span> Prüfung Grösserer Zahlen auf Ihre Eigenschaft als Primzahlen</h4>
+<div class="outline-text-4" id="text-2-32-2">
+<p>
+September 1885, <span class="underline">American Journal of Mathematics</span> Vol. 8 No. 1, pp. 26–38
+<a href="http://www.jstor.org/stable/2369356">http://www.jstor.org/stable/2369356</a>
+Volume toc: <a href="http://www.jstor.org/stable/2369352?seq=2#page_scan_tab_contents">http://www.jstor.org/stable/2369352?seq=2#page_scan_tab_contents</a>
+Vol. 8, No. 1 backmatter: <a href="http://www.jstor.org/stable/2369360?seq=2#page_scan_tab_contents">http://www.jstor.org/stable/2369360?seq=2#page_scan_tab_contents</a>
+</p>
+
+<p>
+&gt; As a continuation of my remarks in Nro. 3 I give first a tabular summary of 192 negative determinants. The table consists of 3 columns. The first labeled D gives the determinants itself, the second is derived from the main forms (Formae principales) and the third the Gesammtcharakter of these forms. As essential and necessary for the present purpose characteristic of these major forms should be emphasized that no other reducirten forms exist alongside them with the same Gesammtcharakter again. The name of the individual characters 3n + r, 3n-r, etc. means that the number N, which is to be displayed, is for 3 etc. quadratic residue, respectively nonresidue. If several forms same Gesammtcharakter, this is specified in detail only the first form.
+</p>
+
+<p>
+&gt; A study carried out for the number types 8n + 3, 8n + 5 and 8n + 7 separation of forms not seemed practical because thereby many repetitions would necessarily, and if I may judge from my own experience, as is the now selected compilation for use of sufficient clarity.
+</p>
+
+<p>
+&gt; I want to prove this by an example, which will give me also the opportunity that in the previous essay to complete the procedure Beige Brought in individual points.
+</p>
+
+<p>
+&gt; Mr. J. W. L. Glaisher in Cambridge manifests itself in one of his essays, as follows: "The process of determining without a table the factors of a number is excessively laborious. Thus to determine, for example, whether the number 8559091 is or not a prime would require a long day's work." Let us see!
+</p>
+
+<p>
+&gt; It can be found immediately that this number N quadratic residue for 3, 5, 7, 17, 19, 23, on the other hand nonresidue for 11, 13, 29, 31. Among the forms for which can be found united in conjunction with the specific nature of 8n + 3, some of these characters, I selected two major forms (15, 0, 364) and (60, 0, 91) of the determinant -5460 for which my has 3n+r, 5n + r, 7n + r, 13n-r;
+&gt; 8n + 3, 7,
+</p>
+
+<p>
+&gt; (Eq1.) 15a + 364b = N
+&gt; Since N = 1 (15),   364 = 4 (15),  and 4.4 = 1 (15), I subtract 364.4 from N and divide by 15.
+(I think this means he's trying to find solutions to 15a + 364b = N &#x2013; note that mod 15, we have 364b = N which gives 4b = 1 so b = 4 (mod 15). And so of course taking b=4 gives one solution a.)
+&gt; Then
+(This should give 570509, but in the paper he has a typo and consistently uses 575509.)
+&gt; a = 575509 - 364k
+&gt; b = 4 + 15k
+&gt; It has also been 575509 = 4(7), = 12(13), sets it accordingly
+(note now he's definitely taking the typo seriously, as the correct thing would be 570509 = 2 mod 7)
+&gt; 15x<sup>2</sup> + 364y<sup>2</sup> = N
+&gt; so x = 4t ± 1 = 7u ± 2 = 13v ± 5
+&gt; and because
+&gt; √575509 = 758
+&gt; forms the upper bound
+&gt; x = 5, 47, 135, 177, 187, 229, 317, 359, 369, 411, 499, 541, 551, 593, 681, 723, 733.
+&gt; On passing from this with the help of perfect square panels k and secondarily from b, so The latter for any of these values is a square.
+(He's done I think.)
+</p>
+
+<p>
+&gt; (Eq2.) 60a + 91b = N
+</p>
+
+<p>
+&gt; Similar to above, one finds
+[note that one is super-lucky here: \(N \equiv 31 \equiv 91 (\mod 60)\), so b=1 works.]
+</p>
+
+<p>
+&gt; a = 142650 - 91k
+</p>
+
+<p>
+&gt; b = 1 + 60k
+</p>
+
+<p>
+&gt; x = 12, 40, 51, 79
+      103, 131, 142, 170
+      194, 222, 233, 261
+      285, 313, 324, 362
+</p>
+<ol class="org-ol">
+<li></li>
+</ol>
+
+<p>
+&gt; For x = 376 is b or y<sup>2</sup> a squares, namely 841 = 29<sup>2</sup>. So is 8559093 = 60.376<sup>2</sup> + 91.29<sup>2</sup> is a prime number.
+</p>
+
+<p>
+(Note he means N = 8559091, the 8559093 here is a typo.)
+</p>
+
+<p>
+&gt; I also have to come back in a different relationship to the remarks in the first article. At one or two places where it is more main forms with communal Gesammtcharakter, my language was perhaps not precise enough, I allow myself therefore to prevent any misunderstandings, a few words.
+</p>
+
+<p>
+&gt; From determinant -1012 following main forms can be to give an example derived.
+</p>
+
+<p>
+&gt; {1, 0, 1012}          {11, 0, 92}
+</p>
+
+<p>
+&gt; {4, 0, 253}     and   {23, 0, 44}.
+</p>
+
+<p>
+&gt; The two forms in the first bracket have the same Gesammtcharakter, as are the two in the second bracket. If we call now Gaussian such Complex shapes with the same Gesammtcharakter a genus (genus), it follows for every 192 determinants following: Is obtained from all forms of a genus only a representation of the number N, so this is a prime number; obtained no representation, so N is composed. Is obtained more than a representation of one and the same form, or for several of the species belonging, as can be derived from a pair of such images, a pair of N factors.
+</p>
+
+<p>
+&gt; How this can happen in the event that both representations are formed by the same type, I have shown in the first item after the example of Euler; So there still remains the other case where two different shapes are used to represent. So be on the determinant -mnp
+&gt; mnx<sup>2</sup> + py<sup>2</sup> = N (1)
+&gt; mX<sup>2</sup> + npY<sup>2</sup> = N (2)
+&gt; so multiplying (2) with nx<sup>2</sup> and (1) with X<sup>2</sup>, then
+&gt; mn (Xx)<sup>2</sup> + p(Xy)<sup>2</sup> = X<sup>2</sup> N
+&gt; mn (Xx)<sup>2</sup> + p(nXY)<sup>2</sup> = nx<sup>2</sup> N
+&gt; and from this
+&gt; p {(Xy)<sup>2</sup> - (nXY)<sup>2</sup>} = (X<sup>2</sup> - nx<sup>2</sup>) N
+</p>
+
+<p>
+&gt; If one determines now the greatest common divisor of Xy + Nyx or Xy - Nyx and N, so this is one of the sought divisors.
+&gt; Bremen in May 1885.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-2-32-3" class="outline-4">
+<h4 id="sec-2-32-3"><span class="section-number-4">2.32.3</span> Nova methodus numeros compositos a primis dignoscendi illorumque factores inveniendi</h4>
+<div class="outline-text-4" id="text-2-32-3">
+<p>
+September 1885, <span class="underline">American Journal of Mathematics</span> Vol. 8 No. 1, pp. 39–44
+<a href="http://www.jstor.org/stable/2369357">http://www.jstor.org/stable/2369357</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-32-4" class="outline-4">
+<h4 id="sec-2-32-4"><span class="section-number-4">2.32.4</span> Zeitschrift math. u. Phys., Vol. 31, 1886, p. 380</h4>
+<div class="outline-text-4" id="text-2-32-4">
+<p>
+Found a factor of the Fermat number 2<sup>2<sup>36</sup></sup>+1, namely that it is divisible by 5*(2<sup>39</sup>) + 1.
+Mentioned in <a href="http://www.jstor.org/stable/2974245">http://www.jstor.org/stable/2974245</a>
+Gauss's proof of which polygons were constructible: Greeks knew 2<sup>n</sup>*(1, 3, 5, 3*5).
+Gauss proved at age 19 that primes p=2<sup>2<sup>µ</sup></sup>+1 are constructible, so additionally 17, 257, 65537 and products thereof.
+</p>
+
+
+<p>
+Other relevant papers:
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-32-5" class="outline-4">
+<h4 id="sec-2-32-5"><span class="section-number-4">2.32.5</span> R. E. Powers, The Tenth Perfect Number</h4>
+<div class="outline-text-4" id="text-2-32-5">
+<p>
+<a href="http://www.jstor.org/stable/2972574?seq=1#page_scan_tab_contents">http://www.jstor.org/stable/2972574?seq=1#page_scan_tab_contents</a>
+Mentions that Seelhoff showed that 2<sup>p</sup>-1 is prime for p=61, and Lucas's theorem
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-32-6" class="outline-4">
+<h4 id="sec-2-32-6"><span class="section-number-4">2.32.6</span> D. H. Lehmer (1930), A fallacious principle in the theory of numbers</h4>
+<div class="outline-text-4" id="text-2-32-6">
+<p>
+Misunderstands Seelhoff and Cole's principle
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-32-7" class="outline-4">
+<h4 id="sec-2-32-7"><span class="section-number-4">2.32.7</span> L. E. Dickson, Perfect and Amicable Numbers</h4>
+<div class="outline-text-4" id="text-2-32-7">
+<p>
+<a href="http://www.jstor.org/stable/6610">http://www.jstor.org/stable/6610</a>
+Same: Mentions that Seelhoff proved in 1886 that 2<sup>61</sup>-1 is prime.
+</p>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+<div id="outline-container-sec-2-33" class="outline-3">
+<h3 id="sec-2-33"><span class="section-number-3">2.33</span> Cole</h3>
+<div class="outline-text-3" id="text-2-33">
+<p>
+He picks only the residues r<sub>alpha</sub> = (m + alpha)<sup>2</sup> - N that are divisible by the first 70 prime numbers (primes up to 349).
+</p>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p><i>The Queen of Mathematics</i> is a book chapter, first published in his <i>Mathematics, Queen and Servant of Science</i> (1951), later republished in James R. Newman (ed), <i>The World of Mathematics</i>, Vol 1 of 4 (1956)</p></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<p class="author">Author: Shreevatsa Rajagopalan</p>
+<p class="date">Created: 2016-05-15 Sun 19:45</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.51.2 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

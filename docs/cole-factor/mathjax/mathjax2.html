@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+  });
+</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</head>
+
+<body>
+<h1>Adding dollar signs</h1>
+
+<p>
+The <code>&lt;head&gt;</code> now contains
+<blockquote>
+<pre>
+<code>
+&lt;script type="text/x-mathjax-config"&gt;
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+  });
+&lt;/script&gt;
+&lt;script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"&gt;&lt;/script&gt;
+</code>
+</pre>
+</blockquote> so that dollar signs are included too.
+</p>
+
+<p>
+When $a \ne 0$, there are two solutions to \(ax^2 + bx + c = 0\) and they are
+$$x = \frac{-b \pm \sqrt{b^2-4ac}}{2a}.$$
+</p>
+
+</body>
+</html>

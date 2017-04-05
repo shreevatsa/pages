@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Assures mobile browsers that the page is as wide as device width, i.e. they don't have to zoom out imagining the page will be desktop-browser wide. -->
+    <!-- See http://blog.javierusobiaga.com/stop-using-the-viewport-tag-until-you-know-ho -->
+    <!-- Also https://developers.google.com/webmasters/mobile-sites/mobile-seo/responsive-design -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX", "output/CommonHTML"],
+    extensions: ["tex2jax.js", "MathMenu.js","MathZoom.js","AssistiveMML.js"],
+    TeX: {
+       extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js", "enclose.js"],
+    },
+    tex2jax: {
+      inlineMath: [ /*['$','$'],*/ ["\\(","\\)"] ], // Leaving out $ so that I don't use it
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: false, // why would I have a $ in my maths?
+    },
+  });
+</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML-full"></script>
+<script>
+function typesetAndRender(node) {
+  MathJax.Hub.Queue(function() {
+    MathJax.Hub.Typeset(node);
+    node.style.visibility = '';
+  });
+}
+
+function* primes() {
+  // A generator: sequence of all numbers >= n.
+  function* numbers(n) {
+    while (true) {
+      yield n++;
+    }
+  }
+  // Takes a sequence (a generator of numbers) and returns a new sequence that contains only numbers not divisible by `divisor`.
+  function* filter(seq, divisor) {
+    for (let num of seq) {
+      if (num % divisor !== 0) {
+        yield num;
+      }
+    }
+  }
+
+  let seq = numbers(2);
+  let prime;
+  while (true) {
+    prime = seq.next().value;
+    yield prime;
+    seq = filter(seq, prime);
+  }
+}
+
+function findReciprocalP(n, k) {
+  let container = document.getElementById('find-primes');
+  // Each time the button is clicked (and this function called), clear out the container.
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
+  }
+  let goodPrimes = document.createElement('div');
+  goodPrimes.textContent = `Primes modulo which ${n} is a square:`;
+  container.appendChild(goodPrimes);
+  let badPrimes = document.createElement('div');
+  badPrimes.textContent = `Primes modulo which ${n} is not a square:`;
+  container.appendChild(badPrimes);
+
+  let allPrimes = primes();
+  for (let i = 0; i < k; ++i) {
+    let p = allPrimes.next().value;
+    let r = n % p;
+    let root = null;
+    for (let j = 0; j < p; ++j) {
+      if ((j * j - r) % p == 0) {
+        root = j;
+        break;
+      }
+    }
+    let text = '';
+    if (root !== null) {
+      text = `${n} \\equiv ${r} \\equiv ${root}^2 \\mod ${p}`;
+      goodPrimes.textContent += ` ${p}`;
+    } else {
+      // text = `${n} \\equiv ${r} \\mod ${p}; \\left(\\frac{${n}}{${p}}\\right) = -1`;
+      text = `${n} \\equiv ${r} \\mod ${p}`;
+      badPrimes.textContent += ` ${p}`;
+    }
+    let node = document.createElement('div');
+    node.textContent = `\\(${text}\\)`;
+    node.style.visibility = 'hidden';
+    container.appendChild(node);
+    typesetAndRender(node);
+  }
+}
+</script>
+</head>
+
+<body>
+<h1>Small primes modulo which a number is a quadratic residue</h1>
+
+<p>Enter a number \(N\), to see small primes \(p \) such that there are solutions to \(x^2 \equiv N \mod p\):</p>
+<div>
+  Find whether
+  <input type="number" step="1" id="user-input-n" value="8559091">
+  is a square modulo the first
+  <input type="number" step="1" id="user-input-k" value="200">
+  primes.
+  <!-- button type="button" instead of "submit" or "reset" means it won't do anything like submitting form data to server. -->
+  <button type="button" onclick="findReciprocalP(this.parentNode.getElementsByTagName('input')[0].value, this.parentNode.getElementsByTagName('input')[1].value);">Find character</button>
+</div>
+
+<div id="find-primes">
+</div>
+</body>
+</html>

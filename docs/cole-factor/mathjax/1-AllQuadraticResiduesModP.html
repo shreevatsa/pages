@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Assures mobile browsers that the page is as wide as device width, i.e. they don't have to zoom out imagining the page will be desktop-browser wide. -->
+    <!-- See http://blog.javierusobiaga.com/stop-using-the-viewport-tag-until-you-know-ho -->
+    <!-- Also https://developers.google.com/webmasters/mobile-sites/mobile-seo/responsive-design -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX", "output/CommonHTML"],
+    extensions: ["tex2jax.js", "MathMenu.js","MathZoom.js","AssistiveMML.js"],
+    TeX: {
+       extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js", "enclose.js"],
+    },
+    tex2jax: {
+      inlineMath: [ /*['$','$'],*/ ["\\(","\\)"] ], // Leaving out $ so that I don't use it
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: false, // why would I have a $ in my maths?
+    },
+  });
+</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML-full"></script>
+<script>
+function typesetAndRender(node) {
+  MathJax.Hub.Queue(["Typeset", MathJax.Hub, node],
+                    function () { node.style.visibility = ''; });
+}
+
+function findResidues(value, delay) {
+  // The line at the top, saying what n is.
+  let topLine = document.getElementById('find-residues');
+  topLine.style.visibility = 'hidden';
+  topLine.textContent = `Got the number \\(n = ${value}\\)`;
+  typesetAndRender(topLine);
+
+  // Add circled and uncircled variants for each number
+  let allNums = document.getElementById('all-numbers-mod-n');
+  allNums.style.visibility = 'hidden';
+  allNums.textContent = 'These are the possible numbers: ';
+  for (let i = 0; i < value; ++i) {
+    let num = document.createElement('span');
+    num.id = `all-numbers-mod-n-${i}`;
+    num.style.width = '200px';
+    let numSmall = document.createElement('span');
+    numSmall.classList.add('num-small');
+    numSmall.textContent = ` \\(${i}\\) `;
+    numSmall.style.color = 'grey';
+    let numBigCircled = document.createElement('span');
+    numBigCircled.textContent = `\\(\\enclose{circle}{${i}}\\)`;
+    numBigCircled.style.color = 'green';
+    numBigCircled.style.display = 'none';
+    numBigCircled.classList.add('num-big-circled');
+    num.appendChild(numSmall);
+    num.appendChild(numBigCircled);
+    allNums.appendChild(num);
+  }
+  typesetAndRender(allNums);
+
+  function uncircle(n) {
+    let node = document.getElementById(`all-numbers-mod-n-${n}`);
+    node.getElementsByClassName('num-big-circled')[0].style.display = 'none';
+    node.getElementsByClassName('num-small')[0].style.display = '';
+    node.getElementsByClassName('num-small')[0].style.color = 'green';
+  }
+  function circle(n) {
+    let node = document.getElementById(`all-numbers-mod-n-${n}`);
+    node.getElementsByClassName('num-small')[0].style.display = 'none';
+    node.getElementsByClassName('num-big-circled')[0].style.display = '';
+    node.classList.add('circled');
+    node.style.color = 'green';
+    node.parentNode.dataset.circledNumber = n;
+  }
+
+  function showSquare(x, n) {
+    let xx = (x * x) % n;
+    let oldCandidate = document.getElementById(`candidate-${x-1}`);
+    let candidate = oldCandidate.cloneNode();
+    candidate.id = `candidate-${x}`;
+    // console.log('Cloned and got: ', candidate);
+    candidate.style.visibility = 'hidden';
+    oldCandidate.parentNode.appendChild(candidate);
+    candidate.textContent = `\\(${x}^2 \\equiv ${xx}\\)`;
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, candidate],
+                      function () {
+                        // console.log(`Removing oldCandidate after typesetting (${x}, ${xx}):`);
+                        // console.log(oldCandidate);
+                        oldCandidate.remove();
+                        candidate.style.visibility = '';
+                        candidate.id = `candidate-${x}`;
+                      });
+
+    let node = document.getElementById(`all-numbers-mod-n-${xx}`);
+    let circledNumber = node.parentNode.dataset.circledNumber;
+    if (circledNumber) { uncircle(circledNumber); }
+    circle(xx);
+  }
+
+  function showSquareAndNext(x, n) {
+    showSquare(x, n);
+    let nextFunction;
+    if (x == n - 1) {
+      nextFunction = function() {
+        let circled = document.getElementById('all-numbers-mod-n').dataset.circledNumber;
+        // console.log(`last circled was ${circled}`);
+        uncircle(circled);
+        let candidate = document.getElementById(`candidate-${x}`);
+        candidate.style.display = 'none';
+        MathJax.Hub.Queue(function() { candidate.id = 'candidate--1'; });
+      };
+    } else {
+      nextFunction = function() { showSquareAndNext(x + 1, n); };
+    }
+    window.setTimeout(nextFunction, delay);
+  }
+  window.setTimeout(function() { showSquareAndNext(0, value); }, 2000);
+}
+</script>
+</head>
+
+<body>
+<h1>Title</h1>
+
+<p>Enter a number \(p\), to find all quadratic residues modulo \(p\):</p>
+<div>
+  <input type="number" step="1" id="user_p" value="23">
+  <input type="delay" step="1" id="user_p" value="800">
+  <!-- button type="button" instead of "submit" or "reset" means it won't do anything like submitting form data to server. -->
+  <button type="button" onclick="findResidues(this.parentNode.getElementsByTagName('input')[0].value, this.parentNode.getElementsByTagName('input')[1].value);">Find residues</button>
+</div>
+
+<div id="find-residues">
+</div>
+
+<div id="all-numbers-mod-n">
+</div>
+
+<div id="candidate--1">
+</div>
+
+</body>
+</html>

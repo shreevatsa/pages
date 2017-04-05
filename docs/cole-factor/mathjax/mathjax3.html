@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX", "output/CommonHTML"],
+    extensions: ["tex2jax.js"],
+    TeX: {
+       extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"]
+    },
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+  });
+</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+</head>
+
+<body>
+<h1>Really minimal example</h1>
+
+<p>
+The <code>&lt;head&gt;</code> now contains
+<blockquote>
+<pre>
+<code>
+&lt;script type="text/x-mathjax-config"&gt;
+  MathJax.Hub.Config({
+    jax: ["input/TeX", "output/CommonHTML"],
+    extensions: ["tex2jax.js"],
+    TeX: {
+       extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"]
+    },
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+  });
+&lt;/script&gt;
+&lt;script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js"&gt;&lt;/script&gt;
+</code>
+</pre>
+</blockquote> so that we only load the extensions and input/output processors we need(?). Note that this now means multiple requests over the network, one for each extension (15 requests instead of 4).
+</p>
+
+<p>
+When $a \ne 0$, there are two solutions to \(ax^2 + bx + c = 0\) and they are
+$$x = \frac{-b \pm \sqrt{b^2-4ac}}{2a}.$$
+
+Note however that the default <code>TeX-MML-AM_CHTML</code> config is
+<blockquote>
+<pre>
+<code>
+MathJax.Hub.Config({
+  jax: ["input/TeX","input/MathML","input/AsciiMath","output/CommonHTML"],
+  extensions: ["tex2jax.js","mml2jax.js","asciimath2jax.js","MathMenu.js","MathZoom.js","AssistiveMML.js"],
+  TeX: {
+    extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"]
+  }
+});
+</code>
+</pre>
+</blockquote>
+
+Because without that, if $\undefined$ then what happens?
+
+
+
+</p>
+
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Assures mobile browsers that the page is as wide as device width, i.e. they don't have to zoom out imagining the page will be desktop-browser wide. -->
+    <!-- See http://blog.javierusobiaga.com/stop-using-the-viewport-tag-until-you-know-ho -->
+    <!-- Also https://developers.google.com/webmasters/mobile-sites/mobile-seo/responsive-design -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX", "output/CommonHTML"],
+    extensions: ["tex2jax.js", "MathMenu.js","MathZoom.js","AssistiveMML.js"],
+    TeX: {
+       extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js", "enclose.js", "mathchoice.js"],
+    },
+    tex2jax: {
+      inlineMath: [ /*['$','$'],*/ ["\\(","\\)"] ], // Leaving out $ so that I don't use it
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: false, // why would I have a $ in my maths?
+    },
+  });
+</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML-full"></script>
+<script>
+function typesetAndRender(node) {
+  MathJax.Hub.Queue(function() {
+    MathJax.Hub.Typeset(node);
+    node.style.visibility = '';
+  });
+}
+
+window.knownPrimes = [];
+window.knownPrimesPopulate = function*() {
+  function* primes() {
+    // A generator: sequence of all numbers >= n.
+    function* numbers(n) {
+      while (true) {
+        yield n++;
+      }
+    }
+    // Takes a sequence (a generator of numbers) and returns a new sequence that contains only numbers not divisible by `divisor`.
+    function* filter(seq, divisor) {
+      for (let num of seq) {
+        if (num % divisor !== 0) {
+          yield num;
+        }
+      }
+    }
+
+    let seq = numbers(2);
+    let prime;
+    while (true) {
+      prime = seq.next().value;
+      yield prime;
+      seq = filter(seq, prime);
+    }
+  }
+  let allPrimes = primes();
+  while (true) {
+    let p = allPrimes.next().value;
+    window.knownPrimes.push(p);
+    yield p;
+  }
+}
+
+function* primes() {
+  let n = 0;
+  let populator = window.knownPrimesPopulate();
+  while (true) {
+    ++n;
+    while (window.knownPrimes.length < n) {
+      populator.next();
+    }
+    yield window.knownPrimes[n - 1];
+  }
+}
+
+
+function findReciprocalP(n, k) {
+  let allPrimes = primes();
+  let ret = [];
+  for (let i = 0; i < k; ++i) {
+    let p = allPrimes.next().value;
+    let r = n % p;
+    let root = null;
+    for (let j = 0; j < p; ++j) {
+      if ((j * j - r) % p == 0) {
+        root = j;
+        break;
+      }
+    }
+    if (root !== null) {
+      ret.push(p);
+    }
+  }
+  return ret;
+}
+
+function* allRepresented(a, b) {
+  let n = 0;
+  while (true) {
+    ++n;
+    // if (n % 8 != 1) continue;
+    for (let x = 0; x < n; ++x) {
+      let l = a * x * x;
+      if (l > n) break;
+      let r = n - l;
+      let y = Math.floor(Math.sqrt(r/b));
+      if (a * x * x + b * y * y == n) {
+        console.log(`Yielding ${n} which has remainder ${n % 8}`);
+        yield n;
+      }
+    }
+  }
+}
+
+function findRepresented(a, b) {
+  let container = document.getElementById('find-representations');
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
+  }
+  let represented = allRepresented(a, b);
+  for (let i = 0; i < 100; ++i) {
+    let n = represented.next().value;
+    let primes = findReciprocalP(n, 20);
+    var anotherN = document.createElement('div');
+    anotherN.textContent = ` ${n}: ${primes} `;
+    container.appendChild(anotherN);
+  }
+}
+</script>
+</head>
+
+<body>
+<h1>Numbers expressed by a given binary quadratic form</h1>
+
+<p>Enter coefficients \(a\) and \(b\) to see all numbers that can be expressed by the binary quadratic form \((a, 0, b)\), i.e. in the form \(ax^2 + by^2\) for integers \(x\) and \(y\):</p>
+<div>
+  <div>
+    Coefficient of \(x^2\):
+    <input type="number" step="1" id="user-input-a" value="14">
+  </div>
+  <div>
+    Coefficient of \(y^2\):
+    <input type="number" step="1" id="user-input-b" value="143">
+  </div>
+  <div>
+  <!-- button type="button" instead of "submit" or "reset" means it won't do anything like submitting form data to server. -->
+  <button type="button" onclick="findRepresented(this.parentNode.parentNode.getElementsByTagName('input')[0].value, this.parentNode.parentNode.getElementsByTagName('input')[1].value);">Find numbers</button>
+  </div>
+</div>
+
+<div id="find-representations">
+</div>
+</body>
+</html>

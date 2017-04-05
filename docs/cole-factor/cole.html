@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>How Cole factored M_67 in 1903</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+  });
+  MathJax.Hub.Queue(function () {
+    document.getElementById("hide_page").style.visibility = "";
+  });
+</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<!-- Markdown -->
+<script type="text/javascript" src="https://cdn.rawgit.com/showdownjs/showdown/1.3.0/dist/showdown.min.js"></script>
+<script>
+function makeMarkdown() {
+  var elems = document.getElementsByClassName('please_markdown');
+  var converter = new showdown.Converter();
+  for (var i = 0; i < elems.length; ++i) {
+    var elem = elems[i];
+    elem.innerHTML = converter.makeHtml(elem.innerHTML);
+  }
+}
+document.addEventListener("DOMContentLoaded", function(event) { makeMarkdown(); });
+</script>
+
+<!-- Org mode -->
+<script type="text/javascript" src="https://cdn.rawgit.com/mooz/org-js/57b4480747e6e0c26baa43f267218a34b59224a5/org.js"></script>
+<script>
+function makeOrg() {
+  var elems = document.getElementsByClassName('please_org');
+  var orgParser = new Org.Parser();
+  for (var i = 0; i < elems.length; ++i) {
+    var elem = elems[i];
+    var orgCode = elem.innerHTML;
+    var orgDocument = orgParser.parse(orgCode);
+    var orgHTMLDocument = orgDocument.convert(Org.ConverterHTML, {
+      headerOffset: 1,
+      exportFromLineNumber: false,
+      suppressSubScriptHandling: false,
+      suppressAutoLink: false
+    });
+    elem.innerHTML = orgHTMLDocument.toString();
+  }
+}
+document.addEventListener("DOMContentLoaded", function(event) { makeOrg(); });
+</script>
+
+</head>
+<body>
+<div class="please_org">
+How Cole factored M_{67} = 2^{67} -1 in 1903.
+</div>
+
+<p>
+When $a \ne 0$, there are two solutions to \(ax^2 + bx + c = 0\) and they are
+$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
+</p>
+
+</body>
+</html>
