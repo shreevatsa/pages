@@ -22,7 +22,7 @@ assert OPENSSL_PASSPHRASE, type(OPENSSL_PASSPHRASE)
 if __name__ == '__main__':
     command, filename = sys.argv[1], sys.argv[2]
     assert command in ['clean', 'smudge'], command
-    assert 'toobfus' in filename, filename # This is via .gitattributes
+    assert 'toobfus' in filename or 'private' in filename, filename # This is via .gitattributes
     signature = 'U2FsdGVkX1'               # base64 encoding of "salted__"
     s = sys.stdin.read(len(signature))
     rest = sys.stdin.read()
