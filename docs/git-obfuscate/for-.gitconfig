@@ -1,0 +1,5 @@
+# Move to .git/config
+[filter "obfuscate"]
+        clean = .git/obfuscate.py clean "%f"
+        smudge = .git/obfuscate.py smudge "%f"
+        required
