@@ -1,1 +1,1 @@
-reading/private/* filter=obfuscate
+reading/private/** filter=obfuscate
