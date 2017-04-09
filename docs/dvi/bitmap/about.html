@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      .hellotable img {
+        height: 20pt;
+      }
+    </style>
+    <title>The bitmap specified by DVI</title>
+  </head>
+  <body>
+    <h1>The bitmap specified by DVI</h1>
+
+    <!-- TODO: Replace with logos. -->
+    <p>
+      Knuth developed TeX and Metafont so that he could produce his books in a format suitable for output on a digital typesetter. The goal was to specify completely where ink would go on the page: the bitmap of black pixels for that output device. In addition to quality, one of his primary goals was stability: that the books should look the same, regardless of changes in technology.
+    </p>
+
+    <p>
+      So I was curious to see exactly what the "Knuth-specified" bitmap for given TeX input would be, for a given output device. Surprisingly, this turns out not to be common knowledge in the community of TeX/LaTeX users: most of them do not share Knuth's goals of producing future-proof output for a digital typesetter, so almost everyone uses outline fonts, leaving the rasterization to their PDF viewer or printer driver.
+    </p>
+
+    <p>
+      With the help of <a href="http://purl.org/nxg/dist/dvi2bitmap">dvi2bitmap</a>, here are extracts from the bitmap for the same input, for different output devices.
+    </p>
+
+    <table class="hellotable">
+      <tr> <th>Mode</th> <th>Image</th> </tr>
+      <tr> <td>epsfast</td> <td><img src="just-hello/just-hello-epsfast.png"></td> </tr>
+      <tr> <td>ibmtosnl</td> <td><img src="just-hello/just-hello-ibmtosnl.png"></td> </tr>
+      <tr> <td>datadisc</td> <td><img src="just-hello/just-hello-datadisc.png"></td> </tr>
+      <tr> <td>newdd</td> <td><img src="just-hello/just-hello-newdd.png"></td> </tr>
+      <tr> <td>epsdrftl</td> <td><img src="just-hello/just-hello-epsdrftl.png"></td> </tr>
+      <tr> <td>epsfastl</td> <td><img src="just-hello/just-hello-epsfastl.png"></td> </tr>
+      <tr> <td>mactrue</td> <td><img src="just-hello/just-hello-mactrue.png"></td> </tr>
+      <tr> <td>pixpt</td> <td><img src="just-hello/just-hello-pixpt.png"></td> </tr>
+      <tr> <td>vs</td> <td><img src="just-hello/just-hello-vs.png"></td> </tr>
+      <tr> <td>ibmegal</td> <td><img src="just-hello/just-hello-ibmegal.png"></td> </tr>
+      <tr> <td>decsmall</td> <td><img src="just-hello/just-hello-decsmall.png"></td> </tr>
+      <tr> <td>eighthre</td> <td><img src="just-hello/just-hello-eighthre.png"></td> </tr>
+      <tr> <td>sun</td> <td><img src="just-hello/just-hello-sun.png"></td> </tr>
+      <tr> <td>macmag</td> <td><img src="just-hello/just-hello-macmag.png"></td> </tr>
+      <tr> <td>ibmtosn</td> <td><img src="just-hello/just-hello-ibmtosn.png"></td> </tr>
+      <tr> <td>nineone</td> <td><img src="just-hello/just-hello-nineone.png"></td> </tr>
+      <tr> <td>newddl</td> <td><img src="just-hello/just-hello-newddl.png"></td> </tr>
+      <tr> <td>atarinf</td> <td><img src="just-hello/just-hello-atarinf.png"></td> </tr>
+      <tr> <td>ncd</td> <td><img src="just-hello/just-hello-ncd.png"></td> </tr>
+      <tr> <td>atarins</td> <td><img src="just-hello/just-hello-atarins.png"></td> </tr>
+      <tr> <td>ibmega</td> <td><img src="just-hello/just-hello-ibmega.png"></td> </tr>
+      <tr> <td>gtfaxlol</td> <td><img src="just-hello/just-hello-gtfaxlol.png"></td> </tr>
+      <tr> <td>amiga</td> <td><img src="just-hello/just-hello-amiga.png"></td> </tr>
+      <tr> <td>declarge</td> <td><img src="just-hello/just-hello-declarge.png"></td> </tr>
+      <tr> <td>ibmtont</td> <td><img src="just-hello/just-hello-ibmtont.png"></td> </tr>
+      <tr> <td>nextscrn</td> <td><img src="just-hello/just-hello-nextscrn.png"></td> </tr>
+      <tr> <td>atariotf</td> <td><img src="just-hello/just-hello-atariotf.png"></td> </tr>
+      <tr> <td>lviewl</td> <td><img src="just-hello/just-hello-lviewl.png"></td> </tr>
+      <tr> <td>ibmvga</td> <td><img src="just-hello/just-hello-ibmvga.png"></td> </tr>
+      <tr> <td>bitgraph</td> <td><img src="just-hello/just-hello-bitgraph.png"></td> </tr>
+      <tr> <td>ibmsoff</td> <td><img src="just-hello/just-hello-ibmsoff.png"></td> </tr>
+      <tr> <td>pcprevw</td> <td><img src="just-hello/just-hello-pcprevw.png"></td> </tr>
+      <tr> <td>pcscreen</td> <td><img src="just-hello/just-hello-pcscreen.png"></td> </tr>
+      <tr> <td>lview</td> <td><img src="just-hello/just-hello-lview.png"></td> </tr>
+      <tr> <td>epsdrft</td> <td><img src="just-hello/just-hello-epsdrft.png"></td> </tr>
+      <tr> <td>epsonlo</td> <td><img src="just-hello/just-hello-epsonlo.png"></td> </tr>
+      <tr> <td>epswlo</td> <td><img src="just-hello/just-hello-epswlo.png"></td> </tr>
+      <tr> <td>onetz</td> <td><img src="just-hello/just-hello-onetz.png"></td> </tr>
+      <tr> <td>epsmedl</td> <td><img src="just-hello/just-hello-epsmedl.png"></td> </tr>
+      <tr> <td>epswlol</td> <td><img src="just-hello/just-hello-epswlol.png"></td> </tr>
+      <tr> <td>itohl</td> <td><img src="just-hello/just-hello-itohl.png"></td> </tr>
+      <tr> <td>itohtozl</td> <td><img src="just-hello/just-hello-itohtozl.png"></td> </tr>
+      <tr> <td>iw</td> <td><img src="just-hello/just-hello-iw.png"></td> </tr>
+      <tr> <td>lasf</td> <td><img src="just-hello/just-hello-lasf.png"></td> </tr>
+      <tr> <td>ljlo</td> <td><img src="just-hello/just-hello-ljlo.png"></td> </tr>
+      <tr> <td>itoh</td> <td><img src="just-hello/just-hello-itoh.png"></td> </tr>
+      <tr> <td>nectzo</td> <td><img src="just-hello/just-hello-nectzo.png"></td> </tr>
+      <tr> <td>boise</td> <td><img src="just-hello/just-hello-boise.png"></td> </tr>
+      <tr> <td>epstyplo</td> <td><img src="just-hello/just-hello-epstyplo.png"></td> </tr>
+      <tr> <td>hprugged</td> <td><img src="just-hello/just-hello-hprugged.png"></td> </tr>
+      <tr> <td>lqlores</td> <td><img src="just-hello/just-hello-lqlores.png"></td> </tr>
+      <tr> <td>lqmedl</td> <td><img src="just-hello/just-hello-lqmedl.png"></td> </tr>
+      <tr> <td>nec</td> <td><img src="just-hello/just-hello-nec.png"></td> </tr>
+      <tr> <td>toshiba</td> <td><img src="just-hello/just-hello-toshiba.png"></td> </tr>
+      <tr> <td>gtfaxl</td> <td><img src="just-hello/just-hello-gtfaxl.png"></td> </tr>
+      <tr> <td>highfax</td> <td><img src="just-hello/just-hello-highfax.png"></td> </tr>
+      <tr> <td>gtfax</td> <td><img src="just-hello/just-hello-gtfax.png"></td> </tr>
+      <tr> <td>gtfaxlo</td> <td><img src="just-hello/just-hello-gtfaxlo.png"></td> </tr>
+      <tr> <td>epsonl</td> <td><img src="just-hello/just-hello-epsonl.png"></td> </tr>
+      <tr> <td>epsonlol</td> <td><img src="just-hello/just-hello-epsonlol.png"></td> </tr>
+      <tr> <td>ibmppl</td> <td><img src="just-hello/just-hello-ibmppl.png"></td> </tr>
+      <tr> <td>starnltl</td> <td><img src="just-hello/just-hello-starnltl.png"></td> </tr>
+      <tr> <td>canonlbp</td> <td><img src="just-hello/just-hello-canonlbp.png"></td> </tr>
+      <tr> <td>epsmed</td> <td><img src="just-hello/just-hello-epsmed.png"></td> </tr>
+      <tr> <td>epson</td> <td><img src="just-hello/just-hello-epson.png"></td> </tr>
+      <tr> <td>ibm_a</td> <td><img src="just-hello/just-hello-ibm_a.png"></td> </tr>
+      <tr> <td>ibmd</td> <td><img src="just-hello/just-hello-ibmd.png"></td> </tr>
+      <tr> <td>ibmpp</td> <td><img src="just-hello/just-hello-ibmpp.png"></td> </tr>
+      <tr> <td>ibmteot</td> <td><img src="just-hello/just-hello-ibmteot.png"></td> </tr>
+      <tr> <td>ibmtetz</td> <td><img src="just-hello/just-hello-ibmtetz.png"></td> </tr>
+      <tr> <td>itohtoz</td> <td><img src="just-hello/just-hello-itohtoz.png"></td> </tr>
+      <tr> <td>okidata</td> <td><img src="just-hello/just-hello-okidata.png"></td> </tr>
+      <tr> <td>sherpa</td> <td><img src="just-hello/just-hello-sherpa.png"></td> </tr>
+      <tr> <td>starnlt</td> <td><img src="just-hello/just-hello-starnlt.png"></td> </tr>
+      <tr> <td>okidatal</td> <td><img src="just-hello/just-hello-okidatal.png"></td> </tr>
+      <tr> <td>atariezf</td> <td><img src="just-hello/just-hello-atariezf.png"></td> </tr>
+      <tr> <td>cx</td> <td><img src="just-hello/just-hello-cx.png"></td> </tr>
+      <tr> <td>deskjet</td> <td><img src="just-hello/just-hello-deskjet.png"></td> </tr>
+      <tr> <td>epsonact</td> <td><img src="just-hello/just-hello-epsonact.png"></td> </tr>
+      <tr> <td>ibmfzon</td> <td><img src="just-hello/just-hello-ibmfzon.png"></td> </tr>
+      <tr> <td>jetiiisi</td> <td><img src="just-hello/just-hello-jetiiisi.png"></td> </tr>
+      <tr> <td>lnotr</td> <td><img src="just-hello/just-hello-lnotr.png"></td> </tr>
+      <tr> <td>lnzo</td> <td><img src="just-hello/just-hello-lnzo.png"></td> </tr>
+      <tr> <td>lpstz</td> <td><img src="just-hello/just-hello-lpstz.png"></td> </tr>
+      <tr> <td>phaser</td> <td><img src="just-hello/just-hello-phaser.png"></td> </tr>
+      <tr> <td>phasertl</td> <td><img src="just-hello/just-hello-phasertl.png"></td> </tr>
+      <tr> <td>qms</td> <td><img src="just-hello/just-hello-qms.png"></td> </tr>
+      <tr> <td>ricoh</td> <td><img src="just-hello/just-hello-ricoh.png"></td> </tr>
+      <tr> <td>ricoha</td> <td><img src="just-hello/just-hello-ricoha.png"></td> </tr>
+      <tr> <td>ricohlp</td> <td><img src="just-hello/just-hello-ricohlp.png"></td> </tr>
+      <tr> <td>xrxesnz</td> <td><img src="just-hello/just-hello-xrxesnz.png"></td> </tr>
+      <tr> <td>xrxfzfz</td> <td><img src="just-hello/just-hello-xrxfzfz.png"></td> </tr>
+      <tr> <td>xrxnszz</td> <td><img src="just-hello/just-hello-xrxnszz.png"></td> </tr>
+      <tr> <td>xrxtszz</td> <td><img src="just-hello/just-hello-xrxtszz.png"></td> </tr>
+      <tr> <td>neclm</td> <td><img src="just-hello/just-hello-neclm.png"></td> </tr>
+      <tr> <td>bjtenex</td> <td><img src="just-hello/just-hello-bjtenex.png"></td> </tr>
+      <tr> <td>bjtzzex</td> <td><img src="just-hello/just-hello-bjtzzex.png"></td> </tr>
+      <tr> <td>bjtzzl</td> <td><img src="just-hello/just-hello-bjtzzl.png"></td> </tr>
+      <tr> <td>canonbjc</td> <td><img src="just-hello/just-hello-canonbjc.png"></td> </tr>
+      <tr> <td>epsonsq</td> <td><img src="just-hello/just-hello-epsonsq.png"></td> </tr>
+      <tr> <td>epstylus</td> <td><img src="just-hello/just-hello-epstylus.png"></td> </tr>
+      <tr> <td>epstypml</td> <td><img src="just-hello/just-hello-epstypml.png"></td> </tr>
+      <tr> <td>epstypro</td> <td><img src="just-hello/just-hello-epstypro.png"></td> </tr>
+      <tr> <td>lqmed</td> <td><img src="just-hello/just-hello-lqmed.png"></td> </tr>
+      <tr> <td>nechi</td> <td><img src="just-hello/just-hello-nechi.png"></td> </tr>
+      <tr> <td>styletwo</td> <td><img src="just-hello/just-hello-styletwo.png"></td> </tr>
+      <tr> <td>stylewri</td> <td><img src="just-hello/just-hello-stylewri.png"></td> </tr>
+      <tr> <td>dover</td> <td><img src="just-hello/just-hello-dover.png"></td> </tr>
+      <tr> <td>agfatfzz</td> <td><img src="just-hello/just-hello-agfatfzz.png"></td> </tr>
+      <tr> <td>nexthi</td> <td><img src="just-hello/just-hello-nexthi.png"></td> </tr>
+      <tr> <td>sparcptr</td> <td><img src="just-hello/just-hello-sparcptr.png"></td> </tr>
+      <tr> <td>agfafzz</td> <td><img src="just-hello/just-hello-agfafzz.png"></td> </tr>
+      <tr> <td>ocessfz</td> <td><img src="just-hello/just-hello-ocessfz.png"></td> </tr>
+      <tr> <td>canonex</td> <td><img src="just-hello/just-hello-canonex.png"></td> </tr>
+      <tr> <td>docutech</td> <td><img src="just-hello/just-hello-docutech.png"></td> </tr>
+      <tr> <td>ibmfztn</td> <td><img src="just-hello/just-hello-ibmfztn.png"></td> </tr>
+      <tr> <td>lexmarku</td> <td><img src="just-hello/just-hello-lexmarku.png"></td> </tr>
+      <tr> <td>ljfive</td> <td><img src="just-hello/just-hello-ljfive.png"></td> </tr>
+      <tr> <td>ljfivemp</td> <td><img src="just-hello/just-hello-ljfivemp.png"></td> </tr>
+      <tr> <td>ljfour</td> <td><img src="just-hello/just-hello-ljfour.png"></td> </tr>
+      <tr> <td>ljfzzzfr</td> <td><img src="just-hello/just-hello-ljfzzzfr.png"></td> </tr>
+      <tr> <td>ljtozzfr</td> <td><img src="just-hello/just-hello-ljtozzfr.png"></td> </tr>
+      <tr> <td>okifte</td> <td><img src="just-hello/just-hello-okifte.png"></td> </tr>
+      <tr> <td>phasertf</td> <td><img src="just-hello/just-hello-phasertf.png"></td> </tr>
+      <tr> <td>qmsostf</td> <td><img src="just-hello/just-hello-qmsostf.png"></td> </tr>
+      <tr> <td>qmsoszz</td> <td><img src="just-hello/just-hello-qmsoszz.png"></td> </tr>
+      <tr> <td>ricohsp</td> <td><img src="just-hello/just-hello-ricohsp.png"></td> </tr>
+      <tr> <td>vtfzszw</td> <td><img src="just-hello/just-hello-vtfzszw.png"></td> </tr>
+      <tr> <td>vtszz</td> <td><img src="just-hello/just-hello-vtszz.png"></td> </tr>
+      <tr> <td>xpstzzl</td> <td><img src="just-hello/just-hello-xpstzzl.png"></td> </tr>
+      <tr> <td>linolo</td> <td><img src="just-hello/just-hello-linolo.png"></td> </tr>
+      <tr> <td>bjtzzs</td> <td><img src="just-hello/just-hello-bjtzzs.png"></td> </tr>
+      <tr> <td>epscszz</td> <td><img src="just-hello/just-hello-epscszz.png"></td> </tr>
+      <tr> <td>epstypmd</td> <td><img src="just-hello/just-hello-epstypmd.png"></td> </tr>
+      <tr> <td>esphi</td> <td><img src="just-hello/just-hello-esphi.png"></td> </tr>
+      <tr> <td>aps</td> <td><img src="just-hello/just-hello-aps.png"></td> </tr>
+      <tr> <td>lwpro</td> <td><img src="just-hello/just-hello-lwpro.png"></td> </tr>
+      <tr> <td>lmaster</td> <td><img src="just-hello/just-hello-lmaster.png"></td> </tr>
+      <tr> <td>apssixhi</td> <td><img src="just-hello/just-hello-apssixhi.png"></td> </tr>
+      <tr> <td>cgnszz</td> <td><img src="just-hello/just-hello-cgnszz.png"></td> </tr>
+      <tr> <td>lexmarkr</td> <td><img src="just-hello/just-hello-lexmarkr.png"></td> </tr>
+      <tr> <td>lexmarks</td> <td><img src="just-hello/just-hello-lexmarks.png"></td> </tr>
+      <tr> <td>ljfzzz</td> <td><img src="just-hello/just-hello-ljfzzz.png"></td> </tr>
+      <tr> <td>ljtozz</td> <td><img src="just-hello/just-hello-ljtozz.png"></td> </tr>
+      <tr> <td>phaserfs</td> <td><img src="just-hello/just-hello-phaserfs.png"></td> </tr>
+      <tr> <td>prntware</td> <td><img src="just-hello/just-hello-prntware.png"></td> </tr>
+      <tr> <td>qmstftf</td> <td><img src="just-hello/just-hello-qmstftf.png"></td> </tr>
+      <tr> <td>ultre</td> <td><img src="just-hello/just-hello-ultre.png"></td> </tr>
+      <tr> <td>vtftzzlo</td> <td><img src="just-hello/just-hello-vtftzzlo.png"></td> </tr>
+      <tr> <td>linoone</td> <td><img src="just-hello/just-hello-linoone.png"></td> </tr>
+      <tr> <td>cg</td> <td><img src="just-hello/just-hello-cg.png"></td> </tr>
+      <tr> <td>cgl</td> <td><img src="just-hello/just-hello-cgl.png"></td> </tr>
+      <tr> <td>vtftzz</td> <td><img src="just-hello/just-hello-vtftzz.png"></td> </tr>
+      <tr> <td>supre</td> <td><img src="just-hello/just-hello-supre.png"></td> </tr>
+      <tr> <td>vtftzzhi</td> <td><img src="just-hello/just-hello-vtftzzhi.png"></td> </tr>
+      <tr> <td>xpstzz</td> <td><img src="just-hello/just-hello-xpstzz.png"></td> </tr>
+      <tr> <td>linotzzh</td> <td><img src="just-hello/just-hello-linotzzh.png"></td> </tr>
+      <tr> <td>linolttz</td> <td><img src="just-hello/just-hello-linolttz.png"></td> </tr>
+    </table>
+
+  </body>
+</html>
