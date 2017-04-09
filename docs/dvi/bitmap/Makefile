@@ -16,6 +16,7 @@ override ydpi := $(shell echo $(ydpi) | awk '{printf("%d\n",$$1 + 0.499)}')
 # $(info 'Rounded dpi to $(dpi)')
 
 font-$(mode).pk:
+	rm -f ~/Library/texlive/2015/texmf-var/fonts/pk/*/public/cm/*.*pk
 # Command invoked by dvi2bitmap
 #	mktexpk --dpi $(dpi) --bdpi $(dpi) --mag 1 --mfmode $(mode) cmr10
 # Command invoked by dvips
@@ -57,11 +58,13 @@ hello-crop-full: hello.dvi font-$(mode).pk
 		--resolution=$(xdpi) \
 		--font-mode=$(mode) \
 		--crop=left=2,right=2,top=2,bottom=2 \
-		-T xbm \
+		-T png \
 		hello.dvi \
-		-o hello-$(mode)-crop-full.xbm \
+		-o hello-$(mode)-crop-full.png \
 		> out-$(mode)-d2b-crop-full.txt 2>&1
 	[ `cat out-$(mode)-d2b-crop-full.txt | \grep --text 'Opened font' | sed -e 's,.*texmf-var/fonts/pk/\(.*\)/public/cm/cmr10.*,\1,'` = $(mode) ]
+	file hello-$(mode)-crop-full.png > data-$(mode)-crop-full
+	rm hello-$(mode)-crop-full.png
 
 hello-crop-part: hello.dvi font-$(mode).pk
 #		--crop=right=0,bottom=0,absolute,left=0,top=0
@@ -71,11 +74,13 @@ hello-crop-part: hello.dvi font-$(mode).pk
 		--resolution=$(xdpi) \
 		--font-mode=$(mode) \
 		--crop=right=2,bottom=2,absolute,left=0,top=0 \
-		-T xbm \
+		-T png \
 		hello.dvi \
-		-o hello-$(mode)-crop-part.xbm \
+		-o hello-$(mode)-crop-part.png \
 		> out-$(mode)-d2b-crop-part.txt 2>&1
 	[ `cat out-$(mode)-d2b-crop-part.txt | \grep --text 'Opened font' | sed -e 's,.*texmf-var/fonts/pk/\(.*\)/public/cm/cmr10.*,\1,'` = $(mode) ]
+	file hello-$(mode)-crop-part.png > data-$(mode)-crop-part
+	rm hello-$(mode)-crop-part.png
 
 
 extract_x = $(shell echo "scale = 0; 40 * $(xdpi) / 110" | bc -q)
@@ -114,4 +119,36 @@ all:
 	for xdpi ydpi mode in `cat modes/modes.nonsquare`; do echo $$xdpi $$ydpi $$mode; rm -f ~/Library/texlive/2015/texmf-var/fonts/pk/*/public/cm/*.*pk; make mode=$$mode xdpi=$$xdpi ydpi=$$ydpi compare > out-$$mode-make.txt 2>&1; tail -n1 out-$$mode-make.txt; echo; done
 
 all-crop:
-	for xdpi ydpi mode in `head -n1 modes/modes.nonsquare`; do echo $$xdpi $$ydpi $$mode; rm -f ~/Library/texlive/2015/texmf-var/fonts/pk/*/public/cm/*.*pk; make mode=$$mode xdpi=$$xdpi ydpi=$$ypdi hello-crop-full hello-crop-part > out-$$mode-make.txt 2>&1; done
+	for xdpi ydpi mode in `cat modes/modes.2d.clean`; do echo $$xdpi $$ydpi $$mode; rm -f ~/Library/texlive/2015/texmf-var/fonts/pk/*/public/cm/*.*pk; make mode=$$mode xdpi=$$xdpi ydpi=$$ypdi hello-crop-full hello-crop-part > out-$$mode-make.txt 2>&1; done
+
+# def xy(line):
+#     fix = 'PNG image data, '
+#     where = line.find(fix)
+#     end = ', 1-bit colormap'
+#     cross = line[line.find(fix) + len(fix):line.find(end)]
+#     cross = cross.split()
+#     return cross[0], cross[2]
+
+# for line in modes:
+#     xdpi, ydpi, mode = line.split()
+#     try:
+#         sizeline = open('data-%s-crop-full' % mode).read().strip()
+#         offline = open('data-%s-crop-part' % mode).read().strip()
+#         xysize = xy(sizeline)
+#         xyoff = xy(offline)
+#         print mode, xdpi, ydpi, xysize[0], xysize[1], int(xyoff[0]) - int(xysize[0]), int(xyoff[1]) - int(xysize[1])
+#     except Exception as e:
+#         print e
+#         pass
+
+sizex = 18
+sizey = 9
+offx = 76
+offy = 61
+
+just-hello: hello-$(mode).xbm
+	convert -verbose 'hello-$(mode).xbm[$(sizex)x$(sizey)+$(offx)+$(offy)]' just-hello-$(mode).png
+	rm hello-$(mode).xbm
+
+all-hello:
+	for mode xdpi ypdi sizex sizey offx offy in `cat modes/modes.bbox`; do echo $$mode; make mode=$$mode xdpi=$$xdpi ydpi=$$ypdi sizex=$$sizex sizey=$$sizey offx=$$offx offy=$$offy just-hello > out-$$mode-make.txt 2>&1; done
