@@ -3,3 +3,9 @@
         clean = .git/obfuscate.py clean "%f"
         smudge = .git/obfuscate.py smudge "%f"
         required
+[filter "obfuscate-with-diff"]
+        clean = .git/obfuscate.py clean "%f"
+        smudge = .git/obfuscate.py smudge "%f"
+        required
+[diff "obfuscate-with-diff"]
+        textconv = .git/obfuscate.py textconv-for-diff "%f"

@@ -1,17 +1,57 @@
-Quite stunning, with Emscripten:
-- https://manuels.github.io/texlive.js/ (https://github.com/manuels/texlive.js)
-- https://github.com/lyze/xetex-js
-
---------------------------------------------------------------------------------
-
-https://tex.stackexchange.com/questions/361104/learning-latex
-
-I think this is a genuine question, and the problem is real. I'm sure that in practice, most people _do_ learn LaTeX by copying examples. To add to the problem, many examples do not come with explanations, so people end up with weird mental models and misconceptions about LaTeX (such as for instance, that it is a programming language). Introductory LaTeX books are also written "helpfully", telling the user how to get things done in the ideal case, rather than revealing what is actually happening. When the user's mental model doesn't match the program, the user experience suffers eventually.
-
-To put it differently, LaTeX is a leaky abstraction. Because of its excellent set of macros which are very close to the human side of things (expressing what is the author's mind), the user can fall into the illusion that they express things abstractly and LaTeX magically produces “ideal” output, rather than the reality: LaTeX is an impressive edifice of macros with poor error-checking (because of the limitations of the time), written in a language that is not very good, on top of a typesetting system (TeX) fundamentally concerned with the page and where to put down ink and characters on it.
-
-Of the example “problems” in the question: the solution to “printing a bibliography in a specific order” would probably involve knowledge of the macros (a program) that someone has written for bibliographies, that for “creating a table” has probably more to do with typesetting, “changing the fonts” is a different part of the TeX typesetting engine + ecosystem of related programs, and “formatting a document” may be a question about page design. These are all very different things, though it's impressive that LaTeX is good enough to give the illusion that the user is working with one system.
-
-The antidote for all this, IMO, is to spend some time and learn TeX. The best book I've found for this, which is at the same time a gentle introduction and reveals what's going on in enough detail to make you practically an expert, is Seroul & Levy's _A Beginner's Book of TeX_. Then, having learned TeX, and having the confidence that you'll more or less be able to reproduce any printed page you see (though not always with elegant input), you can better appreciate LaTeX for what it is. And know enough about TeX macros to understand examples (but it's taste whether you enjoy or avoid them).
-
---------------------------------------------------------------------------------
+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
+iRwr4IStKAVVQn70HhcBOXb9gA==

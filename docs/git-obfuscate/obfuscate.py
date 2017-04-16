@@ -21,12 +21,12 @@ assert OPENSSL_PASSPHRASE, type(OPENSSL_PASSPHRASE)
 
 if __name__ == '__main__':
     command, filename = sys.argv[1], sys.argv[2]
-    assert command in ['clean', 'smudge'], command
-    assert 'toobfus' in filename or 'private' in filename, filename # This is via .gitattributes
+    assert command in ['clean', 'smudge', 'textconv-for-diff'], command
+    # assert 'toobfus' in filename or 'private' in filename, filename # This is via .gitattributes
     signature = 'U2FsdGVkX1'               # base64 encoding of "salted__"
-    s = sys.stdin.read(len(signature))
-    rest = sys.stdin.read()
     if command == 'clean':
+        s = sys.stdin.read(len(signature))
+        rest = sys.stdin.read()
         if s == signature:
             sys.stderr.write('Already starts with signature, so not encrypting.\n')
             sys.stdout.write(s)
@@ -40,17 +40,30 @@ if __name__ == '__main__':
             out, err = openssl_enc_command.communicate(input=s+rest)
             sys.stdout.write(out)
     elif command == 'smudge':
+        s = sys.stdin.read(len(signature))
+        rest = sys.stdin.read()
         if s != signature:
             sys.stderr.write('Does not start with signature, so not decrypting.\n')
             sys.stdout.write(s)
             sys.stdout.write(rest)
         else:
-            openssl_enc_command = subprocess.Popen(
-                ['openssl', 'enc', '-d', '-base64', '-aes-256-ctr', '-S', OPENSSL_SALT, '-k', OPENSSL_PASSPHRASE],
+            openssl_dec_command = subprocess.Popen(
+                ['openssl', 'enc', '-d', '-base64', '-aes-256-ctr', '-k', OPENSSL_PASSPHRASE],
                 stdin=subprocess.PIPE,
                 stdout=subprocess.PIPE
                 )
-            out, err = openssl_enc_command.communicate(input=s+rest)
+            out, err = openssl_dec_command.communicate(input=s+rest)
+            sys.stdout.write(out)
+    elif command == 'textconv-for-diff':
+            assert False
+            sys.stderr.write('Running textconv')
+            openssl_dec_command = subprocess.Popen(
+                ['openssl', 'enc', '-d', '-base64', '-aes-256-ctr', '-k', OPENSSL_PASSPHRASE, '-in', filename],
+                stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE
+                )
+            out, err = openssl_dec_command.communicate()
+            sys.stderr.write(err)
             sys.stdout.write(out)
     else:
-        raise ValueError('Unknown command %s: should be clean/smudge' % command)
+        raise ValueError('Unknown command %s: should be clean/smudge/textconv-for-diff' % command)
