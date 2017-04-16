@@ -8,9 +8,11 @@ hello.dvi: hello.tex
 	tex hello.tex
 	rm hello.log
 
+dvi2bitmap = ~/Downloads/dvi2bitmap-1.1rc1/dvi2bitmap
 mode = ibmvga
 xdpi = 110
 ydpi = 110
+# Need to round these dpi values to closest integer. E.g. aps 722.909 -> 723
 override xdpi := $(shell echo $(xdpi) | awk '{printf("%d\n",$$1 + 0.499)}')
 override ydpi := $(shell echo $(ydpi) | awk '{printf("%d\n",$$1 + 0.499)}')
 # $(info 'Rounded dpi to $(dpi)')
@@ -33,11 +35,13 @@ hello-$(mode).pbm: hello-$(mode).ps
 	cat hello-$(mode).ps | gs -sDEVICE=pbm -sOutputFile=hello-$(mode).pbm -r$(xdpi) -
 	rm hello-$(mode).ps
 
+
+
 # [dvi] -> dvi2bitmap -> [xbm]
 hello-$(mode).xbm: width = $(shell echo "$(xdpi) * 8.5" | bc -q)
 hello-$(mode).xbm: height = $(shell echo "$(xdpi) * 11" | bc -q) # Yes, xdpi here
 hello-$(mode).xbm: hello.dvi font-$(mode).pk
-	~/Downloads/dvi2bitmap-1.0/dvi2bitmap \
+	$(dvi2bitmap) \
 		--debug=p \
 		--font-gen=off \
 		--resolution=$(xdpi) \
@@ -52,7 +56,7 @@ hello-$(mode).xbm: hello.dvi font-$(mode).pk
 
 hello-crop-full: hello.dvi font-$(mode).pk
 #		--crop=right=0,bottom=0,absolute,left=0,top=0
-	~/Downloads/dvi2bitmap-1.0/dvi2bitmap \
+	$(dvi2bitmap) \
 		--debug=p \
 		--font-gen=off \
 		--resolution=$(xdpi) \
@@ -68,7 +72,7 @@ hello-crop-full: hello.dvi font-$(mode).pk
 
 hello-crop-part: hello.dvi font-$(mode).pk
 #		--crop=right=0,bottom=0,absolute,left=0,top=0
-	~/Downloads/dvi2bitmap-1.0/dvi2bitmap \
+	$(dvi2bitmap) \
 		--debug=p \
 		--font-gen=off \
 		--resolution=$(xdpi) \
