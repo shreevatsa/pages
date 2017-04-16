@@ -55,15 +55,17 @@ if __name__ == '__main__':
             out, err = openssl_dec_command.communicate(input=s+rest)
             sys.stdout.write(out)
     elif command == 'textconv-for-diff':
-            assert False
-            sys.stderr.write('Running textconv')
-            openssl_dec_command = subprocess.Popen(
-                ['openssl', 'enc', '-d', '-base64', '-aes-256-ctr', '-k', OPENSSL_PASSPHRASE, '-in', filename],
-                stdin=subprocess.PIPE,
-                stdout=subprocess.PIPE
-                )
-            out, err = openssl_dec_command.communicate()
-            sys.stderr.write(err)
+        sys.stderr.write('Running textconv\n')
+        # pwd = subprocess.check_output('pwd')
+        # sys.stderr.write('pwd is %s\n' % pwd)
+        file_contents = open(filename).read()
+        sys.stderr.write('File starts as: %s\n' % file_contents[:10])
+        command = ['openssl', 'enc', '-d', '-base64', '-aes-256-ctr', '-k', OPENSSL_PASSPHRASE, '-in', filename]
+        try:
+            out = subprocess.check_output(command)
             sys.stdout.write(out)
+        except subprocess.CalledProcessError:
+            sys.stderr.write('The command %s failed\n' % command)
+            sys.stdout.write(open(filename).read())
     else:
         raise ValueError('Unknown command %s: should be clean/smudge/textconv-for-diff' % command)
