@@ -1,0 +1,130 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{xcolor}
+
+\def\shoutmyn#1{\expandafter\show\csname tikz@cc@n@#1\endcsname}
+
+\definecolor{c0}{HTML}{5A311D}
+\definecolor{c1}{HTML}{E18B4E}
+\definecolor{c2}{HTML}{4A1776}
+\definecolor{c3}{HTML}{C966DA}
+\definecolor{c4}{HTML}{04676C}
+\definecolor{c5}{HTML}{0CE7E1}
+\definecolor{c6}{HTML}{004692}
+\definecolor{c7}{HTML}{0082FF}
+\definecolor{c8}{HTML}{355128}
+\definecolor{c9}{HTML}{DF1C24}
+
+\begin{document}
+\newcommand{\distance}{6}
+
+\begin{tikzpicture}
+
+    % \foreach \a in {0,1,...,100}{
+    %     \node[draw=none](\a) at (\a/100*360: \distance) {} ;
+    % }
+    % \path (0) edge [bend right, color=c0] (9);
+
+    % \foreach \a in {0,1,...,100}{
+    %   \coordinate (\a) at (\a/100*360: \distance);
+    % }
+    % \path (0) edge [bend right, color=c0] (9);
+
+    % \foreach \digit in {0,1,...,100}{
+    %   \coordinate (\digit) at (\digit/100*360: \distance);
+    % }
+    % \path (0) edge [bend right, color=c0] (9);
+
+  % \foreach \digit in {0,1,...,10}{
+  %   \foreach \position in {0,1,...,10}{
+  %     \coordinate (\digit) at (\digit/100*360: \distance);
+  %   }
+  % }
+  % \path (0) edge [bend right, color=c0] (9);
+
+  % \foreach \digit in {0,1,...,10}{
+  %   \foreach \position in {0,1,...,10}{
+  %     \coordinate (\digit-\position) at (\digit/100*360: \distance);
+  %   }
+  % }
+  % \path (0-0) edge [bend right, color=c0] (9-1);
+
+  % \foreach \digit in {0,1,...,10}{
+  %   \foreach \position in {0,1,...,10}{
+  %     \coordinate (\digit-\position) at (\digit*360/10+\position*360/10/10: \distance);
+  %   }
+  % }
+  % \path (0-0) edge [bend right, color=c0] (9-1);
+
+  % \foreach \digit in {0,1,...,10}{
+  %   \foreach \position in {0,1,...,45}{
+  %     \coordinate (\digit-\position) at (\digit*360/10+\position*360/10/45: \distance);
+  %   }
+  % }
+  % \path (0-0) edge [bend right, color=c0] (9-1);
+
+  % \foreach \digit in {0,1,...,10}{
+  %   \foreach \position in {0,1,...,1000}{
+  %     \coordinate (3-\digit) at (\digit/100*360: \distance);
+  %     \coordinate (1-\digit) at (\digit/100*360: \distance);
+  %   }
+  % }
+
+  % \foreach \digit in {8,9,...,10}{
+  %   \foreach \position in {998,999,...,1000}{
+  %     \coordinate (\digit-\position) at (\digit/100*360: \distance);
+  %   }
+  % }
+  % \path (8-998) edge [bend right, color=c3] (10-1000);
+
+  % \foreach \digit in {8,9,...,10}{
+  %   \foreach \position in {998,999,...,1000}{
+  %     \coordinate (\digit-\position) at (\digit/10*360 + \position/1000/10*360: \distance);
+  %   }
+  % }
+  % \path (8-998) edge [bend right, color=c3] (10-1000);
+
+  % \foreach \digit in {0,1,...,9}{
+  %   \foreach \position in {0,1,...,100}{
+  %     \pgfmathsetlengthmacro{\angle}{\digit/10*360 + \position/100/10*360}
+  %     \coordinate (\digit-\position) at (\angle: \distance);
+  %   }
+  % }
+
+  \foreach \digit in {0,1,...,9}{
+    \foreach \position in {0,1,...,1000}{
+      \pgfmathsetlengthmacro{\angle}{\digit/10*360 + \position/100/10*360}
+      \coordinate (\digit-\position) at (\angle: \distance);
+    }
+  }
+
+  \directlua{dofile("pidigits.lua")}
+
+  % \path (3-0) edge [bend right, color=c3] (1-1);
+  % \path (1-1) edge [bend right, color=c1] (4-2);
+  % \path (4-2) edge [bend right, color=c4] (1-3);
+  % \path (1-3) edge [bend right, color=c1] (5-4);
+  % \path (5-4) edge [bend right, color=c5] (9-5);
+  % \path (9-5) edge [bend right, color=c9] (2-6);
+  % \path (2-6) edge [bend right, color=c2] (6-7);
+  % \path (9-7) edge [bend right, color=c6] (5-8);
+  % \path (5-8) edge [bend right, color=c5] (3-9);
+  % 112345569
+
+    % \foreach \digit in {0,1,...9}{
+    %   \coordinate (\digit) at (\digit/100*360: \distance);
+    % }
+    % \path (0) edge [bend right, color=c0] (9);
+
+    % \foreach \digit in {0,1,...9}{
+    %   \foreach \position in {0,1,...,10}{
+        % \coordinate (\digit-\position) at (\digit*1000/100*360: \distance);
+
+    %     % \pgfmathsetlengthmacro{\angle}{};
+    %     \node[draw=none](\digit) at (\digit/100*360: \distance) {} ;
+    %   }
+    % }
+    % \path (3-0) edge [bend right, color=c3] (1-1);
+\end{tikzpicture}
+\end{document}
