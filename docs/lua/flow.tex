@@ -19,9 +19,9 @@
 
 \begin{tikzpicture}
   \foreach \digit in {0,1,...,9}{
-    \foreach \position in {0,1,...,100}{
+    \foreach \position in {0,1,...,1000}{
       % Want to allocate range [36d .. 36(d+1)) to digit, but use only say 90% of the range.
-      \pgfmathsetlengthmacro{\angle}{\digit/10*360 + 0.90*\position/100/10*360}
+      \pgfmathsetlengthmacro{\angle}{\digit/10*360 + 0.9*\position/1000/10*360}
       \coordinate (\digit-\position) at (\angle: \distance);
     }
   }

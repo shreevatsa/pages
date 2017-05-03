@@ -7,7 +7,7 @@ function pi_digits()
     -- pi = 2 + (2, 2, 2, 2, 2, 2, ...) in base (1/3, 2/5, 3/7, 4/9, 5/11, 6/13,...)
     -- So to get the digits of pi, we just have to convert to the familiar base.
 
-    local n = 100  -- The number of digits we want.
+    local n = 1000  -- The number of digits we want.
     local len = math.floor(10 * n / 3) + 1  -- A value high enough (see Gibbons)
     local a = {}  -- Holds the number pi in base C. (Later: pi * 10^k after k steps.)
     for j = 1, len do
