@@ -1,12 +1,4 @@
-function str(arr)
-    local ret = ""
-    for key, value in pairs(arr) do
-            ret = ret.." "..value
-    end
-    return ret
-end
-
-function pi_digits_with_leading_zero()
+function pi_digits()
     -- Spigot algorithm by Rabinowitz and Wagon:
     -- http://www.cecm.sfu.ca/~jborwein/Expbook/Manuscript/Related%20files/spigot.pdf
 
@@ -18,7 +10,7 @@ function pi_digits_with_leading_zero()
     (Let us call this base C.)
     So to get the digits of pi, we just have to convert to the familiar base.
     --]]
-    local n = 1000 -- The number of digits we want.
+    local n = 100 -- The number of digits we want.
     local len = math.floor(10 * n / 3) + 1 -- Setting a value high enough.
     local a = {} -- Denotes the number (2, 2, 2, 2, ) in base C.
 
@@ -64,43 +56,3 @@ function pi_digits_with_leading_zero()
     -- The remaining digit, let's not throw it away.
     coroutine.yield(predigit)
 end
-
--- function pi_digits(put)
---     -- Calls `put` on each digit of pi.
---     local done = 0
---     for digit in coroutine.wrap(pi_digits_with_leading_zero) do
---         if done > 0 then
---             put(digit)
---         end
---         done = done + 1
---     end
--- end
-
-function p(digit)
-    print('This is a digit '..digit)
-    -- print(digit)
-end
-
-function edges()
-    local i = -1 -- The position of the digit being printed
-    local previous = nil
-    for digit in coroutine.wrap(pi_digits_with_leading_zero) do
-        if i >= 1 then
-            coroutine.yield({previous, i - 1, digit, i})
-        end
-        previous = digit
-        i = i + 1
-    end
-end
-
-function print_edges()
-    for edge in coroutine.wrap(edges) do
-        local d1 = edge[1]
-        local p1 = edge[2]
-        local d2 = edge[3]
-        local p2 = edge[4]
-        tex.print("\\path ("..d1.."-"..p1..") edge [bend right, color=c"..d1.."] ("..d2.."-"..p2..");")
-    end
-end
-
-print_edges()
