@@ -5,19 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
     </style>
-    <title>An example of a TeX format: Knuth's "recipe" format</title>
+    <title>An example of a TeX format: Knuth's “recipe” format</title>
   </head>
   <body>
-    <h1>An example of a TeX format: Knuth's "recipe" format</h1>
-    <p>In <i>TUGboat, Volume 8 (1987), No. 3</i>, Knuth published a short note called <a href="https://www.tug.org/TUGboat/tb08-3/tb19knut.pdf">Macros for Jill</a>. One of the two sets of macros the note mentions is one for writing recipe files.</p>
+    <h1>An example of a TeX format: Knuth's “recipe” format</h1>
+    <p>In <i>TUGboat, Volume 8 (1987), No. 3</i>, Knuth published a short note called <a href="https://www.tug.org/TUGboat/tb08-3/tb19knut.pdf">Macros for Jill</a>. One of the two sets of macros mentioned is one for entering family recipes, to print them on file cards.</p>
 
-    <p>With input like <a href="sample.tex">this</a>:</p>
+    <p>This is what its input and output looked like:</p>
 
-    <object data="sample.txt" type="text/plain" id="sample.tex" height=550 width=600></object>
+    <table>
+      <tr>
+        <th>Input (<a href="sample.tex">download</a>)</th>
+        <th>Output, page 1</th>
+        <th>Output, page 2</th>
+      </tr>
+      <tr>
+        <td>
+          <object data="sample.txt" type="text/plain" id="sample.tex" height=550 width=500></object>
+        </td>
+        <td style="vertical-align:top">
+          <img src="sample-1.svg">
+        </td>
+        <td style="vertical-align:top">
+          <img src="sample-2.svg">
+        </td>
+      </tr>
+    </table>
 
-    <p>it produced output like the following:</p>
+    <p>A thing to note here is how different this is from TeX formats like LaTeX or even plain TeX. The characters <tt>"</tt>, <tt>#</tt>, <tt>&lt;</tt>, <tt>&gt;</tt>, <tt>|</tt>, <tt>%</tt>, <tt>$</tt>, <tt>@</tt>, <tt>!</tt>, <tt>*</tt>, <tt>^</tt>, <tt>=</tt> all have meanings different from what they do in plain TeX or LaTeX: <tt>%</tt> is no longer the comment character, <tt>$</tt> no longer enters math mode, and so on.</p>
 
-    <p>A thing to note here is how different this is from TeX formats like LaTeX or even plain TeX. He writes:</p>
+    <p>What led to this design? He writes:</p>
     <blockquote>Jill worked out a system of codes that she found convenient for entering the data efficiently.</blockquote>
+    <p>…and then DEK <em>implemented</em> that system of codes. So even though each of the special characters has a specific meaning (<tt>%</tt> for baking temperature, <tt>|</tt> for preparation time, and so on) that would be familiar to the author, the input does not have to look verbose (no <tt>\begin{ingredients} … \end{ingredients}</tt>, say), and the markup stays minimal.</p>
+
+    <p>As I understand it, this is how DEK thought (or thinks) of TeX: for each application, such as writing <i>The Art of Computer Programming</i>, or writing <i>The TeXbook</i> (see <tt>manmac</tt>), or writing <i>Concrete Mathematics</i> (see <a href="https://ctan.org/pkg/gkpmac"><tt>gkpmac</tt></a>) or indeed for writing kitchen recipes, you would think about what sort of output you would like, how you would like to enter the input, and then come up with an appropriate TeX format, uniquely suited to that application.</p>
   </body>
 </html>
