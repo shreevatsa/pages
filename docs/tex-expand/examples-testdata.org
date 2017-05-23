@@ -1,0 +1,399 @@
+Examples that it has to work with.
+
+Good examples from `texdoc programm`.
+
+* Simple single macro, replacement with argument pattern
+
+#+BEGIN_SRC tex
+\def\macro#1-#2.{replacement with arguments: ‘#1’ and ‘#2’.}
+Invoking it: \macro a-s.
+#+END_SRC
+
+Should show steps:
+
+#+BEGIN_EXAMPLE tex
+Invoking it: \macro a-s haha
+             ^
+
+=> [State]: \macro has argument pattern #1-#2. and replacement text {replacement with arguments: ‘#1’ and ‘#2’.}
+
+Invoking it: \macro a-s haha
+                    ^
+
+=>
+
+Invoking it: \macro a-s haha
+                      ^
+
+=>
+
+Invoking it: replacement with arguments: ‘#1’ and ‘#2’. haha
+             ^
+#+END_EXAMPLE
+
+* Multiple macros being replaced
+
+#+BEGIN_SRC tex
+\def\macroone abc{\macrotwo}
+\def\macrotwo def{\macrothree}
+\def\macrothree#1{Got ‘#1’}
+\macroone abcdefg
+#+END_SRC
+
+Should show:
+
+#+BEGIN_EXAMPLE
+\macroone abcdefg
+^
+
+=> \macroone has argument pattern abc and replacement text \macrotwo
+
+\macrotwo defg
+^
+
+=> \macrotwo has argument pattern def and replacement text \macrothree
+
+\macrothree g
+
+=> \macrothree has argument pattern #1 and replacement text Got ‘#1’
+=> So we find #1 <- g, and replacement text Got ‘#1’ becomes:
+
+Got ‘g’
+#+END_EXAMPLE
+
+* expandafter
+
+#+BEGIN_SRC tex
+\def\point(#1,#2){we do something with #1 and #2}
+\def\temp{(42,1234)}
+\expandafter\point\temp
+#+END_SRC
+
+Should show:
+
+#+BEGIN_EXAMPLE
+\expandafter\point\temp
+^
+
+=> Workings of expandafter:
+=> first_token: \point, second_token: \temp
+=> expand \temp (Should we show workings of expansion here?): (42, 1234)   [This example illustrates that we need a stack.]
+=> insert first token
+
+\point(42, 1234)
+
+=> \point has argument pattern (#1,#2) and replacement text we do something with #1 and #2
+=> So we set #1 <- 42 and #2 <- 1234 and replacement text becomes:
+
+we do something with 42 and 1234
+#+END_EXAMPLE
+
+[This example illustrates that we need a stack.]
+
+Also some sort of animation for showing the matches and assignments (to #1, #2, etc).
+
+Also replay?
+
+And higlighting of unread text in a different colour.
+
+* multiple expandafter
+
+#+BEGIN_SRC tex
+\def\theimportantmacro#1{I got the pre-assembled argument ‘#1’ here.}
+\def\temp{xyz}
+\expandafter\theimportantmacro\expandafter{\temp}
+#+END_SRC
+
+Should show:
+#+BEGIN_EXAMPLE
+\expandafter\theimportantmacro\expandafter{\temp}
+^           ^
+
+=> [Save stack, and go into expansion of...]
+
+      \expandafter{\temp
+
+      =>
+
+      {xyz
+
+   So:
+
+\theimportantmacro {xyz}
+^                  ^   ^
+
+=>
+
+I got the pre-assembled argument ‘xyz’ here.
+#+END_EXAMPLE
+
+
+* another multiple expandafter with nested defs
+
+#+BEGIN_SRC tex
+\def\macroone{This is macro one \macrotwo}
+\def\macrotwo{--2--}
+\def\macrothree#1{\def\macrofour{4[#1]}}
+\expandafter\macrothree\expandafter{\macroone}%
+So far, nothing has been typeset. But now: \macrofour.
+\message{We have macrofour = \meaning\macrofour}%
+#+END_SRC
+
+* defs with expandafters
+
+#+BEGIN_SRC tex
+\def\a{3}
+\def\b{2\a}
+\def\c{1\b}
+\def\d{value=\c}
+\message{Macro ‘d’ is defined to be ‘\meaning\d’}
+\edef\d{value=\c}
+\message{Macro ‘d’ is e-defined to be ‘\meaning\d’}
+\expandafter\def\expandafter\d\expandafter{\c}
+\message{Macro ‘d’ is defined to be ‘\meaning\d’ using expandafter}
+#+END_SRC
+
+This shows that we should also show the effect of \def and \edef happening: the changes to eqtb.
+
+#+BEGIN_EXAMPLE
+\expandafter\def\expandafter\d\expandafter{\c}
+^
+
+=> first token is \def, second is the \expandafter after it.
+   Expand the second token: \expandafter
+
+   => first token is \d, second is the \expandafter after it.
+      Expand the second token: \expandafter
+
+      => first token is {, second is \c
+         Expand the second token: \c
+         Expands to 1\b
+         Together, {1\b
+
+      Expands to {1\b
+      Together, \d{1\b
+
+   Expands to \d{1\b
+   Together, \def\d{1\b
+
+\def\d{1\b}
+#+END_EXAMPLE
+
+This shows that in the HTML we need nested boxes for display. With no wrapping: horizontal scroll if necessary. Maybe each nested level goes in a different colour. And is collapsible.
+
+Obviously, we will have different box forms for:
+- expansion
+- each primitive like `\def` and `\expandafter`
+- etc.
+
+Do these boxes also need to show stuff they "emit"? Or is it just a line and unemitted stuff just comes below?
+
+* Groups and smuggle
+
+#+BEGIN_SRC tex
+\def\smuggle#1\endgroup{%
+    \expandafter\endgroup\expandafter\def\expandafter#1\expandafter{#1}%
+}
+\begingroup
+    \def\variable{12}
+    \edef\variable{\variable34}
+    \edef\variable{\variable56}
+    \smuggle\variable
+\endgroup
+#+END_SRC
+
+-- This is like the `\expandafter\fi` (or whatever) trick:
+
+#+BEGIN_EXAMPLE
+\begingroup
+    \def\variable{12}
+    \edef\variable{\variable34}
+    \edef\variable{\variable56}
+    \smuggle\variable
+\endgroup
+
+=>
+
+  \begingroup [and looking for \endgroup]
+  \def\variable{12}
+  \edef\variable{\variable34}
+  \edef\variable{\variable56}
+  \smuggle\variable \endgroup
+  ^
+
+  => here \smuggle has argument template #1\endgroup, and replacement text \expandafter\endgroup\expandafter\def\expandafter#1\expandafter{#1}
+
+  \expandafter\endgroup\expandafter\def\expandafter\variable\expandafter{\variable}
+
+  => First token is \endgroup
+     Second token is \expandafter
+     => First token is \def
+        Second token is \expandafter
+        => First token is \variable
+           Second token is \expandafter
+           => First token is {
+              Second token is \variable
+              Expands to VARVALUE
+              Together: {VARVALUE
+           Expands to {VARVALUE
+           Together: \variable{VARVALUE
+        Expands to \variable{VARVALUE
+        Together: \def\variable{VARVALUE
+     Expands to \def\variable{VARVALUE
+     Together: \endgroup\def\variable{VARVALUE
+Then the final } is read.
+#+END_EXAMPLE
+
+* "if" primitives
+
+\ifnum, \ifdim, \ifx
+
+Also `\if<tokens><true-block>\else<false-block>\fi` where first two unexpandable tokens in <tokens> are compared.
+
+And maybe \iftrue and \iffalse
+
+#+BEGIN_SRC tex
+\def\shownexttoken#1{The next token is ‘\texttt{\string#1}’.}
+\def\mymacro{%
+     \ifnum1=1 %
+         \expandafter\shownexttoken%
+\fi% }%
+\mymacro 23
+#+END_SRC
+
+#+BEGIN_QUOTE
+Whenever it encounters an \if... statement, [TeX] evaluates it and scans tokens to find the matching end part (either an \else or an \fi token). But it will not expand tokens during this scan, although it will count nested \if...\fi pairs!
+#+END_QUOTE
+
+What goes on, *without* the \expandafter (need to check this -- I'm not sure I understand it correctly)
+
+#+BEGIN_EXAMPLE
+\def\mymacro{\ifnum1=1 \shownexttoken\fi}
+\mymacro 23
+
+=>
+
+\ifnum1=1 \shownexttoken\fi 23
+
+=>
+
+\shownexttoken\fi 23 [and looking for \fi]
+
+=>
+
+The next token is ‘\texttt{\string\fi}’. 23 [and looking for \fi]
+#+END_EXAMPLE
+
+What goes in, *with* the \expandafter (need to check this -- I'm not sure I understand it correctly)
+
+
+#+BEGIN_EXAMPLE
+\def\mymacro{\ifnum1=1 \expandafter\shownexttoken \fi }
+\mymacro 23
+
+=>
+
+\ifnum1=1 \expandafter\shownexttoken \fi 23
+
+=>
+
+\expandafter\shownexttoken\fi 23 [and looking for \fi]
+
+=>
+
+\shownexttoken\fi 23 [and looking for \fi]
+
+=> [found \fi]
+
+\shownexttoken 23
+
+=>
+
+The next token is ‘2’.3
+#+END_EXAMPLE
+
+* Loops over counters
+
+Need to illustrate the difference between
+
+#+BEGIN_SRC tex
+\long\def\countingloop#1 in #2:#3#4{%
+#1=#2 %
+\loopcounter{#1}{#3}{#4}%
+}
+\long\def\loopcounter#1#2#3{%
+#3%
+\ifnum#1=#2 %
+\else%
+\advance#1 by1 %
+\loopcounter{#1}{#2}{#3}%
+\fi%
+}
+\countingloop{\count0} in 0:{3}{%
+The current value is ‘\the\count0’\par
+}
+#+END_SRC
+
+(note the multiple \fi get nested)
+
+and
+
+#+BEGIN_SRC tex
+\long\def\countingloop#1 in #2:#3#4{%
+#1=#2 %
+\loopcounter{#1}{#3}{#4}%
+}
+\long\def\loopcounter#1#2#3{%
+#3%
+\ifnum#1=#2 %
+\let\next=\relax%
+\else
+\advance#1 by1 %
+\def\next{\loopcounter{#1}{#2}{#3}}%
+\fi
+\next
+}
+\newcount\ourcounter
+\countingloop{\ourcounter} in 0:{3}{%
+The current value is ‘\the\ourcounter’\par
+}
+#+END_SRC
+
+* Loops over lists
+
+#+BEGIN_SRC tex
+\def\listingloopENDMARKER{\par \listingloopENDMARKER}
+\long\def\listingloop#1in#2#3{%
+\looppicker{#1}{#3}#2,\listingloopENDMARKER,%
+}%
+\long\def\looppicker#1#2#3,{%
+\def\tempitem{#3}%
+\ifx\tempitem\listingloopENDMARKER
+\let\next=\relax%
+\else
+\def#1{#3}%
+#2%
+\def\next{\looppicker{#1}{#2}}%
+\fi
+\next
+}%
+\listingloop\x in{a,b,c,,d,e}{%
+The current item is ‘\x’
+}
+#+END_SRC
+
+could show:
+
+#+BEGIN_EXAMPLE
+\def\listingloopENDMARKER{\par \listingloopENDMARKER}
+=> updated eqtb entry for \listingloopENDMARKER
+
+\long\def\listingloop#1in#2#3{%
+\looppicker{#1}{#3}#2,\listingloopENDMARKER,%
+}%
+=> updated eqtb entry for \listingloop
+
+\long\def\looppicker#1#2#3,
+=>
+
+#+END_EXAMPLE

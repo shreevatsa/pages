@@ -1,0 +1,33 @@
+qpdf 12kA_lct_EN.pdf --pages 12kA_lct_EN.pdf 11-12 -- images.pdf
+qpdf --stream-data=uncompress --qdf --show-pages --with-images images.pdf
+
+#+BEGIN_QUOTE
+page 1: 180 0 R
+  images:
+    /Image54: 185 0 R, 789 x 598    (Monotype machine)
+    /Image55: 186 0 R, 538 x 634    (Monotype equation)
+    /Image56: 187 0 R, 625 x 461    (1st edition)
+    /Image57: 188 0 R, 536 x 842    (Phototypesetting)
+    /Image58: 189 0 R, 784 x 601    (h in pixels)
+    /Image59: 190 0 R, 633 x 455    (Copy of equation??)
+  content:
+    182 0 R
+page 2: 181 0 R
+  images:
+    /Image62: 192 0 R, 921 x 465    (XGP)
+    /Image63: 193 0 R, 533 x 673    (2nd edition)
+    /Image64: 194 0 R, 540 x 679    (ffi)
+    /Image65: 195 0 R, 929 x 682    (fffiling)
+    /Image66: 196 0 R, 534 x 832    (y)
+    /Image67: 197 0 R, 533 x 841    (japanese)
+  content:
+    191 0 R
+#+END_QUOTE
+
+So I want:
+Image56 = 1969-monotype-first-edition
+Image57 = 1976-phototypesetting-galleyv2
+Image62 = 1978-texmetafont-xgp
+Image63 = 1981-texmetafont-second-edition
+
+> qpdf --stream-data=uncompress --qdf images.pdf out

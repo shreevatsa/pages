@@ -1,0 +1,15 @@
+This is dvi2bitmap version 1.0, 2015 January 12
+PkFont::PkFont cmr10 c=1274110073 s=655360 d=655360
+PkFont::magnification: 655360/655360 * 1 = 1
+PkFont::find_font: cmr10, checksum=1274110073, res 8000*PkFont::magnification: 655360/655360 * 1 = 1
+1 = 8000 (fontSearchStrategies_=5)
+PkFont::magnification: 655360/655360 * 1 = 1
+PkFont::magnification: 655360/655360 * 1 = 1
+PkFont::substitute_font_string (fmt=/Library/TeX/texbin/kpsewhich pk %f.%dpk mode=dpdfezzz fontname=cmr10 dpi=8000 basedpi=8000 magnification=1
+PkFont::find_font: running cmd </Library/TeX/texbin/kpsewhich pk cmr10.8000pk>...
+    ...produced </Users/srajagopalan/Library/texlive/2015/texmf-var/fonts/pk/dpdfezzz/public/cm/cmr10.8000pk> (status=1)
+PkFont::read_font cmr10 'METAFONT output 2017.04.09:0130' designSize=10 cs=1274110073 hppp=110.696 vppp=110.696...
+PkFont::read_font ...finished reading cmr10
+Opened font /Users/srajagopalan/Library/texlive/2015/texmf-var/fonts/pk/dpdfezzz/public/cm/cmr10.8000pk successfully
+PkFont::magnification: 655360/655360 * 1 = 1
+Quad=655360 dvi units

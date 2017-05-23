@@ -1,0 +1,140 @@
+* Get the sources
+#+BEGIN_SRC sh
+  cd
+  mkdir tex; cd tex
+  mkdir full; cd full
+  rsync -a --delete --exclude=.svn tug.org::tldevsrc .
+  cd ~/tex/full/Build/source/
+#+END_SRC
+
+* Install dependencies
+#+BEGIN_SRC sh
+sudo apt-get install libfontconfig-dev libx11-dev libxmu-dev libxaw7-dev texi2html texinfo bison
+#+END_SRC
+
+* Build
+** Without AFL
+#+BEGIN_SRC sh
+cd ~/tex/full/Build
+./Build --no-clean  # Can remove --no-clean if it causes errors.
+#+END_SRC
+
+** With AFL
+#+BEGIN_SRC sh
+sudo apt-get install afl
+CC=/usr/bin/afl-gcc CXX=/usr/bin/afl-g++ ./Build --disable-shared
+#+END_SRC
+
+* Install
+#+BEGIN_SRC sh
+cd ../../../full/Master
+./install-tl
+#+END_SRC
+
+* Will this work?
+cd ~/tex/full/Master
+cd bin/
+cd x86_64-linux/
+cp ~/tex/sources/source/inst/bin/x86_64-pc-linux-gnu/tex .
+
+Trying this:
+
+./Build --disable-all-pkgs --enable-tex
+
+(from inside /home/shreevatsa/tex/full/Build/source/Work)
+../configure --disable-all-pkgs --enable-tex-synctex -C
+
+--disable-tex
+--disable-all-pkgs
+--disable-native-texlive-build
+--disable-option-checking
+--disable-web2c
+--disable-missing
+--disable-silent-rules
+
+#+BEGIN_SRC sh
+cd tex/full/Build/source/Work
+../configure -C --disable-afm2pl --disable-dvipsk --disable-mkocp-default --disable-synctex --disable-aleph --disable-dvisvgm --disable-mkofm-default --disable-t1dotlessj --disable-eptex --disable-mktexfmt-default --disable-t1lint --disable-auto-cfftot1 --disable-eptex-synctex --disable-t1rawafm --disable-autosp --disable-etex-synctex --disable-mktexpk-default --disable-t1reencode --disable-auto-t1dotlessj --disable-euptex --disable-mktexmf-default --disable-mktextfm-default --disable-t1testpage --disable-auto-ttftotype42 --disable-euptex-synctex --disable-mmafm --disable-t1utils --disable-auto-updmap --disable-mmpfb --disable-bibtex8 --disable-gregorio --disable-mp --disable-tex4htk --disable-bibtexu --disable-gsftopk --disable-m-tx --disable-texdoctk --disable-bibtex-x --disable-ipc --disable-musixtnt --disable-texlive --disable-cfftot1 --disable-lacheck --disable-tpic2pdftex --disable-chktex --disable-largefile --disable-ttf2pk2 --disable-cjkutils --disable-lcdf-typetools --disable-otfinfo --disable-ttfdump --disable-debug --disable-libtool-lock --disable-otftotfm --disable-ttftotype42 --disable-dependency-tracking --disable-linked-scripts --disable-pdftex --disable-upmendex --disable-detex --disable-luajittex --disable-pdftex-synctex --disable-upmp --disable-devnag --disable-luatex --disable-pmp --disable-uptex --disable-dtl --disable-makeindexk --disable-pmx --disable-uptex-synctex --disable-dump-share --disable-makejvf --disable-ps2eps --disable-vlna --disable-dvi2tty --disable-mendexk --disable-ps2pk --disable-dvidvi --disable-mf --disable-psutils --disable-web-progs --disable-dviljk --disable-mflua --disable-ptex --disable-xdvik --disable-dvipdfm-x --disable-mfluajit --disable-ptex-synctex --disable-xetex --disable-dvipng --disable-mf-nowin --disable-seetexk --disable-xetex-synctex --disable-dvipos  --disable-xpdfopen
+
+make
+cd texk/web2c/
+make
+cp tex ~/texlive-modified/bin/x86_64-linux/
+
+cd /tmp
+~/texlive-modified/bin/x86_64-linux/fmtutil-sys --byfmt=tex
+~/texlive-modified/bin/x86_64-linux/tex test.tex
+#+END_SRC
+
+This works!
+* Debugging "Build"
+
+Builds everything and fails on triptrap:
+#+BEGIN_SRC sh
+cd tex/full/Build/source/
+./Build --no-clean --disable-ptex --disable-eptex --disable-uptex --disable-euptex
+#+END_SRC
+
+So I'm trying to find out what it does:
+
+#+BEGIN_SRC sh
+cd tex/full/Build/source/
+set -x
+./Build | grep '^+'
+#+END_SRC
+
+The output is:
+#+BEGIN_EXAMPLE
++ grep --color=auto '^+'
++ ./Build
++ eval ../configure --prefix=/home/shreevatsa/tex/full/Build/source/inst --datadir=/home/shreevatsa/tex/full/Build/source/inst --disable-missing --enable-largefile --disable-shared --with-xdvi-x-toolkit=xaw
++ ../configure --prefix=/home/shreevatsa/tex/full/Build/source/inst --datadir=/home/shreevatsa/tex/full/Build/source/inst --disable-missing --enable-largefile --disable-shared --with-xdvi-x-toolkit=xaw
++ eval true
++ true
++ eval make world
++ make world
+#+END_EXAMPLE
+
+Or:
+
+#+BEGIN_SRC sh
+./Build --no-clean --disable-ptex --disable-eptex --disable-uptex --disable-euptex | grep '^+'
+#+END_SRC
+#+BEGIN_EXAMPLE
++ grep --color=auto '^+'
++ ./Build --no-clean --disable-ptex --disable-eptex --disable-uptex --disable-euptex
++ eval ../configure --prefix=/home/shreevatsa/tex/full/Build/source/inst --datadir=/home/shreevatsa/tex/full/Build/source/inst --disable-missing --enable-largefile --disable-shared --with-xdvi-x-toolkit=xaw --disable-ptex --disable-eptex --disable-uptex --disable-euptex
++ ../configure --prefix=/home/shreevatsa/tex/full/Build/source/inst --datadir=/home/shreevatsa/tex/full/Build/source/inst --disable-missing --enable-largefile --disable-shared --with-xdvi-x-toolkit=xaw --disable-ptex --disable-eptex --disable-uptex --disable-euptex
++ eval true
++ true
++ eval make world
++ make world
+#+END_EXAMPLE
+
+Something is wrong: where's the cd?
+
+* Understanding "Build"
+
+Basically equivalent to:
+
+#+BEGIN_SRC sh
+cd Work
+../configure --prefix=/home/shreevatsa/tex/full/Build/source/inst --datadir=/home/shreevatsa/tex/full/Build/source/inst --disable-missing --enable-largefile --disable-shared --with-xdvi-x-toolkit=xaw --disable-ptex --disable-eptex --disable-uptex --disable-euptex
+make world # Will fail on check
+#+END_SRC
+
+So from start to end, I can run
+
+** One-time setup
+#+BEGIN_SRC sh
+cd /home/shreevatsa/tex/full/Build/source/Work
+../configure --prefix=/home/shreevatsa/tex/full/Build/source/inst --datadir=/home/shreevatsa/tex/full/Build/source/inst --disable-missing --enable-largefile --disable-shared --with-xdvi-x-toolkit=xaw --disable-ptex --disable-eptex --disable-uptex --disable-euptex
+make world # Will fail on check
+#+END_SRC
+
+** Each time
+
+After editing (~emacsclient -n ~/tex/full/Build/source/texk/web2c/tex.web~) do
+#+BEGIN_SRC sh
+cd ~/tex/full/Build/source/Work/texk/web2c && make tex && cd /tmp && cp ~/tex/full/Build/source/Work/texk/web2c/tex ~/texlive-modified/bin/x86_64-linux/ && ~/texlive-modified/bin/x86_64-linux/fmtutil-sys --byfmt=tex && ~/texlive-modified/bin/x86_64-linux/tex ~/test.tex
+#+END_SRC

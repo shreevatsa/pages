@@ -1,0 +1,167 @@
+\documentclass{article}
+\usepackage{unravel}
+\begin{document}
+\section{Hello}
+
+This is an enumeration.
+
+\begin{enumerate}
+\item First item
+\unravel{\item Second item}
+
+\item Second item
+
+=>
+
+\@inmatherr \item \@ifnextchar [\@item {\@noitemargtrue \@item [\@itemlabel ]}Second item
+=
+\@inmatherr
+    \item
+\@ifnextchar [\@item {\@noitemargtrue \@item [\@itemlabel ]}Second item
+
+=>
+
+\relax \ifmmode \@latex@error {Command \protect \item  invalid in math mode}\@ehc \fi
+\@ifnextchar [\@item {\@noitemargtrue \@item [\@itemlabel ]}Second item
+=
+\relax
+\ifmmode \@latex@error {Command \protect \item  invalid in math mode}\@ehc \fi
+\@ifnextchar [\@item {\@noitemargtrue \@item [\@itemlabel ]}Second item
+
+=>
+
+\ifmmode \@latex@error {Command \protect \item  invalid in math mode}\@ehc \fi
+\@ifnextchar [\@item {\@noitemargtrue \@item [\@itemlabel ]}Second item
+= (I'm just guessing here: \ifmmode is a primitive)
+\ifmmode
+    \@latex@error {Command \protect \item  invalid in math mode}\@ehc \fi
+\@ifnextchar [\@item {\@noitemargtrue \@item [\@itemlabel ]}Second item
+
+=>
+
+\@ifnextchar [\@item {\@noitemargtrue \@item [\@itemlabel ]}Second item
+=
+\@ifnextchar
+    [
+    \@item
+    {\@noitemargtrue \@item [\@itemlabel ]}
+Second item
+
+=>
+
+\let \reserved@d =[\def \reserved@a {\@item }\def \reserved@b {\@noitemargtrue \@item [\@itemlabel ]}\futurelet \@let@token \@ifnch
+Second item
+=
+\let \reserved@d =[
+\def \reserved@a {\@item }\def \reserved@b {\@noitemargtrue \@item [\@itemlabel ]}\futurelet \@let@token \@ifnch
+Second item
+
+=> Set \reserved@d to the character [
+
+\def \reserved@a {\@item }\def \reserved@b {\@noitemargtrue \@item [\@itemlabel ]}\futurelet \@let@token \@ifnch
+Second item
+=
+\def \reserved@a {\@item }
+\def \reserved@b {\@noitemargtrue \@item [\@itemlabel ]}\futurelet \@let@token \@ifnch
+Second item
+
+=> Set \reserved@a to the macro \@item
+
+\def \reserved@b {\@noitemargtrue \@item [\@itemlabel ]}\futurelet \@let@token \@ifnch
+Second item
+=
+\def \reserved@b {\@noitemargtrue \@item [\@itemlabel ]}
+\futurelet \@let@token \@ifnch
+Second item
+
+=> Set \reserved@b to the macro \@noitemargtrue \@item [\@itemlabel ]
+
+\futurelet \@let@token \@ifnch
+Second item
+=
+\futurelet
+    \@let@token
+    \@ifnch
+    S
+econd item
+
+=> Set \@let@token to the letter S
+
+\@ifnch Second item
+
+=>
+
+\ifx \@let@token \@sptoken \let \reserved@c \@xifnch \else \ifx \@let@token \reserved@d \let \reserved@c \reserved@a \else \let \reserved@c \reserved@b \fi \fi \reserved@c Second item
+=
+\ifx
+    \@let@token
+    \@sptoken
+  \let \reserved@c \@xifnch
+  \else
+    \ifx \@let@token \reserved@d \let \reserved@c \reserved@a \else \let \reserved@c \reserved@b \fi \fi \reserved@c Second item
+
+=> (As the comparison \ifx \@let@token \@sptoken turns out to be false)
+
+\ifx \@let@token \reserved@d \let \reserved@c \reserved@a \else \let \reserved@c \reserved@b \fi \fi \reserved@c Second item
+=
+\ifx
+    \@let@token
+    \reserved@d
+  \let \reserved@c \reserved@a
+  \else
+    \let \reserved@c \reserved@b \fi \fi \reserved@c Second item
+
+=> (As the comparison \ifx \@let@token \reserved@d turns out to be false)
+
+\let \reserved@c \reserved@b \fi \fi \reserved@c Second item
+=
+\let \reserved@c \reserved@b
+\fi \fi \reserved@c Second item
+
+=> Set \reserved@c to the replacement text of \reserved@b which was earlier defined as \@noitemargtrue \@item [\@itemlabel ]
+
+\fi \fi \reserved@c Second item
+
+=>
+
+\fi \reserved@c Second item
+
+=>
+
+\reserved@c Second item
+
+=>
+
+\@noitemargtrue \@item [\@itemlabel ]Second item
+=
+\@noitemargtrue
+\@item [\@itemlabel ]Second item
+
+=>
+
+\let \if@noitemarg \iftrue
+\@item [\@itemlabel ]Second item
+
+=> Set \if@noitemarg to \iftrue
+
+\@item [\@itemlabel ]Second item
+=
+\@item
+    [\@itemlabel]
+Second item
+
+=>
+
+|> \if@noparitem \@donoparitem \else \if@inlabel \indent \par \fi \ifhmode
+|> \unskip \unskip \par \fi \if@newlist \if@nobreak \@nbitem \else \addpenalty
+|> \@beginparpenalty \addvspace \@topsep \addvspace {-\parskip }\fi \else
+|> \addpenalty \@itempenalty \addvspace \itemsep \fi \global \@inlabel... (650
+|> chars)
+
+=>
+
+\item Third item
+\end{enumerate}
+
+
+\end{document}

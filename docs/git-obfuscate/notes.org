@@ -1,0 +1,12 @@
+See https://gist.github.com/shadowhand/873637 and https://git-scm.com/docs/gitattributes
+
+The problem is that the latter recommends:
+#+BEGIN_QUOTE
+For best results, clean should not alter its output further if it is run twice ("clean→clean" should be equivalent to "clean"), and multiple smudge commands should not alter clean's output ("smudge→smudge→clean" should be equivalent to "clean").
+#+END_QUOTE
+
+This means that "clean" needs to peek at stdin and leave files starting with "U2FsdGVkX1" alone (not further "enc" them).
+
+Similarly, "smudge" should only work on files starting with "U2FsdGVkX1" (other ones should be passed through).
+
+Unfortunately, "clean" and "smudge" take input from stdin.

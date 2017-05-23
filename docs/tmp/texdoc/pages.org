@@ -1,0 +1,17 @@
+#+BEGIN_SRC python
+files = !find . -iname '*.pdf'
+
+pages_pdf = {}
+for f in files:
+  if f in pages_pdf: continue
+  print f
+  try:
+    pages = !pdfinfo $f | grep Pages
+    if len(pages) > 1:
+      print pages
+    assert pages[-1].startswith('Pages:')
+    num = pages[-1].split()[-1]
+    pages_pdf[f] = num
+  except Exception as e:
+    print 'Ignoring error', e
+#+END_SRC

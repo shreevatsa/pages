@@ -1,0 +1,7 @@
+In 2016, DEK gave two talks on "Hamiltonian Paths in Antiquity".
+
+https://youtu.be/4UFkH5ZlVqQ?t=293
+
+5:44 Today I'm going to tell you a story that I don't think has ever been told before and it's just waiting to really be told properly because I'm only - I've only done the initial investigation into it.
+
+So as I'm writing my books of course one of the important topics that I'll be that I want to discuss as part of The Art of Computer Programming ... is the whole idea of Hamiltonian paths and one of the things I try hardest to do in my books is to try to get the history right. And so I've been learning over the years more and more things about Hamiltonian paths and especially last year and this year some things I think you'll find as surprising as I did. I couldn't wait for the historians to tell this story because they don't get Hamiltonian paths. So here I'm going to tell you what I know about it so far and presumably there's a lot more will be remained to be told.

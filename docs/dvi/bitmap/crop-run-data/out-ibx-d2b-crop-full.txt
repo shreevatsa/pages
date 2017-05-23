@@ -1,0 +1,16 @@
+This is dvi2bitmap version 1.0, 2015 January 12
+PkFont::PkFont cmr10 c=1274110073 s=655360 d=655360
+PkFont::magnification: 655360/655360 * 1 = 1
+PkFont::find_font: cmr10, checksum=1274110073, res 9600*PkFont::magnification: 655360/655360 * 1 = 1
+1 = 9600 (fontSearchStrategies_=5)
+PkFont::magnification: 655360/655360 * 1 = 1
+PkFont::magnification: 655360/655360 * 1 = 1
+PkFont::substitute_font_string (fmt=/Library/TeX/texbin/kpsewhich pk %f.%dpk mode=ibx fontname=cmr10 dpi=9600 basedpi=9600 magnification=1
+PkFont::find_font: running cmd </Library/TeX/texbin/kpsewhich pk cmr10.9600pk>...
+    ...produced </Users/srajagopalan/Library/texlive/2015/texmf-var/fonts/pk/ibx/public/cm/cmr10.9600pk> (status=1)
+PkFont::read_font cmr10 'METAFONT output 2017.04.09:0130' designSize=10 cs=1274110073 hppp=132.835 vppp=132.835...
+PkFont::read_font ...finished reading cmr10
+Opened font /Users/srajagopalan/Library/texlive/2015/texmf-var/fonts/pk/ibx/public/cm/cmr10.9600pk successfully
+PkFont::magnification: 655360/655360 * 1 = 1
+Quad=655360 dvi units
+libc++abi.dylib: terminating with unexpected exception of type std::bad_alloc: std::bad_alloc

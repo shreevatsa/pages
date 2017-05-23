@@ -1,0 +1,25 @@
+#+TITLE: Notes on TeX expansion: the syntactic routines in TeX the program
+
+* Introduction
+In /TeX: The Program/ part 21 *Introduction to the syntactic routines*, Knuth writes:
+
+#+BEGIN_QUOTE
+Let's pause a moment now and try to look at the Big Picture.
+The TeX program consists of three main parts: syntactic routines,
+semantic routines, and output routines. The chief purpose of the
+syntactic routines is to deliver the user's input to the semantic routines,
+one token at a time. The semantic routines act as an interpreter
+responding to these tokens, which may be regarded as commands.
+#+END_QUOTE
+
+So the syntactic routines are what act as the "eyes and mouth" of TeX, which turn the input into a sequence of "commands" passed to the "stomach". They take care of understanding catcodes, expanding macros, evaluating conditionals, and so on.
+
+* Code
+
+Before we begin, a disclaimer: The code uses global variables. TeX is a program first written (in some form) in the late 1970s, to run on the hardware of the time. It had constraints of memory and efficiency. Plus, it was written by a programmer who began programming in the 1950s, with a unique way of thinking and an outstanding ability to keep track of a lot of details.
+
+The TeX program takes your input (from your file, say) and scans it: puts it into a buffer, and then calls a procedure called ~get_next~ to get what's next.
+
+This procedure, the “keystone of TeX's input mechanism” sets three global variables:
+
+- ~cur_cmd~

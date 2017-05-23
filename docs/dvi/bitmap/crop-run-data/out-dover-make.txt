@@ -1,0 +1,62 @@
+mktexpk --mfmode dover --bdpi 384 --mag 1 --dpi 384 cmr10
+mktexpk: Running mf-nowin -progname=mf \mode:=dover; mag:=1; nonstopmode; input cmr10
+This is METAFONT, Version 2.7182818 (TeX Live 2015) (preloaded base=mf)
+
+(/usr/local/texlive/2015/texmf-dist/fonts/source/public/cm/cmr10.mf
+(/usr/local/texlive/2015/texmf-dist/fonts/source/public/cm/cmbase.mf)
+(/usr/local/texlive/2015/texmf-dist/fonts/source/public/cm/roman.mf
+(/usr/local/texlive/2015/texmf-dist/fonts/source/public/cm/romanu.mf [65]
+[66] [67] [68] [69] [70] [71] [72] [73] [74] [75] [76] [77] [78] [79] [80]
+[81] [82] [83] [84] [85] [86] [87] [88] [89] [90])
+(/usr/local/texlive/2015/texmf-dist/fonts/source/public/cm/romanl.mf [97]
+[98] [99] [100] [101] [102] [103] [104] [105] [106] [107] [108] [109] [110]
+[111] [112] [113] [114] [115] [116] [117] [118] [119] [120] [121] [122])
+(/usr/local/texlive/2015/texmf-dist/fonts/source/public/cm/greeku.mf [0]
+[1] [2] [3] [4] [5] [6] [7] [8] [9] [10])
+(/usr/local/texlive/2015/texmf-dist/fonts/source/public/cm/romand.mf [48]
+[49] [50] [51] [52] [53] [54] [55] [56] [57])
+(/usr/local/texlive/2015/texmf-dist/fonts/source/public/cm/romanp.mf [36]
+[38] [63] [62])
+(/usr/local/texlive/2015/texmf-dist/fonts/source/public/cm/romspl.mf [16]
+[17] [25] [26] [27] [28])
+(/usr/local/texlive/2015/texmf-dist/fonts/source/public/cm/romspu.mf [29]
+[30] [31]) (/usr/local/texlive/2015/texmf-dist/fonts/source/public/cm/punct.mf
+[33] [60] [35] [37] [39] [40] [41] [42] [43] [44] [46] [47] [58] [59] [61]
+[64] [91] [93] [96])
+(/usr/local/texlive/2015/texmf-dist/fonts/source/public/cm/accent.mf [18]
+[19] [20] [21] [22] [23] [24] [32] [94] [95] [125] [126] [127])
+(/usr/local/texlive/2015/texmf-dist/fonts/source/public/cm/romlig.mf [11]
+[12] [13] [14] [15])
+(/usr/local/texlive/2015/texmf-dist/fonts/source/public/cm/comlig.mf [34]
+[45] [92] [123] [124]) ) )
+Font metrics written on cmr10.tfm.
+Output written on cmr10.384gf (128 characters, 15588 bytes).
+Transcript written on cmr10.log.
+mktexpk: /Users/srajagopalan/Library/texlive/2015/texmf-var/fonts/pk/dover/public/cm/cmr10.384pk: successfully generated.
+/Users/srajagopalan/Library/texlive/2015/texmf-var/fonts/pk/dover/public/cm/cmr10.384pk
+~/Downloads/dvi2bitmap-1.0/dvi2bitmap \
+		--debug=p \
+		--font-gen=off \
+		--resolution=384 \
+		--font-mode=dover \
+		--crop=left=2,right=2,top=2,bottom=2 \
+		-T png \
+		hello.dvi \
+		-o hello-dover-crop-full.png \
+		> out-dover-d2b-crop-full.txt 2>&1
+[ `cat out-dover-d2b-crop-full.txt | \grep --text 'Opened font' | sed -e 's,.*texmf-var/fonts/pk/\(.*\)/public/cm/cmr10.*,\1,'` = dover ]
+file hello-dover-crop-full.png > data-dover-crop-full
+rm hello-dover-crop-full.png
+~/Downloads/dvi2bitmap-1.0/dvi2bitmap \
+		--debug=p \
+		--font-gen=off \
+		--resolution=384 \
+		--font-mode=dover \
+		--crop=right=2,bottom=2,absolute,left=0,top=0 \
+		-T png \
+		hello.dvi \
+		-o hello-dover-crop-part.png \
+		> out-dover-d2b-crop-part.txt 2>&1
+[ `cat out-dover-d2b-crop-part.txt | \grep --text 'Opened font' | sed -e 's,.*texmf-var/fonts/pk/\(.*\)/public/cm/cmr10.*,\1,'` = dover ]
+file hello-dover-crop-part.png > data-dover-crop-part
+rm hello-dover-crop-part.png

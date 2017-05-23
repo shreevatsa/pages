@@ -1,0 +1,54 @@
+  60   72 epsfast  =>   18 x   9 +  76 +  61       16 x 7 -> 93 x 69 => 16x7+77+62
+  98  204 gtfaxlol =>   29 x  22 + 124 +  91
+ 110  110 ibmvga   =>   32 x  13 + 139 + 113                 (40 x  20 + 135 + 110)
+ 204   98 gtfaxlo  =>   56 x  11 + 260 + 222       (152 x 113)
+ 360  720 bjtzzl   =>~ 106 x  72 + 458 + 340
+ 600 2400 xpstzzl  =>  168 x 237 + 767 + 451 (from 5100 x 6600)
+
+
+bjtzzl 360 720                100 x 70
+bjtzzs 720 360                198 x 36
+cg 1301 1569                  359 x 153
+cgl 1569 1302                 435 x 127
+epsdrft 120 72                31 x 7
+epsdrftl 72 120               19 x 12
+epsfast 60 72                 16 x 7
+epsfastl 72 60                19 x 6
+epsmed 240 144                65 x 14
+epsmedl 144 240               39 x 23
+epson 240 216                 65 x 21
+epsonl 216 240                60 x 23
+epsonlo 120 216               31 x 21
+epsonlol 216 120              60 x 12
+epstypmd 720 360              198 x 35
+epstypml 360 720              100 x 69
+epswlo 120 144                31 x 14
+epswlol 144 120               39 x 12
+gtfax 204 196                 54 x 19
+gtfaxl 196 204                52 x 20
+gtfaxlo 204 98                54 x 9
+gtfaxlol 98 204               27 x 20
+ibmega 96 81                  26 x 8
+ibmegal 81 96                 23 x 9
+ibmpp 240 216                 65 x 21
+ibmppl 216 240                60 x 23
+ibmtosn 87 65                 24 x 6
+ibmtosnl 65 87                18 x 8
+itoh 160 144                  45 x 14
+itohl 144 160                 39 x 15
+itohtoz 240 144               65 x 14
+itohtozl 144 240              39 x 23
+lqmed 360 180                 100 x 17
+lqmedl 180 360                49 x 35
+lview 118.06 109              31 x 10
+lviewl 109 118                30 x 11
+newdd 70 93                   19 x 9
+newddl 93 70                  25 x 7
+okidata 240 288               65 x 28
+okidatal 288 240              81 x 23
+phasertf 600 300              166 x 29
+phasertl 300 600              83 x 59
+starnlt 240 216               65 x 21
+starnltl 216 240              60 x 23
+xpstzz 2400 600               664 x 59
+xpstzzl 600 2400              166 x 235

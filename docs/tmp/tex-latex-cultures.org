@@ -1,0 +1,75 @@
+Thanks to the comments and replies by @cfr, @DavidCarlisle, @egreg, and everyone else. Some things were unclear to me when I asked the question that I think are clearer now; let me attempt to summarize what I've gathered. (Sorry for the delay; it took me a while for things to sink in... and even longer to write. Apologies in advance for what I suspect will turn out to be a long post.)
+
+I think many things become clear if we consider the "culture" or goals of LaTeX and the LaTeX community.
+
+* Goals
+** TeX
+Knuth's original motivation for TeX was to reproduce an existing (already printed) book, for a digital typesetter: to come up a digital equivalent (a pattern of "dots") for pages originally produced via other (analog) methods.
+
+To solve a problem like this, even after you have encapsulated common patterns of dots (such as those for individual letters) into "fonts" (for which the tool he designed is METAFONT and that's another story), you still need to position these patterns on the page. Instead of manually specifying instructions like "put character 'h' from font1 at position (x1, y1)", "put character 'e' from font1 at position (x2, y2)" and so on, he wanted something easier to work with. And that was TeX, a program that does some of this: breaking paragraphs into lines, turning table specifications into positioned tables, arranging the positions of symbols in mathematical expressions, etc. Of course he learned a lot about the practices and tricks of professional setters of type, who solved similar problems in their working lives.
+
+So he designed TeX as a tool, originally intended for use only by him and possibly his secretary. In his view, the "real" document existed in two forms: (1) His manuscript (written by hand with pen/pencil on paper), and (2) The final typeset printed book. TeX was simply a tool to convert (1) into (2), and what you typed into the .tex file was just your usage of the tool for this conversion -- with no deeper significance. (I'll return to this later.)
+
+** LaTeX
+While Knuth thought deeply about typesetting, Lamport thought about the author: the human. Lamport realized that the users' real purpose was communication. The real goal of most users wasn't to get "put this much space on this page after breaking this paragraph this way"; they were (or going to be) writing "articles" that contained "sections", and so on. They were producing electronic documents, and this is reflected in the official name _LaTeX: A Document Preparation System_ (the title of Lamport's book, and still the title at https://www.latex-project.org/).
+
+As a user, one starts not from "this is what I want the page to look like, now what's an easy way to position my characters", but "this is what my document *is*, how do I express it...", leading to a clean separation of content from presentation/appearance.
+
+Related:
+
+Lamport's ["Announcement of LaTeX Version 2.09"](https://tug.org/TUGboat/tb06-3/tb13lamport.pdf) ends with:
+
+> Speaking of document styles… before creating
+> a document style for anyone else to use, talk to a
+. typographic designer. People with no training in
+> design who do their own formatting invariably do a
+> rotten job. This is discussed in the new manual.
+
+Some of these ideas were already in the air, e.g. [Brian K. Reid's Scribe](https://en.wikipedia.org/w/index.php?title=Scribe_%28markup_language%29&oldid=739223763) system. In [this interview](https://tug.org/TUGboat/tb22-1-2/tb70lamp.pdf) Lamport mentions
+
+>  I don’t think TeX and LaTeX would have
+> become popular had they not been free. Indeed,
+> I think most users would have been happier with
+> Scribe. Had Scribe been free and had it continued
+> to be supported, I suspect it would have won out
+> over TeX.
+
+In the same interview, Lamport answers:
+
+> GMZ: Three LaTeX mistakes that people should stop
+> making?
+> LL: 1. Worrying too much about formatting and
+> not enough about content. 2. Worrying too much
+> about formatting and not enough about content.
+> 3. Worrying too much about formatting and not
+> enough about content.
+
+See philosophy in his paper.
+
+The "interface" that TeX exposes to the user involves boxes and glue -- as a user you get to think about these.
+
+The "interface" that LaTeX exposes to the user are all higher-level and "semantic" -- as a user, you do not get to think about boxes and glue. The goal of LaTeX is not to provide better typesetting primitives, but to provide better semantic primitives (here I mean "primitives" not in the TeX sense but in the sense of things that the user works with). I was asking for the former, but this is the wrong question to ask.
+
+(I would think that such a typesetting-level interface ought to be provided for the package writers at least, but perhaps the fear is that then even users would use it.)
+
+https://tex.stackexchange.com/questions/12668/where-do-i-start-latex-programming/27589#27589 -- different categories (TeX programming (macros, expansion...), TeX typesetting (boxes, glue, rules...), macro packages (LaTeX, packages...)). Also another mentions clsguide.
+
+https://tex.stackexchange.com/questions/528/style-class-tutorials
+http://tutex.tug.org/pracjourn/2005-4/hefferon/hefferon.pdf
+https://www.tug.org/pracjourn/2005-4/hefferon/
+
+https://tex.stackexchange.com/questions/2124/is-there-a-comprehensive-and-complete-latex-reference
+
+https://tex.stackexchange.com/questions/2416/reference-guide-to-begin-writing-a-class-and-or-a-package?noredirect=1&lq=1
+https://tex.stackexchange.com/questions/345531/how-to-start-working-with-tex-core
+
+
+https://www.tug.org/TUGboat/tb10-1/tb23knut.pdf -- typesetting concrete mathematics: see  "$x$ is either 1 or $-1$"
+
+https://tug.org/TUGboat/tb17-4/tb53knuc.pdf (extending TeX)
+https://www.tug.org/TUGboat/Articles/tb17-1/tb50knut.pdf (extending TeX)
+^ one of them also has opinions about LaTeX
+
+Disclaimer: I presented the caricatures above because I think there is some truth to them, and I think they are a useful way of looking at things. But they are caricatures:
+
+- LaTeX does provide some better typesetting primitives/operations: the idea of a ["coffin"](http://mirrors.ctan.org/macros/latex/contrib/l3experimental/xcoffins.pdf) for example.
