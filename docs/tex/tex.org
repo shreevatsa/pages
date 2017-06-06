@@ -100,3 +100,7 @@ See also exercises in this video around 40:00: https://www.youtube.com/watch?v=V
 * Generating TeX code
 
 This is very cool: http://wiki.luatex.org/index.php/TeX_without_TeX
+
+* Quote
+
+“TeX was designed for typesetting, not for programming; so it is at best “weird” when considered as a programming language.” — DEK in “Mini-Indexes For Literate Programs” (page 235 of Digital Typography).
