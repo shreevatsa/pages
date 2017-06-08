@@ -1,0 +1,123 @@
+
+(Act 1, Scene 2, Lines 345-346)
+(I.ii.345-6)
+
+(Act 3, Scene 4, Line 72)
+(III.iv.72)
+
+--------------------------------------------------------------------------------
+
+Output "("
+Read 5 characters `(Act `
+Read a number (1-5)
+Output it in uppercase Roman.
+
+Output "."
+
+Read 8 characters `, Scene `
+Read a number (1-9)
+Convert to lowercase Roman and output.
+
+Output "."
+
+Read 6 characters `, Line`.
+Read a number.
+If successful: just output the number and ")", done.
+Read two characters `s `
+Read a number. Store it as A.
+Output A.
+Read 1 character.
+Read a number. Store it as B.
+Output "-".
+[Compute B's new part over A]:
+
+
+
+Output it and ")". Done.
+
+--------------------------------------------------------------------------------
+
+A Tale of Two Cites. [sic]
+
+Julius Caesar, the first citizen of the Roman Republic.
+Brutus, a traitor: member of the Fifth Column.
+Cicero, the greatest Roman orator.
+Cleopatra, a proud queen, whom the Romans want to make one of their own.
+Romeo, a man who's sometimes there.
+Juliet, a maiden who may follow Romeo or stand on her own.
+
+           Act I: Imperium Romanum.
+
+           Scene 1: Cleopatra puts men in their place.
+
+[Enter Cleopatra and I]
+I: You are 40 (= 32 + 8). Speak. Read char x 4.
+C: You are 73.
+[Exit I, enter V]
+C: You are 86
+[Exit V, enter X]
+C: You are 88
+
+          Scene 2: How do you solve a problem like Cleopatra?
+[Exeunt, Enter I and C]
+I: Read int.
+[Exit C, enter V]
+*: Is C >= 9?
+*: If so, goto Scene 4.
+*: Is C >= 4?
+*: If so, goto Scene 3.
+V: Speak!
+   Is C >= 2 (C > 1)? If so, speak!
+   Is C >= 3 (C > 2)? If so, speak!
+*: Go to scene 5.
+
+          Scene 3:
+V: Is t = 4? If so, speak!
+I: Speak!
+V: Is t >= 6? If so speak!
+   Is t >= 7? If so speak!
+   Is t = 8? If so speak!
+*: Goto Scene 5.
+
+          Scene 4: Cicero's turn, but he doesn't speak much
+[Exit V, Enter X]
+*: Is t = 9?
+X: If so, speak!
+I: Speak!
+
+          Scene 5: A period piece: Cleopatra's reprisal
+[Exeunt. I and C enter.]
+I: You are 46. Speak! Read char x 6.
+*: Is I/V/X lowercase? If so, goto Act II.
+*: Read char x 2.
+C: You are 105.
+[Exit I, enter V]
+C: You are 118.
+[Exit V, enter X]
+C: You are 120.
+*: Goto Scene II.
+
+          Act II: Lovers' arithmetick
+
+          Scene I: Discrimination
+[m and n enter]
+m: You are -1. Read int.
+*: Is n > 0 (or n!= -1)?
+*: If so, goto Scene III.
+n: Read int. Speak int.
+m: You are 45. Speak char.
+*: Read char.
+m: Read int.
+*: Is n/100 = m/100?
+*: If not, goto Scene II.
+*: m = m % 100
+*: n = m % 100
+
+          Scene II: Tense times
+*: Is n/10 = m/10? If so, n = n % 10
+
+          Scene III: Parting is such sweet sorrow
+m: Speak!
+*: You are 41. Speak.
+
+--------------------------------------------------------------------------------
