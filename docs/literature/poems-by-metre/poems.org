@@ -1,0 +1,111 @@
+Some poems organized by metre, drawing from the book /Measure for Measure: An Anthology of Poetic Meters/
+
+* Accentual poems
+
+** From a Railway Carriage
+
+#+BEGIN_VERSE
+Faster than fairies, faster than witches,
+Bridges and houses, hedges and ditches;
+And charging along like troops in a battle,
+All through the meadows the horses and cattle:
+All of the sights of the hill and the plain
+Fly as thick as driving rain;
+And ever again, in the wink of an eye,
+Painted stations whistle by.
+
+Here is a child who clambers and scrambles,
+All by himself and gathering brambles;
+Here is a tramp who stands and gazes;
+And there is the green for stringing the daisies!
+Here is a cart run away in the road
+Lumping along with man and load;
+And here is a mill and there is a river:
+Each a glimpse and gone for ever!
+
+Robert Louis Stevenson
+#+END_VERSE
+https://www.gutenberg.org/files/30659/30659-h/30659-h.htm#page24
+https://www.gutenberg.org/files/25609/25609-h/25609-h.htm#FROM_A_RAILWAY_CARRIAGE
+https://archive.org/stream/childsgardenofve01stevuoft#page/80/mode/2up
+
+** Recuerdo
+
+#+BEGIN_VERSE
+  We were very tired, we were very merry—
+  We had gone back and forth all night on the ferry.
+  It was bare and bright, and smelled like a stable—
+  But we looked into a fire, we leaned across a table,
+  We lay on a hill-top underneath the moon;
+  And the whistles kept blowing, and the dawn came soon.
+
+  We were very tired, we were very merry—
+  We had gone back and forth all night on the ferry;
+  And you ate an apple, and I ate a pear,
+  From a dozen of each we had bought somewhere;
+  And the sky went wan, and the wind came cold,
+  And the sun rose dripping, a bucketful of gold.
+
+  We were very tired, we were very merry,
+  We had gone back and forth all night on the ferry.
+  We hailed, "Good morrow, mother!" to a shawl-covered head,
+  And bought a morning paper, which neither of us read;
+  And she wept, "God bless you!" for the apples and pears,
+  And we gave her all our money but our subway fares.
+
+Edna St. Vincent Millay
+#+END_VERSE
+http://digital.library.upenn.edu/women/millay/figs/figs.html#recuerdo
+http://www.gutenberg.org/cache/epub/4399/pg4399-images.html
+
+** Night Mail
+by Auden
+https://www.youtube.com/watch?v=zmciuKsBOi0
+http://wonderingminstrels.blogspot.com/2003/06/night-mail-w-h-auden.html
+
+* Trochaic poems
+
+** The Tyger
+
+#+BEGIN_VERSE
+Tyger Tyger, burning bright,
+In the forests of the night;
+What immortal hand or eye,
+Could frame thy fearful symmetry?
+
+In what distant deeps or skies
+Burnt the fire of thine eyes?
+On what wings dare he aspire?
+What the hand, dare seize the fire?
+
+And what shoulder, & what art,
+Could twist the sinews of thy heart?
+And when thy heart began to beat,
+What dread hand? & what dread feet?
+
+What the hammer? what the chain,
+In what furnace was thy brain?
+What the anvil? what dread grasp,
+Dare its deadly terrors clasp!
+
+When the stars threw down their spears
+And water'd heaven with their tears:
+Did he smile his work to see?
+Did he who made the Lamb make thee?
+
+Tyger Tyger burning bright,
+In the forests of the night:
+What immortal hand or eye,
+Dare frame thy fearful symmetry?
+
+William Blake
+#+END_VERSE
+https://commons.wikimedia.org/wiki/The_Tyger
+
+** The Song of Hiawatha
+by H. W. Longfellow.
+
+It's long, so here are a couple of parodies that are less long:
+
+- Hiawatha's Photographing, by Lewis Carroll (= C. L. Dodgson): https://books.google.com/books?id=eloJAAAAQAAJ&pg=PA66#v=onepage&q&f=false
+- The Song of Hakwatha by F. X. Reid (= Michael W. Shields): https://web.archive.org/web/20120722030125/https://personal.cis.strath.ac.uk/duncan.sinclair/hakawatha.html
