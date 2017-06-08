@@ -1,0 +1,52 @@
+Don Knuth's compiler-writing exploits
+
+* June 1958, Compiler III and Soap III
+http://archive.computerhistory.org/resources/text/Knuth_Don_X4100/PDF_index/k-3-pdf/k-3-c1033-COMPILERIII-SOAPIII-listing.pdf
+
+* September 1959, Runcible and DRuncible
+(Program for the IBM 650)
+His first paper after "potzrbie": RUNCIBLE -- Algebraic Translation On A Limited Computer (ACM paper, have download)
+http://archive.computerhistory.org/resources/text/Knuth_Don_X4100/PDF_index/k-3-pdf/k-3-c1028-RUNCIBLE-listing.pdf
+http://archive.computerhistory.org/resources/text/Knuth_Don_X4100/PDF_index/KnuthDigitalArchive-Index.html
+http://hopl.info/showlanguage.prx?exp=111
+
+http://archive.computerhistory.org/resources/text/Knuth_Don_X4100/PDF_index/k-3-pdf/k-3-c1034-DRUNCIBLE-listing.pdf
+
+* Summer of 1960, writing an Algol 58 compiler
+Richard Waychoff's "Stories about the B5000 and the People Who Were There" (written in April 9, 1979?)
+Scan: http://archive.computerhistory.org/resources/text/Knuth_Don_X4100/PDF_index/k-8-pdf/k-8-u2779-B5000-People.pdf -- note the "half-true" is pencilled by Knuth!
+OCRed: http://ed-thelen.org/comp-hist/B5000-AlgolRWaychoff.html
+Reddit discussion: https://www.reddit.com/r/programming/comments/14jm20/1979richard_waychoff_halftrue_stories_about_the/
+Metafilter discussion: http://www.metafilter.com/122701/STORIES-ABOUT-THE-B5000-AND-PEOPLE-WHO-WERE-THERE-By-Richard-Waychoff
+
+Don Knuth's coding form: http://archive.computerhistory.org/resources/text/Knuth_Don_X4100/PDF_index/k-2-pdf/k-2-c1039-ALGOL-B205.pdf ("appears to be the handwritten compiler source code and notes written by Knuth in motel rooms during the month-long drive in his Volkswagen to the Burroughs office in California" -- JeffL on Metafilter)
+His documentation: http://archive.computerhistory.org/resources/text/Knuth_Don_X4100/PDF_index/k-2-pdf/k-2-u2435-B205-ALGOL-internals.pdf
+
+Vaguely related:
+Algol 60 Syntactical Chart: http://www.softwarepreservation.org/projects/ALGOL/paper/ALGOL_60_Syntactical_Chart.pdf (compare with syntax charts at http://www.json.org/)
+https://en.wikipedia.org/w/index.php?title=Burroughs_large_systems&oldid=781685890
+
+* 1961, New concept for a computer
+http://archive.computerhistory.org/resources/text/Knuth_Don_X4100/PDF_index/k-6-pdf/k-6-u2115-Burroughs-new-concept.pdf
+
+* 1962, Fortran II for the Univac Solid State Computer
+http://archive.computerhistory.org/resources/text/Knuth_Don_X4100/PDF_index/k-6-pdf/k-6-R11-UnivacSS-FORTRANII-prelim-spec.pdf
+http://archive.computerhistory.org/resources/text/Knuth_Don_X4100/PDF_index/k-6-pdf/k-6-R12-UnivacSS-QADAAD-Assembler.pdf
+http://archive.computerhistory.org/resources/text/Knuth_Don_X4100/PDF_index/k-6-pdf/k-6-R13-UnivacSS-Technical-Ref-Block.pdf
+"Computer languages"
+http://archive.computerhistory.org/resources/text/Knuth_Don_X4100/PDF_index/k-6-pdf/k-6-R17a-UnivacSS-FORTRANII-code-example-a.pdf first version, February 1963 <- actually an expository lecture!
+http://archive.computerhistory.org/resources/text/Knuth_Don_X4100/PDF_index/k-6-pdf/k-6-R17b-UnivacSS-FORTRANII-code-example-b.pdf another version, December 1964
+
+* 1963, consultant
+"Confidential" memo: http://archive.computerhistory.org/resources/text/Knuth_Don_X4100/PDF_index/k-6-pdf/k-6-u2111-Burroughs-prelim-design-business-DP.pdf
+
+
+* More
+at http://archive.computerhistory.org/resources/text/Knuth_Don_X4100/PDF_index/KnuthDigitalArchive-Index.html
+but it's not clear which are by Knuth and which are simply his annotations on others' code
+
+Web of Stories playlist: https://www.youtube.com/playlist?list=PLVV0r6CmEsFzeNLngr1JqyQki3wdoGrCn
+
+* Unrelated quote
+
+"As archive-browser, I learned early that summaries written after the fact don't give much of the true flavor" (http://archive.computerhistory.org/resources/text/Knuth_Don_X4100/PDF_index/k-3-pdf/k-3-u2798-JacksHall-Dedication-outline.pdf)
