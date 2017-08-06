@@ -31,18 +31,7 @@ const z = segment(X, Y);
 // const XYZ = board.create('polygon', [X, Y, Z], {hasInnerPoints: true});
 // const g = board.create('group', [X, Y, Z]);
 
-function insideABC(points) {
-    return points.every(p => ABC.hasPoint(p.coords.scrCoords[1], p.coords.scrCoords[2]));
-}
-
-// The coordinates of the centroid of triangle [p, q, r]
-function centroidCoords(p, q, r) {
-    const cx = (p.coords.usrCoords[1] + q.coords.usrCoords[1] + r.coords.usrCoords[1]) / 3;
-    const cy = (p.coords.usrCoords[2] + q.coords.usrCoords[2] + r.coords.usrCoords[2]) / 3;
-    return [cx, cy];
-}
-XYZcentroid = centroidCoords(X, Y, Z);
-
+// Can we scale XYZ by a factor of t about its centroid, and still remain inside ABC?
 function canScaleXYZby(t) {
     // Using scrCoords in order to use hasPoint
     const cx = (X.coords.scrCoords[1] + Y.coords.scrCoords[1] + Z.coords.scrCoords[1]) / 3;
@@ -56,6 +45,7 @@ function canScaleXYZby(t) {
 function howMuchScaleXYZ() {
     let lo = 1;
     while (lo > 0 && !canScaleXYZby(lo)) lo /= 2;
+    console.assert(lo > 0, 'cannot scale at all: is the centroid outside?');
     if (lo == 0) return -1;
     let hi = lo;
     while (canScaleXYZby(hi)) hi *= 2;
@@ -69,8 +59,10 @@ function howMuchScaleXYZ() {
     return lo;
 }
 
+// Scale the triangle by a factor of k, taking time "duration" to do it.
 function scaleXYZ(k, duration) {
-    const [cx, cy] = centroidCoords(X, Y, Z);
+    const cx = (X.coords.usrCoords[1] + Y.coords.usrCoords[1] + Z.coords.usrCoords[1]) / 3;
+    const cy = (X.coords.usrCoords[2] + Y.coords.usrCoords[2] + Z.coords.usrCoords[2]) / 3;
     [X, Y, Z].forEach(p => p.moveTo(
         [cx + (p.coords.usrCoords[1] - cx) * k,
          cy + (p.coords.usrCoords[2] - cy) * k],
@@ -79,56 +71,36 @@ function scaleXYZ(k, duration) {
 
 // A (dx, dy) perpendicular to the line, and in the direction of XYZ (farthest of the three), and of unit distance.
 function normalDirection(line) {
-    // First find the vertex farthest from line, in order to get a proper arrow for line's perpendicular bisector
-    let bestV, bestDx, bestDy, bestDistance;
-    [X, Y, Z].forEach(v => {
-        const base = board.create('orthogonalprojection', [line, v]);
-        const path = board.create('perpendicularsegment', [line, v]);
-        let dx = (v.coords.scrCoords[1] - base.coords.scrCoords[1]);
-        let dy = (v.coords.scrCoords[2] - base.coords.scrCoords[2]);
-        board.removeObject(base);
-        board.removeObject(path);
-        const distance = Math.hypot(dx, dy);
-        if (bestV == undefined || distance > bestDistance) {
-            bestV = v;
-            bestDx = dx;
-            bestDy = dy;
-            bestDistance = distance;
-        }
-    });
-    bestDx /= bestDistance;
-    bestDy /= bestDistance;
-    return [bestDx, bestDy];
+    const slope = line.getSlope();
+    let dy = slope;
+    let dx = 1;
+    let distance = Math.hypot(dx, dy);
+    dy /= distance;
+    dx /= distance;
+    return [dx, dy];
 }
 
 // Can I translate the triangle XYZ by distance d, away from edge l?
 function canTranslateXYZby(d, l) {
     const [dx, dy] = normalDirection(l);
-    console.log('found normalDirection');
     // Now try translating all the points by distance d along (dx, dy)
     const ret = [X, Y, Z].every(v => ABC.hasPoint(v.coords.scrCoords[1] + dx * d, v.coords.scrCoords[2] + dy * d));
-    console.log('checked every');
     return ret;
 }
 
 function howMuchTranslateXYZ(l) {
-    console.log('in howMuchTranslateXYZ');
     let lo = 1;
     while (lo > 0 && !canTranslateXYZby(lo, l)) lo /= 2;
-    console.log('found lo');
     if (lo == 0) return -1;
     let hi = lo;
     while (canTranslateXYZby(hi, l)) hi *= 2;
-    console.log('found hi');
     // Invariant: Can translate by lo, cannot translateby hi
     console.assert(hi > lo, 'not greater: ' + hi + ' versus ' + lo);
     while (hi - lo > 1e-6) {
-        console.log('bs iteration');
         const mid = lo + (hi - lo) / 2;
         if (canTranslateXYZby(mid, l)) lo = mid;
         else hi = mid;
     }
-    console.log('done binary search');
     return lo;
 }
 
@@ -176,6 +148,6 @@ function translateXYZbest(duration) {
 }
 
 // scaleXYZ(howMuchScaleXYZ(), 1000);
-// console.log(howMuchTranslateXYZ(a));
-// console.log(howMuchTranslateXYZ(b));
-// console.log(howMuchTranslateXYZ(c));
+console.log(howMuchTranslateXYZ(a));
+console.log(howMuchTranslateXYZ(b));
+console.log(howMuchTranslateXYZ(c));
