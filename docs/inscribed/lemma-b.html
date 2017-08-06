@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Largest inscribed equilateral triangle in a triangle</title>
+    <script type="text/javascript" src="jsxgraphcore.js" charset="utf-8"></script>
+    <link rel = "stylesheet" type = "text/css" href = "jsxgraph.css"/>
+    <link rel = "stylesheet" type = "text/css" href = "common.css"/>
+  </head>
+  <body>
+    <h1>Finding the largest equilateral triangle XYZ that fits inside a given triangle ABC</h1>
+    <div>
+      <p>Lemma: At least <i>two</i> of the three vertices of XYZ each lie on a side of ABC.</p>
+      <p>Proof: By the previous lemma, at least one of the three vertices lies on ABC: say X. Suppose Y and Z lie completely inside ABC. Then triangle XYZ cannot have the largest area because:</p>
+      <p align="center"><button onclick="translateXYZbest(500);">Click</button></p>
+    </div>
+    <div id="jxgbox" class="jxgbox"></div>
+    <p>And if you like: <button onclick="scaleXYZ(howMuchScaleXYZ(), 1000);">Click2</button> See: <a href="https://math.stackexchange.com/questions/2379188/finding-the-largest-equilateral-triangle-inside-a-given-triangle">Finding the largest equilateral triangle inside a given triangle</a></p>
+    <script type="text/javascript" src="equilateral.js"></script>
+    <script type="text/javascript">scaleXYZ(howMuchScaleXYZ(), 1);</script>
+  </body>
+</html>
