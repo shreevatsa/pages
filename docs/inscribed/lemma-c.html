@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Largest inscribed equilateral triangle in a triangle</title>
+    <script type="text/javascript" src="jsxgraphcore.js" charset="utf-8"></script>
+    <link rel = "stylesheet" type = "text/css" href = "jsxgraph.css"/>
+    <link rel = "stylesheet" type = "text/css" href = "common.css"/>
+  </head>
+  <body>
+    <h1>Finding the largest equilateral triangle XYZ that fits inside a given triangle ABC</h1>
+    <div>
+      <p>We ultimately want to prove that XYZ and ABC share a vertex in common (i.e. that one of X, Y, Z is the same as one of A, B, C). To prove this, let's consider different ways in which this might <i>not</i> happen. By the previous lemma, at least two vertices of XYZ (say X and Y) each lie on a side of ABC.</p>
+      <p>Suppose X and Y lie on the (interior of) the same side of ABC, and Z is not one of A, B, C. Then triangle XYZ cannot have the largest area. Proof:</p>
+      <p align="center"><button onclick="translateXYZbest(500);">Click</button></p>
+    </div>
+    <div id="jxgbox" class="jxgbox"></div>
+    <p>See: <a href="https://math.stackexchange.com/questions/2379188/finding-the-largest-equilateral-triangle-inside-a-given-triangle">Finding the largest equilateral triangle inside a given triangle</a></p>
+    <script type="text/javascript" src="equilateral.js"></script>
+    <script type="text/javascript">
+      X.moveTo([-3.2365, 0.5317]);
+      Y.moveTo([-3.4280, -1]);
+      // Z.moveTo([-2.0058, -0.4]);
+    </script>
+  </body>
+</html>
