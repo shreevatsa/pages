@@ -31,6 +31,7 @@ const z = segment(X, Y);
 // const XYZ = board.create('polygon', [X, Y, Z], {hasInnerPoints: true});
 // const g = board.create('group', [X, Y, Z]);
 
+/*********************************** Scaling ***********************************/
 // Can we scale XYZ by a factor of t about its centroid, and still remain inside ABC?
 function canScaleXYZby(t) {
     // Using scrCoords in order to use hasPoint
@@ -69,21 +70,17 @@ function scaleXYZ(k, duration) {
         duration));
 }
 
+/*********************************** Translating away from a line ***********************************/
 // A (dx, dy) perpendicular to the line, and in the direction of XYZ (farthest of the three), and of unit distance.
 function normalDirection(line) {
-    const slope = line.getSlope();
-    let dy = slope;
-    let dx = 1;
-    let distance = Math.hypot(dx, dy);
-    dy /= distance;
-    dx /= distance;
-    return [dx, dy];
+    const [dy, dx] = [line.getSlope(), 1];
+    const distance = Math.hypot(dx, dy);
+    return [dx/distance, dy/distance];
 }
 
 // Can I translate the triangle XYZ by distance d, away from edge l?
 function canTranslateXYZby(d, l) {
     const [dx, dy] = normalDirection(l);
-    // Now try translating all the points by distance d along (dx, dy)
     const ret = [X, Y, Z].every(v => ABC.hasPoint(v.coords.scrCoords[1] + dx * d, v.coords.scrCoords[2] + dy * d));
     return ret;
 }
@@ -104,16 +101,16 @@ function howMuchTranslateXYZ(l) {
     return lo;
 }
 
-// Translate the triangle away from l by distance d
+// Translate the triangle away from l by distance d, taking time 2.5*duration
 function translateXYZ(l, d, duration) {
     const [dx, dy] = normalDirection(l);
     [X, Y, Z].forEach(p => {
-        const sx = p.coords.scrCoords[1];
-        const sy = p.coords.scrCoords[2];
-        const coordsFull = new JXG.Coords(JXG.COORDS_BY_SCREEN, [sx + 2*d*dx, sy + 2*d*dy], board);
+        const px = p.coords.scrCoords[1];
+        const py = p.coords.scrCoords[2];
+        const coordsFull = new JXG.Coords(JXG.COORDS_BY_SCREEN, [px + 2*d*dx, py + 2*d*dy], board);
         const nxFull = coordsFull.usrCoords[1];
         const nyFull = coordsFull.usrCoords[2];
-        const coordsHalf = new JXG.Coords(JXG.COORDS_BY_SCREEN, [sx + d*dx, sy + d*dy], board);
+        const coordsHalf = new JXG.Coords(JXG.COORDS_BY_SCREEN, [px + d*dx, py + d*dy], board);
         const nxHalf = coordsHalf.usrCoords[1];
         const nyHalf = coordsHalf.usrCoords[2];
         p.moveTo([nxFull, nyFull], duration);
