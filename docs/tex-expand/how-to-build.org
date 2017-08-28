@@ -54,7 +54,7 @@ Trying this:
 
 #+BEGIN_SRC sh
 cd tex/full/Build/source/Work
-../configure -C --disable-afm2pl --disable-dvipsk --disable-mkocp-default --disable-synctex --disable-aleph --disable-dvisvgm --disable-mkofm-default --disable-t1dotlessj --disable-eptex --disable-mktexfmt-default --disable-t1lint --disable-auto-cfftot1 --disable-eptex-synctex --disable-t1rawafm --disable-autosp --disable-etex-synctex --disable-mktexpk-default --disable-t1reencode --disable-auto-t1dotlessj --disable-euptex --disable-mktexmf-default --disable-mktextfm-default --disable-t1testpage --disable-auto-ttftotype42 --disable-euptex-synctex --disable-mmafm --disable-t1utils --disable-auto-updmap --disable-mmpfb --disable-bibtex8 --disable-gregorio --disable-mp --disable-tex4htk --disable-bibtexu --disable-gsftopk --disable-m-tx --disable-texdoctk --disable-bibtex-x --disable-ipc --disable-musixtnt --disable-texlive --disable-cfftot1 --disable-lacheck --disable-tpic2pdftex --disable-chktex --disable-largefile --disable-ttf2pk2 --disable-cjkutils --disable-lcdf-typetools --disable-otfinfo --disable-ttfdump --disable-debug --disable-libtool-lock --disable-otftotfm --disable-ttftotype42 --disable-dependency-tracking --disable-linked-scripts --disable-pdftex --disable-upmendex --disable-detex --disable-luajittex --disable-pdftex-synctex --disable-upmp --disable-devnag --disable-luatex --disable-pmp --disable-uptex --disable-dtl --disable-makeindexk --disable-pmx --disable-uptex-synctex --disable-dump-share --disable-makejvf --disable-ps2eps --disable-vlna --disable-dvi2tty --disable-mendexk --disable-ps2pk --disable-dvidvi --disable-mf --disable-psutils --disable-web-progs --disable-dviljk --disable-mflua --disable-ptex --disable-xdvik --disable-dvipdfm-x --disable-mfluajit --disable-ptex-synctex --disable-xetex --disable-dvipng --disable-mf-nowin --disable-seetexk --disable-xetex-synctex --disable-dvipos  --disable-xpdfopen
+../configure -C --disable-afm2pl --disable-dvipsk --disable-mkocp-default --disable-synctex --disable-aleph --disable-dvisvgm --disable-mkofm-default --disable-t1dotlessj --disable-eptex --disable-mktexfmt-default --disable-t1lint --disable-auto-cfftot1 --disable-eptex-synctex --disable-t1rawafm --disable-autosp --disable-etex-synctex --disable-mktexpk-default --disable-t1reencode --disable-auto-t1dotlessj --disable-euptex --disable-mktexmf-default --disable-mktextfm-default --disable-t1testpage --disable-auto-ttftotype42 --disable-euptex-synctex --disable-mmafm --disable-t1utils --disable-auto-updmap --disable-mmpfb --disable-bibtex8 --disable-gregorio --disable-mp --disable-tex4htk --disable-bibtexu --disable-gsftopk --disable-m-tx --disable-texdoctk --disable-bibtex-x --disable-ipc --disable-musixtnt --disable-texlive --disable-cfftot1 --disable-lacheck --disable-tpic2pdftex --disable-chktex --disable-largefile --disable-ttf2pk2 --disable-cjkutils --disable-lcdf-typetools --disable-otfinfo --disable-ttfdump --disable-debug --disable-libtool-lock --disable-otftotfm --disable-ttftotype42 --disable-dependency-tracking --disable-linked-scripts --disable-upmendex --disable-detex --disable-luajittex --disable-pdftex-synctex --disable-upmp --disable-devnag --disable-luatex --disable-pmp --disable-uptex --disable-dtl --disable-makeindexk --disable-pmx --disable-uptex-synctex --disable-dump-share --disable-makejvf --disable-ps2eps --disable-vlna --disable-dvi2tty --disable-mendexk --disable-ps2pk --disable-dvidvi --disable-mf --disable-psutils --disable-web-progs --disable-dviljk --disable-mflua --disable-ptex --disable-xdvik --disable-dvipdfm-x --disable-mfluajit --disable-ptex-synctex --disable-xetex --disable-dvipng --disable-mf-nowin --disable-seetexk --disable-xetex-synctex --disable-dvipos  --disable-xpdfopen
 
 make
 cd texk/web2c/
@@ -138,3 +138,76 @@ After editing (~emacsclient -n ~/tex/full/Build/source/texk/web2c/tex.web~) do
 #+BEGIN_SRC sh
 cd ~/tex/full/Build/source/Work/texk/web2c && make tex && cd /tmp && cp ~/tex/full/Build/source/Work/texk/web2c/tex ~/texlive-modified/bin/x86_64-linux/ && ~/texlive-modified/bin/x86_64-linux/fmtutil-sys --byfmt=tex && ~/texlive-modified/bin/x86_64-linux/tex ~/test.tex
 #+END_SRC
+
+* Debug build
+
+Use
+
+#+BEGIN_SRC sh
+shreevatsa@ubuntu:~/build-tex/texlive/full$
+
+./Build/source/Build --no-clean -g
+
+cd Build/source/Work/
+
+make install # Instead of make install strip
+
+cd ~/build-tex/texlive/full
+
+cp -rv Build/source/inst/bin/x86_64-pc-linux-gnu/* Master/bin/x86_64-linux/
+
+PATH=$PATH:/home/shreevatsa/build-tex/texlive/full/Master/bin/x86_64-linux
+
+gdb tex
+#+END_SRC
+
+Now we can use ~info functions~ inside ~gdb~.
+
+Actually I run it from Emacs, with ~M-x gdb~ and then "run like" ~gdb -i=mi /home/shreevatsa/build-tex/texlive/full/Master/bin/x86_64-linux/tex~
+
+Then inside gdb:
+
+#+BEGIN_SRC
+break main
+run
+#+END_SRC
+
+You can save a tiny bit of time with `break mainbody`, and a lot more time with `break maincontrol`
+
+Making changes to ~tex.web~:
+
+
+#+BEGIN_SRC sh
+./Build --no-clean -g --disable-ptex --disable-eptex --disable-uptex --disable-euptex
+[Or: ./configure -C --disable... (from above)]
+
+shreevatsa@ubuntu:~/build-tex/texlive/full/Build/source/Work/texk/web2c$ make
+shreevatsa@ubuntu:~/build-tex/texlive/full/Build/source/Work/texk/web2c$ cp tex ~/build-tex/texlive/full/Master/bin/x86_64-linux/tex
+
+shreevatsa@ubuntu:/tmp$ fmtutil-sys --byfmt=tex
+shreevatsa@ubuntu:/tmp$ tex (or: gdb tex)
+#+END_SRC
+
+* How are `\def` and `\def` implemented?
+
+https://tex.stackexchange.com/questions/386741/a-macro-defined-with-edef-whose-body-consists-solely-of-non-expandable-tokens/386986#386986
+
+* Refs
+
+- https://www.tug.org/texlive/svn/
+- https://www.tug.org/texlive/build.html
+- https://www.tug.org/texlive/doc/tlbuild.html#Building
+
+Basically you should do
+
+#+BEGIN_SRC sh
+rsync -a --delete --exclude=.svn tug.org::tldevsrc .
+#+END_SRC
+or
+#+BEGIN_SRC sh
+rsync -a --delete --exclude=.svn tug.org::tldevsrc/ /your/dir/
+#+END_SRC
+
+to get the sources.
+
+Then, inside the top-level ~Build~ directory, run ~./Build~
