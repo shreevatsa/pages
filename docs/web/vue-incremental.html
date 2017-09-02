@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Truly incremental Vue.js adoption  <br> Moving to Vue for elements being built up with <code>innerHTML</code></title>
+<!-- 2017-09-02 Sat 15:34 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Shreevatsa R" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Truly incremental Vue.js adoption  <br> Moving to Vue for elements being built up with <code>innerHTML</code></h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Background</a></li>
+<li><a href="#sec-2">2. First version (hand-written HTML)</a></li>
+<li><a href="#sec-3">3. Second version (JavaScript helper)</a></li>
+<li><a href="#sec-4">4. Moving to Vue</a>
+<ul>
+<li><a href="#sec-4-1">4.1. v-html</a></li>
+<li><a href="#sec-4-2">4.2. render function</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+The page at <a href="https://vuejs.org/v2/guide/">https://vuejs.org/v2/guide/</a> says that Vue
+</p>
+
+<blockquote>
+<p>
+is a <b>progressive framework</b> for building user interfaces. Unlike other monolithic frameworks, Vue is designed from the ground up to be incrementally adoptable.
+</p>
+</blockquote>
+
+<p>
+Here I put it to the test with a truly stupid use case. :-)
+</p>
+
+<p>
+(TL;DR: If before using Vue you have an element being built up in JavaScript, then in Vue use either <code>v-html</code> or a <code>render</code> function with <code>domProps</code> and <code>innerHTML</code>.)
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Background</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+I am not a serious web developer, and I do not write serious “web applications”. (If you're wondering what “web applications” are: once upon a time, we thought the World Wide Web was for documents (such as the one you're reading right now). Then came JavaScript, a way to add some interactivity to the page. Years passed, and long story short, we've reached the state where today when you visit most websites (say GMail or Facebook), you're no longer reading documents; instead what happens is that first your browser downloads a large program, then starts running that program…)
+</p>
+
+<p>
+Still, the browser is the most widely available user-interface, and it seems that if you want make something visually apparent, then considering the available alternatives (that I know of)—all the different ways to paint the screen and position elements on it—the browser is a reasonable medium to use, possibly as good as any.
+</p>
+
+<p>
+So here I am, with a hazy idea of what I'd like something to look like, and trying to achieve that via HTML (+later CSS for styling).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> First version (hand-written HTML)</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+I wrote something like (all the details don't matter; the main thing to note is that in the first two rows, columns 3 to 5 are occupied by an inner table that's laborious to write by hand):
+</p>
+
+<table border=1>
+  <tr class="meanings">
+    <td rowspan=2>1</td>
+    <td class="statefield1">scanner state: MID_LINE</td>
+    <td class="indexfield1">open-files depth: (reading from terminal)</td>
+    <td class="startfield1" colspan=3><tt><table border=1><tr><td>e</td><td>x</td><td>p</td><td>a</td><td>n</td><td>d</td><td>a</td><td>f</td><td>t</td><td>e</td><td>r</td><td>.</td><td>t</td><td>e</td><td>x</td></tr><tr><td>↑</td><td colspan=15></td><td>↑</td></tr></table></tt></td>
+    <td class= "namefield1">filename: (reading from terminal)</td>
+  </tr>
+  <tr class="values">
+    <td class="statefield1">1</td>
+    <td class="indexfield1">0</td>
+    <td class="startfield1">1</td>
+    <td class=  "locfield1">17</td>
+    <td class="limitfield1">16</td>
+    <td class= "namefield1">0</td>
+  </tr>
+
+  <tr class="meanings">
+    <td rowspan=2>2</td>
+    <td class="statefield1">scanner state: MID_LINE</td>
+    <td class="indexfield1">open-files depth: 1</td>
+    <td class="startfield1" colspan=3 id="replace2"><tt><table border="1"><tbody><tr><td>\</td><td>e</td><td>x</td><td>p</td><td>a</td><td>n</td><td>d</td><td>a</td><td>f</td><td>t</td><td>e</td><td>r</td><td>\</td><td>u</td><td>p</td><td>p</td><td>e</td><td>r</td><td>c</td><td>a</td><td>s</td><td>e</td><td>\</td><td>e</td><td>x</td><td>p</td><td>a</td><td>n</td><td>d</td><td>a</td><td>f</td><td>t</td><td>e</td><td>r</td><td>{</td><td>a</td><td>}</td><td>%</td></tr><tr><td colspan="40"></td><td>↑</td></tr></tbody></table></tt></td>
+    <td class= "namefield1">filename: <tt>expandafter.tex</tt></td>
+  </tr>
+  <tr class="values">
+    <td class="statefield1">1</td>
+    <td class="indexfield1">1</td>
+    <td class="startfield1">17</td>
+    <td class=  "locfield1">58</td>
+    <td class="limitfield1">57</td>
+    <td class= "namefield1">2039</td>
+  </tr>
+
+  <tr class="meanings">
+    <td rowspan=2>3</td>
+    <td class="statefield2">token list</td>
+    <td class="indexfield2">token list type: 3 (= backed up)</td>
+    <td class="startfield2" colspan=2 id="replace3"><tt><table border=1><tr><td>(11, 97=a)</td></tr><tr><td align=center>↑</td></tr></table></tt></td>
+    <td class="limitfield2">(ignore, not a macro)</td>
+    <td class= "namefield2">(ignore, not a macro)</td>
+  </tr>
+  <tr class="values">
+    <td class="statefield1">0</td>
+    <td class="indexfield1">3</td>
+    <td class="startfield1">4995122</td>
+    <td class=  "locfield1">4995122</td>
+    <td class="limitfield1">59</td>
+    <td class= "namefield1">2039</td>
+  </tr>
+
+  <tr class="meanings">
+    <td rowspan=2>4</td>
+    <td class="statefield2">token list</td>
+    <td class="indexfield2">token list type: 3 (= backed up)</td>
+    <td class="startfield2" colspan=2 id="replace4"><tt><table border=1><tr><td>(1, 123={)</td></tr><tr><td align=center>↑</td></tr></table></tt></td>
+    <td class="limitfield2">(ignore, not a macro)</td>
+    <td class= "namefield2">(ignore, not a macro)</td>
+  </tr>
+  <tr class="values">
+    <td class="statefield1">0</td>
+    <td class="indexfield1">3</td>
+    <td class="startfield1">4995121</td>
+    <td class=  "locfield1">4995121</td>
+    <td class="limitfield1">59</td>
+    <td class= "namefield1">2039</td>
+  </tr>
+
+  <tr class="meanings">
+    <td rowspan=2>5</td>
+    <td class="statefield2">token list</td>
+    <td class="indexfield2">token list type: 3 (= backed up)</td>
+    <td class="startfield2" colspan=2 id="replace5"><tt><table border=1><tr><td>(ControlSequence, \uppercase)</td></tr><tr><td></td><td align=center>↑</td></tr></table></tt></td>
+    <td class="limitfield2">(ignore, not a macro)</td>
+    <td class= "namefield2">(ignore, not a macro)</td>
+  </tr>
+  <tr class="values">
+    <td class="statefield1">0</td>
+    <td class="indexfield1">3</td>
+    <td class="startfield1">4995120</td>
+    <td class=  "locfield1">NULL</td>
+    <td class="limitfield1">59</td>
+    <td class= "namefield1">2039</td>
+  </tr>
+
+  <tr class="meanings">
+    <td rowspan=2>6</td>
+    <td class="statefield2">token list</td>
+    <td class="indexfield2">token list type: 4 (= inserted)</td>
+    <td class="startfield2" colspan=2 id="replace6"><tt><table border=1><tr><td>\</td><td>u</td><td>p</td><td>p</td><td>e</td><td>r</td><td>c</td><td>a</td><td>s</td><td>e</td></tr><tr><td align=center>↑</td></tr></table></tt></td>
+    <td class="limitfield2">(ignore, not a macro)</td>
+    <td class= "namefield2">(ignore, not a macro)</td>
+  </tr>
+  <tr class="values">
+    <td class="statefield1">0</td>
+    <td class="indexfield1">4</td>
+    <td class="startfield1">4995119</td>
+    <td class=  "locfield1">4995119</td>
+    <td class="limitfield1">59</td>
+    <td class= "namefield1">2039</td>
+  </tr>
+</table>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Second version (JavaScript helper)</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Like the first version, except that the inner tables are generated using JavaScript. The HTML has just placeholders for those inner tables:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-html">&lt;<span style="color: #0000ff;">head</span>&gt;
+  &lt;<span style="color: #0000ff;">meta</span> <span style="color: #a0522d;">charset</span>=<span style="color: #8b2252;">"utf-8"</span>/&gt;
+&lt;/<span style="color: #0000ff;">head</span>&gt;
+
+...
+
+    &lt;<span style="color: #0000ff;">td</span> <span style="color: #a0522d;">class</span>=<span style="color: #8b2252;">"startfield1"</span> colspan=3 <span style="color: #a0522d;">id</span>=<span style="color: #8b2252;">"replace1"</span>&gt;&lt;/<span style="color: #0000ff;">td</span>&gt;
+
+...
+
+    &lt;<span style="color: #0000ff;">td</span> <span style="color: #a0522d;">class</span>=<span style="color: #8b2252;">"startfield1"</span> colspan=3 <span style="color: #a0522d;">id</span>=<span style="color: #8b2252;">"replace2"</span>&gt;&lt;/<span style="color: #0000ff;">td</span>&gt;
+
+...
+
+&lt;<span style="color: #0000ff;">script</span> <span style="color: #a0522d;">type</span>='text/javascript' <span style="color: #a0522d;">src</span>=<span style="color: #8b2252;">"helper.js"</span>&gt;
+&lt;/<span style="color: #0000ff;">script</span>&gt;
+</pre>
+</pre>
+</div>
+
+<p>
+where <code>helper.js</code> replaces the contents of the those fields identified by <code>id</code> (yes I work in security and know that using <code>innerHTML</code> can be dangerous and error-prone, so we need to make sure that the inputs to the following function can never be influenced by the user):
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-javascript"><span style="color: #a020f0;">function</span> <span style="color: #0000ff;">makeTableFromBuffer</span>(<span style="color: #a0522d;">text</span>, <span style="color: #a0522d;">start</span>, <span style="color: #a0522d;">loc</span>, <span style="color: #a0522d;">limit</span>) {
+    <span style="color: #a020f0;">let</span> <span style="color: #a0522d;">inner</span> = <span style="color: #8b2252;">'&lt;table border=1&gt;&lt;tr&gt;'</span>;
+    <span style="color: #a020f0;">for</span> (<span style="color: #a020f0;">let</span> <span style="color: #a0522d;">c</span> of text) {
+        inner += <span style="color: #8b2252;">'&lt;td&gt;'</span> + c + <span style="color: #8b2252;">'&lt;/td&gt;'</span>;
+    }
+    inner += <span style="color: #8b2252;">'&lt;/tr&gt;'</span>;
+    inner += <span style="color: #8b2252;">'&lt;tr&gt;&lt;td colspan='</span>;
+    inner += loc - start;
+    inner += <span style="color: #8b2252;">'&gt;'</span>;
+    inner += <span style="color: #8b2252;">'&lt;td&gt;&#8593;&lt;/td&gt;'</span>;
+    inner += <span style="color: #8b2252;">'&lt;/tr&gt;'</span>;
+    inner += <span style="color: #8b2252;">'&lt;/table&gt;'</span>;
+
+    <span style="color: #a020f0;">const</span> <span style="color: #a0522d;">elt</span> = document.createElement(<span style="color: #8b2252;">'tt'</span>);
+    elt.innerHTML = inner;
+    <span style="color: #a020f0;">return</span> elt;
+}
+</pre>
+</pre>
+</div>
+
+<p>
+and then:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-javascript">document.getElementById(<span style="color: #8b2252;">'replace1'</span>).appendChild(makeTableFromBuffer(<span style="color: #8b2252;">'expandafter.tex'</span>, 1, 17, 15));
+document.getElementById(<span style="color: #8b2252;">'replace2'</span>).appendChild(makeTableFromBuffer(<span style="color: #8b2252;">'\\expandafter\\uppercase\\expandafter{a}%'</span>, 17, 57, 58));
+</pre>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Moving to Vue</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+In Vue, normally the elements that you want to generate from data (Vue components) are written as HTML-like templates, with special syntax for conditionals (<code>v-if</code>) and loops (<code>v-for</code>). If we were working in Vue from scratch, we might have done that, instead of writing the function that assembles the table using <code>innerHTML</code>. And that may still be what we should ultimately turn our table into.
+</p>
+
+<p>
+For now, though, we have this <code>makeTableFromBuffer</code> function that is directly generating the html of the table (wrapped in a <code>&lt;tt&gt;</code> element), and we'd like to try Vue without having to re-do the table in Vue. (That is what is being illustrated by this page that you're reading.)
+</p>
+</div>
+
+<div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> v-html</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+One solution that works is to use Vue's <code>v-html</code> to replace the HTML of elements we want to replace:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-html">&lt;<span style="color: #0000ff;">head</span>&gt;
+  &lt;<span style="color: #0000ff;">meta</span> <span style="color: #a0522d;">charset</span>=<span style="color: #8b2252;">"utf-8"</span>/&gt;
+  &lt;<span style="color: #0000ff;">script</span> <span style="color: #a0522d;">src</span>=<span style="color: #8b2252;">"vue.js"</span>&gt;&lt;/<span style="color: #0000ff;">script</span>&gt;
+&lt;/<span style="color: #0000ff;">head</span>&gt;
+
+...
+
+&lt;<span style="color: #0000ff;">table</span> <span style="color: #a0522d;">id</span>=<span style="color: #8b2252;">"full-table"</span>&gt;
+
+...
+
+    &lt;<span style="color: #0000ff;">td</span> <span style="color: #a0522d;">class</span>=<span style="color: #8b2252;">"startfield1"</span> colspan=3 <span style="color: #a0522d;">v-html</span>=<span style="color: #8b2252;">"replace1Html"</span>&gt;&lt;/<span style="color: #0000ff;">td</span>&gt;
+
+...
+
+&lt;/<span style="color: #0000ff;">table</span>&gt;
+
+...
+
+&lt;<span style="color: #0000ff;">script</span> <span style="color: #a0522d;">type</span>='text/javascript' <span style="color: #a0522d;">src</span>=<span style="color: #8b2252;">"helper.js"</span>&gt;
+</pre>
+</pre>
+</div>
+
+<p>
+where <code>helper.js</code> has:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-javascript"><span style="color: #a020f0;">var</span> <span style="color: #a0522d;">app</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">Vue</span>({
+  el: <span style="color: #8b2252;">'#full-table'</span>,
+  data: {
+      replace1Html: makeTableFromBuffer(<span style="color: #8b2252;">'expandafter.tex'</span>, 1, 17, 15).outerHTML,
+  }
+});
+</pre>
+</pre>
+</div>
+
+<p>
+This works, but note that we are passing the data to the entire Vue “app”, rather than to the inner component specifically. So this does not lend itself well to making this inner table part of a component that goes into another, etc. (Or maybe it does, and I just didn't try it.)
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> render function</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+Another solution: Vue's <code>render</code> functions.
+</p>
+
+<p>
+Via: <a href="https://stackoverflow.com/questions/43734263/vue-component-render-function-print-unescaped-html-entity">https://stackoverflow.com/questions/43734263/vue-component-render-function-print-unescaped-html-entity</a>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-javascript">Vue.component(<span style="color: #8b2252;">'buffer-table'</span>, {
+    props: [<span style="color: #8b2252;">'text'</span>, <span style="color: #8b2252;">'start'</span>, <span style="color: #8b2252;">'loc'</span>, <span style="color: #8b2252;">'limit'</span>],
+    <span style="color: #0000ff;">render</span>: <span style="color: #a020f0;">function</span>(<span style="color: #a0522d;">createElement</span>) {
+        <span style="color: #a020f0;">return</span> createElement(<span style="color: #8b2252;">'tt'</span>, {
+            domProps: {
+                innerHTML: makeTableFromBuffer(<span style="color: #008b8b;">this</span>.text, <span style="color: #008b8b;">this</span>.start, <span style="color: #008b8b;">this</span>.loc, <span style="color: #008b8b;">this</span>.limit).innerHTML,
+            },
+        });
+    }
+});
+</pre>
+</pre>
+</div>
+
+<p>
+(We should probably make our <code>makeTableFromBuffer</code> function simpler rather than returning a created element of which we use only its <code>innerHTML</code>, but changing that function is not what I'm trying to illustrate here.)
+</p>
+
+<p>
+With this, we can write in the HTML directly:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-html">...
+
+    &lt;<span style="color: #0000ff;">td</span> <span style="color: #a0522d;">class</span>=<span style="color: #8b2252;">"startfield1"</span> colspan=3&gt;&lt;<span style="color: #0000ff;">div</span> <span style="color: #a0522d;">is</span>=<span style="color: #8b2252;">"buffer-table"</span> <span style="color: #a0522d;">text</span>=<span style="color: #8b2252;">"expandafter.tex"</span> start=1 loc=17 limit=15&gt;&lt;/<span style="color: #0000ff;">div</span>&gt;&lt;/<span style="color: #0000ff;">td</span>&gt;
+
+...
+
+
+    &lt;<span style="color: #0000ff;">td</span> <span style="color: #a0522d;">class</span>=<span style="color: #8b2252;">"startfield1"</span> colspan=3&gt;&lt;<span style="color: #0000ff;">div</span> <span style="color: #a0522d;">is</span>=<span style="color: #8b2252;">"buffer-table"</span> <span style="color: #a0522d;">text</span>=<span style="color: #8b2252;">"\expandafter\uppercase\expandafter{a}%"</span> start=17 loc=57 limit=58&gt;&lt;/<span style="color: #0000ff;">div</span>&gt;&lt;/<span style="color: #0000ff;">td</span>&gt;
+</pre>
+</pre>
+</div>
+
+<p>
+(Here we needed to use <code>&lt;div is="buffer-table"&gt;&lt;/div&gt;</code> instead of <code>&lt;buffer-table&gt;&lt;/buffer-table&gt;</code> as we'd like to, because <code>&lt;table&gt;</code> cannot contain arbitrary elements and they will get stripped out of the DOM. But we'll get to that later: when we make the outer thing a template as well, we'll be able to change this.)
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Shreevatsa R</p>
+<p class="date">Created: 2017-09-02 Sat 15:34</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.1.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

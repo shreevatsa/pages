@@ -1,0 +1,263 @@
+#+MACRO: NEWLINE @@latex:\\@@ @@html:<br>@@
+#+TITLE: Truly incremental Vue.js adoption {{{NEWLINE}}} Moving to Vue for elements being built up with =innerHTML=
+#+AUTHOR: Shreevatsa R
+
+The page at https://vuejs.org/v2/guide/ says that Vue
+
+#+BEGIN_QUOTE
+is a *progressive framework* for building user interfaces. Unlike other monolithic frameworks, Vue is designed from the ground up to be incrementally adoptable.
+#+END_QUOTE
+
+Here I put it to the test with a truly stupid use case. :-)
+
+(TL;DR: If before using Vue you have an element being built up in JavaScript, then in Vue use either ~v-html~ or a ~render~ function with ~domProps~ and ~innerHTML~.)
+
+* Background
+
+I am not a serious web developer, and I do not write serious “web applications”. (If you're wondering what “web applications” are: once upon a time, we thought the World Wide Web was for documents (such as the one you're reading right now). Then came JavaScript, a way to add some interactivity to the page. Years passed, and long story short, we've reached the state where today when you visit most websites (say GMail or Facebook), you're no longer reading documents; instead what happens is that first your browser downloads a large program, then starts running that program…)
+
+Still, the browser is the most widely available user-interface, and it seems that if you want make something visually apparent, then considering the available alternatives (that I know of)—all the different ways to paint the screen and position elements on it—the browser is a reasonable medium to use, possibly as good as any.
+
+So here I am, with a hazy idea of what I'd like something to look like, and trying to achieve that via HTML (+later CSS for styling).
+
+* First version (hand-written HTML)
+
+I wrote something like (all the details don't matter; the main thing to note is that in the first two rows, columns 3 to 5 are occupied by an inner table that's laborious to write by hand):
+
+#+BEGIN_HTML
+<table border=1>
+  <tr class="meanings">
+    <td rowspan=2>1</td>
+    <td class="statefield1">scanner state: MID_LINE</td>
+    <td class="indexfield1">open-files depth: (reading from terminal)</td>
+    <td class="startfield1" colspan=3><tt><table border=1><tr><td>e</td><td>x</td><td>p</td><td>a</td><td>n</td><td>d</td><td>a</td><td>f</td><td>t</td><td>e</td><td>r</td><td>.</td><td>t</td><td>e</td><td>x</td></tr><tr><td>↑</td><td colspan=15></td><td>↑</td></tr></table></tt></td>
+    <td class= "namefield1">filename: (reading from terminal)</td>
+  </tr>
+  <tr class="values">
+    <td class="statefield1">1</td>
+    <td class="indexfield1">0</td>
+    <td class="startfield1">1</td>
+    <td class=  "locfield1">17</td>
+    <td class="limitfield1">16</td>
+    <td class= "namefield1">0</td>
+  </tr>
+
+  <tr class="meanings">
+    <td rowspan=2>2</td>
+    <td class="statefield1">scanner state: MID_LINE</td>
+    <td class="indexfield1">open-files depth: 1</td>
+    <td class="startfield1" colspan=3 id="replace2"><tt><table border="1"><tbody><tr><td>\</td><td>e</td><td>x</td><td>p</td><td>a</td><td>n</td><td>d</td><td>a</td><td>f</td><td>t</td><td>e</td><td>r</td><td>\</td><td>u</td><td>p</td><td>p</td><td>e</td><td>r</td><td>c</td><td>a</td><td>s</td><td>e</td><td>\</td><td>e</td><td>x</td><td>p</td><td>a</td><td>n</td><td>d</td><td>a</td><td>f</td><td>t</td><td>e</td><td>r</td><td>{</td><td>a</td><td>}</td><td>%</td></tr><tr><td colspan="40"></td><td>↑</td></tr></tbody></table></tt></td>
+    <td class= "namefield1">filename: <tt>expandafter.tex</tt></td>
+  </tr>
+  <tr class="values">
+    <td class="statefield1">1</td>
+    <td class="indexfield1">1</td>
+    <td class="startfield1">17</td>
+    <td class=  "locfield1">58</td>
+    <td class="limitfield1">57</td>
+    <td class= "namefield1">2039</td>
+  </tr>
+
+  <tr class="meanings">
+    <td rowspan=2>3</td>
+    <td class="statefield2">token list</td>
+    <td class="indexfield2">token list type: 3 (= backed up)</td>
+    <td class="startfield2" colspan=2 id="replace3"><tt><table border=1><tr><td>(11, 97=a)</td></tr><tr><td align=center>↑</td></tr></table></tt></td>
+    <td class="limitfield2">(ignore, not a macro)</td>
+    <td class= "namefield2">(ignore, not a macro)</td>
+  </tr>
+  <tr class="values">
+    <td class="statefield1">0</td>
+    <td class="indexfield1">3</td>
+    <td class="startfield1">4995122</td>
+    <td class=  "locfield1">4995122</td>
+    <td class="limitfield1">59</td>
+    <td class= "namefield1">2039</td>
+  </tr>
+
+  <tr class="meanings">
+    <td rowspan=2>4</td>
+    <td class="statefield2">token list</td>
+    <td class="indexfield2">token list type: 3 (= backed up)</td>
+    <td class="startfield2" colspan=2 id="replace4"><tt><table border=1><tr><td>(1, 123={)</td></tr><tr><td align=center>↑</td></tr></table></tt></td>
+    <td class="limitfield2">(ignore, not a macro)</td>
+    <td class= "namefield2">(ignore, not a macro)</td>
+  </tr>
+  <tr class="values">
+    <td class="statefield1">0</td>
+    <td class="indexfield1">3</td>
+    <td class="startfield1">4995121</td>
+    <td class=  "locfield1">4995121</td>
+    <td class="limitfield1">59</td>
+    <td class= "namefield1">2039</td>
+  </tr>
+
+  <tr class="meanings">
+    <td rowspan=2>5</td>
+    <td class="statefield2">token list</td>
+    <td class="indexfield2">token list type: 3 (= backed up)</td>
+    <td class="startfield2" colspan=2 id="replace5"><tt><table border=1><tr><td>(ControlSequence, \uppercase)</td></tr><tr><td></td><td align=center>↑</td></tr></table></tt></td>
+    <td class="limitfield2">(ignore, not a macro)</td>
+    <td class= "namefield2">(ignore, not a macro)</td>
+  </tr>
+  <tr class="values">
+    <td class="statefield1">0</td>
+    <td class="indexfield1">3</td>
+    <td class="startfield1">4995120</td>
+    <td class=  "locfield1">NULL</td>
+    <td class="limitfield1">59</td>
+    <td class= "namefield1">2039</td>
+  </tr>
+
+  <tr class="meanings">
+    <td rowspan=2>6</td>
+    <td class="statefield2">token list</td>
+    <td class="indexfield2">token list type: 4 (= inserted)</td>
+    <td class="startfield2" colspan=2 id="replace6"><tt><table border=1><tr><td>\</td><td>u</td><td>p</td><td>p</td><td>e</td><td>r</td><td>c</td><td>a</td><td>s</td><td>e</td></tr><tr><td align=center>↑</td></tr></table></tt></td>
+    <td class="limitfield2">(ignore, not a macro)</td>
+    <td class= "namefield2">(ignore, not a macro)</td>
+  </tr>
+  <tr class="values">
+    <td class="statefield1">0</td>
+    <td class="indexfield1">4</td>
+    <td class="startfield1">4995119</td>
+    <td class=  "locfield1">4995119</td>
+    <td class="limitfield1">59</td>
+    <td class= "namefield1">2039</td>
+  </tr>
+</table>
+#+END_HTML
+
+* Second version (JavaScript helper)
+
+Like the first version, except that the inner tables are generated using JavaScript. The HTML has just placeholders for those inner tables:
+
+#+BEGIN_SRC html
+<head>
+  <meta charset="utf-8"/>
+</head>
+
+...
+
+    <td class="startfield1" colspan=3 id="replace1"></td>
+
+...
+
+    <td class="startfield1" colspan=3 id="replace2"></td>
+
+...
+
+<script type='text/javascript' src="helper.js">
+</script>
+#+END_SRC
+
+where ~helper.js~ replaces the contents of the those fields identified by ~id~ (yes I work in security and know that using ~innerHTML~ can be dangerous and error-prone, so we need to make sure that the inputs to the following function can never be influenced by the user):
+
+#+BEGIN_SRC javascript
+function makeTableFromBuffer(text, start, loc, limit) {
+    let inner = '<table border=1><tr>';
+    for (let c of text) {
+        inner += '<td>' + c + '</td>';
+    }
+    inner += '</tr>';
+    inner += '<tr><td colspan=';
+    inner += loc - start;
+    inner += '>';
+    inner += '<td>↑</td>';
+    inner += '</tr>';
+    inner += '</table>';
+
+    const elt = document.createElement('tt');
+    elt.innerHTML = inner;
+    return elt;
+}
+#+END_SRC
+
+and then:
+
+#+BEGIN_SRC javascript
+    document.getElementById('replace1').appendChild(makeTableFromBuffer('expandafter.tex', 1, 17, 15));
+    document.getElementById('replace2').appendChild(makeTableFromBuffer('\\expandafter\\uppercase\\expandafter{a}%', 17, 57, 58));
+#+END_SRC
+
+* Moving to Vue
+
+In Vue, normally the elements that you want to generate from data (Vue components) are written as HTML-like templates, with special syntax for conditionals (~v-if~) and loops (~v-for~). If we were working in Vue from scratch, we might have done that, instead of writing the function that assembles the table using ~innerHTML~. And that may still be what we should ultimately turn our table into.
+
+For now, though, we have this ~makeTableFromBuffer~ function that is directly generating the html of the table (wrapped in a ~<tt>~ element), and we'd like to try Vue without having to re-do the table in Vue. (That is what is being illustrated by this page that you're reading.)
+
+** v-html
+One solution that works is to use Vue's ~v-html~ to replace the HTML of elements we want to replace:
+
+#+BEGIN_SRC html
+<head>
+  <meta charset="utf-8"/>
+  <script src="vue.js"></script>
+</head>
+
+...
+
+<table id="full-table">
+
+...
+
+    <td class="startfield1" colspan=3 v-html="replace1Html"></td>
+
+...
+
+</table>
+
+...
+
+<script type='text/javascript' src="helper.js">
+#+END_SRC
+
+where ~helper.js~ has:
+
+#+BEGIN_SRC javascript
+var app = new Vue({
+  el: '#full-table',
+  data: {
+      replace1Html: makeTableFromBuffer('expandafter.tex', 1, 17, 15).outerHTML,
+  }
+});
+#+END_SRC
+
+This works, but note that we are passing the data to the entire Vue “app”, rather than to the inner component specifically. So this does not lend itself well to making this inner table part of a component that goes into another, etc. (Or maybe it does, and I just didn't try it.)
+
+** render function
+Another solution: Vue's ~render~ functions.
+
+Via: https://stackoverflow.com/questions/43734263/vue-component-render-function-print-unescaped-html-entity
+
+#+BEGIN_SRC javascript
+Vue.component('buffer-table', {
+    props: ['text', 'start', 'loc', 'limit'],
+    render: function(createElement) {
+        return createElement('tt', {
+            domProps: {
+                innerHTML: makeTableFromBuffer(this.text, this.start, this.loc, this.limit).innerHTML,
+            },
+        });
+    }
+});
+#+END_SRC
+
+(We should probably make our ~makeTableFromBuffer~ function simpler rather than returning a created element of which we use only its ~innerHTML~, but changing that function is not what I'm trying to illustrate here.)
+
+With this, we can write in the HTML directly:
+
+#+BEGIN_SRC html
+
+...
+
+    <td class="startfield1" colspan=3><div is="buffer-table" text="expandafter.tex" start=1 loc=17 limit=15></div></td>
+
+...
+
+
+    <td class="startfield1" colspan=3><div is="buffer-table" text="\expandafter\uppercase\expandafter{a}%" start=17 loc=57 limit=58></div></td>
+
+#+END_SRC
+
+(Here we needed to use ~<div is="buffer-table"></div>~ instead of ~<buffer-table></buffer-table>~ as we'd like to, because ~<table>~ cannot contain arbitrary elements and they will get stripped out of the DOM. But we'll get to that later: when we make the outer thing a template as well, we'll be able to change this.)
