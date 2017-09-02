@@ -191,23 +191,3 @@ shreevatsa@ubuntu:/tmp$ tex (or: gdb tex)
 * How are `\def` and `\def` implemented?
 
 https://tex.stackexchange.com/questions/386741/a-macro-defined-with-edef-whose-body-consists-solely-of-non-expandable-tokens/386986#386986
-
-* Refs
-
-- https://www.tug.org/texlive/svn/
-- https://www.tug.org/texlive/build.html
-- https://www.tug.org/texlive/doc/tlbuild.html#Building
-
-Basically you should do
-
-#+BEGIN_SRC sh
-rsync -a --delete --exclude=.svn tug.org::tldevsrc .
-#+END_SRC
-or
-#+BEGIN_SRC sh
-rsync -a --delete --exclude=.svn tug.org::tldevsrc/ /your/dir/
-#+END_SRC
-
-to get the sources.
-
-Then, inside the top-level ~Build~ directory, run ~./Build~
