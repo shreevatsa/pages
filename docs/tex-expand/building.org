@@ -1,0 +1,207 @@
+(Redo of how-to-build.org)
+
+* Four Refs
+
+1. https://www.tug.org/texlive/svn/
+2. https://www.tug.org/texlive/build.html
+3. https://www.tug.org/texlive/doc/tlbuild.html#Building
+4. https://tug.org/texinfohtml/web2c.html
+
+* 1. Getting from SVN: https://www.tug.org/texlive/svn/
+
+Basically you should do
+
+#+BEGIN_SRC sh
+rsync -a --delete --exclude=.svn tug.org::tldevsrc .
+#+END_SRC
+or
+#+BEGIN_SRC sh
+rsync -a --delete --exclude=.svn tug.org::tldevsrc/ /your/dir/
+#+END_SRC
+
+to get the sources.
+
+* 2. Basic Build: https://www.tug.org/texlive/build.html
+
+*Build binaries*: Inside the top-level directory (under what you got from rsync as ~tldevsrc~), go to ~Build/source~ and run ~./Build~. This can take an argument (~./Build -g~), and is basically equivalent (to verify, use ~set -x~ when running the ~Build~ script) to (in a new ~Work~ directory) ~./configure~ followed by (~make world~ which is) ~make install strip~. Remove the ~strip~ as we don't want to strip.
+
+(A tip at this stage, apparently, is that if you want to see what is #define-d where, you can look at the make invocation and replace the ~-c -o foo.o~ with ~-E -dD -o /tmp/out~ or ~-E -dM - </dev/null~. Haven't used this myself.)
+
+*Copy binaries*: This apparently creates executable binaries (~tex~, ~pdftex~, etc.) in the directory ~Build/source/inst/bin/i686-pc-linux-gnu~. If I understand correctly, the executable binaries are *also* created in directories like ~Build/source/Work/texk/web2c~. Either way, the binaries need to be copied to ~Master/bin/x86_64-linux/~.
+
+*Format files*: After that, add this directory to PATH (e.g. ~PATH=$PATH:/home/shreevatsa/build-tex/texlive/full/Master/bin/x86_64-linux~). After this I ran ~fmtutil-sys --byfmt=tex~ but apparently one can run ~latex small2e~ and it will build the ~latex.fmt~ file and similarly with ~pdflatex~ etc.
+
+* 3. Detailed build manual: https://www.tug.org/texlive/doc/tlbuild.html
+
+This page is long, but note that over half the page is made of “Appendix A install-tl”, “Appendix B tlmgr”, and “Index”. In fact if you stop at say “6.2 Top-level directories”, then you'll only be at about a seventh of the way down on the page.
+
+** What's all this?
+
+From TeXLive's point of view, TeX (and all TeX engines) are only one of a huge number of packages they distribute. See ~Build/source/m4/kpse-pkgs.m4~ for the list:
+
+#+BEGIN_SRC
+# KPSE_LIBS_PKGS
+#  kpse_libs_pkgs (libs/*) (generic libraries: for use by both utils/* and texk/*)
+harfbuzz
+icu
+teckit
+graphite2
+zziplib
+xpdf
+poppler
+mpfr
+gmp
+cairo
+pixman
+potrace
+gd
+freetype2
+libpng
+libpaper
+luajit
+lua52
+zlib
+#  kpse_texlibs_pkgs (texk/*: TeX-specific programs and libraries)
+ptexenc
+kpathsea
+
+# KPSE_UTILS_PKGS (utils/*: additional programs)
+autosp
+devnag
+lacheck
+m-tx
+pmx
+ps2eps
+t1utils
+texdoctk
+tpic2pdftex
+vlna
+xindy
+xpdfopen
+
+# KPSE_TEXK_PKGS (texk/* other than texk/kpathsea: TeX-specific programs and libraries)
+web2c
+afm2pl
+bibtex-x
+chktex
+cjkutils
+detex
+dtl
+dvi2tty
+dvidvi
+dviljk
+dvipdfm-x
+dvipng
+dvipos
+dvipsk
+dvisvgm
+gregorio
+gsftopk
+lcdf-typetools
+makeindexk
+makejvf
+mendexk
+musixtnt
+ps2pk
+psutils
+seetexk
+tex4htk
+ttf2pk2
+ttfdump
+upmendex
+xdvik
+texlive
+#+END_SRC
+
+Where in this list is TeX the program itself? (Answer: Inside texk/web2c)
+
+[IMO this whole situation is a bit absurd: ~web2c~ started as a "distribution" itself: of TeX, MF, and related programs. Why does this other distribution (TeX Live) "nest" that distribution instead of cleaning up / refactoring, and having things at the same level? The whole culture is one of treating programs and even distributions as blackboxes and writing wrappers around them, instead of breaking them apart and making them transparent.]
+
+See “6.2 Top-level directories” in tlbuild.html for more on these and other top-level directories.
+
+** Building
+
+This thing says that the top-level ~Build~ script is equivalent to ~configure && make && make check && make install~ except that they need to be run inside a separate directory (the ~Build~ script runs ~configure~ and ~make~ inside the ~Work~ directory, and installs into the ~inst~ directory.)
+
+Running ~configure~ at the top level runs configure for the top-level and for the subdirectories (~libs~, ~utils~, ~texk~). Running ~make~ at the top level takes care of recursively running ~configure~ where needed, then ~make~ (which makes sure dependencies have been built), etc.
+
+You can run ~configure --disable-all-pkgs~ at the top level (which still does "configure" everything), with either
+
+- ~--enable-prog~ only for the prog you need, or
+- (with ~--disable-all-pkgs~ and without anything enabled) later running ~make~ on just the thing you need, from the relevant directory (e.g. ~make etex~ from within ~texk/web2c/~).
+
+Quoting an example from the tlbuild manual:
+
+#+BEGIN_EXAMPLE
+Here is an example from start to finish for working on dvipdfm-x.
+
+#+BEGIN_SRC
+mkdir mydir && cd mydir                                                                             # new working directory
+rsync -a --delete --exclude=.svn --exclude=Work tug.org::tldevsrc/Build/source/ .                   # Get sources (http://tug.org/texlive/svn)
+mkdir Work && cd Work                                                                               # Create build directory
+../configure --disable-all-pkgs --enable-dvipdfm-x -C CFLAGS=-g CXXFLAGS=-g >&outc                  # Do the configure
+make >&outm                                                                                         # Do the make
+cd texk/dvipdfm-x
+make check                                                                                          # Test
+#+END_SRC
+Then you modify source files in mydir/texk/dvipdfm-x and rerun make in mydir/Work/texk/dvipdfm-x to rebuild.
+#+END_EXAMPLE
+
+(Note: I would do it differently: start with a full checkout including ~Master~ etc., because if you make changes to TeX then you still need the rest of the “data” to build the format files etc., and actually run TeX.)
+
+** Installing
+
+#+BEGIN_QUOTE
+The main consideration is that make install is not enough to make a usable TeX installation. Beyond the compiled binaries, (thousands of) support files are needed; just as a first example plain.tex is not in the source tree.
+#+END_QUOTE
+
+Installation happens to different directories:
+
+  +-----------+----------------+----------------------------+
+  |name       |autoconf default|TL (./Build) default        |
+  +-----------+----------------+----------------------------+
+  |prefix     |/usr/local      |./inst ?                    |
+  +-----------+----------------+----------------------------+
+  |exec_prefix|prefix          |./inst ?                    |
+  +-----------+----------------+----------------------------+
+  |bindir     |exec_prefix/bin |./inst/bin/std-platform-name|
+  +-----------+----------------+----------------------------+
+  |libdir     |exec_prefix/lib |[./inst/lib ??]             |
+  +-----------+----------------+----------------------------+
+  |includedir |prefix/include  |                            |
+  +-----------+----------------+----------------------------+
+  |datarootdir|prefix/share    |prefix (= inst?)            |
+  +-----------+----------------+----------------------------+
+  |mandir     |datarootdir/man |prefix/texmf-dist/doc/man   |
+  +-----------+----------------+----------------------------+
+  |infodir    |datarootdir/info|prefix/texmf-dist/doc/info  |
+  +-----------+----------------+----------------------------+
+
+* Complete flow
+
+** Initial setup
+
+#+BEGIN_SRC sh
+mkdir texlive2
+cd texlive2
+# Downloads around 8.4 GB
+rsync -a -vv --delete --exclude=.svn tug.org::tldevsrc .
+cd Build/source
+# At this point, tex.web is present in ./texk/web2c/tex.web i.e. in texlive2/Build/source/texk/web2c/tex.web
+#+END_SRC
+
+** Regular build and install/usage
+If you just want to use TeX, and maybe edit ~tex.web~ to make changes:
+#+BEGIN_SRC sh
+# Recall that we are in texlive2/Build/source
+./Build
+#+END_SRC
+
+If you're going to edit ~tex.web~, you'll almost surely want to add ~--disable-ptex --disable-eptex --disable-uptex --disable-euptex~ so that your changes don't make ~make check~ fail and be an annoyance.
+
+** Debug build and install/usage
+If you want to run ~tex~ under a debugger (~gdb~), you need the ~-g~ flag:
+#+BEGIN_SRC sh
+# Recall that we are in texlive2/Build/source
+./Build --no-clean -g --disable-ptex --disable-eptex --disable-uptex --disable-euptex
+#+END_SRC
