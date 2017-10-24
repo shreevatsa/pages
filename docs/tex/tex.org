@@ -118,3 +118,6 @@ TEXDR.AFT (have annotations)
 
 * Pre-METAFONT history?
 Findfont: https://archive.org/details/findafont00brucrich
+
+* Random links, sort later
+http://petergallagher.com.au/index.php/site/article/the-longevity-of-plain-tex (random person)
