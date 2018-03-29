@@ -1,0 +1,31 @@
+Chalk / WesleyAC
+- http://blog.wesleyac.com/
+- https://github.com/WesleyAC/blog/commits/master?after=6173ceae4674bb4bb1ecc631aed4085e313e44fd+69
+- https://github.com/nielsenramon/chalk
+- http://chalk.nielsenramon.com/
+
+Hiding a post (basically add a "dontshow = true" to the hidden posts, and filter that out on the front page...)
+- https://stackoverflow.com/questions/23935062/jekyll-github-pages-how-to-hide-a-post
+- https://gist.github.com/carlo/2870636
+- http://hamishwillee.github.io/2014/06/11/public-drafts-in-jekyll/
+- https://jekyllrb.com/docs/drafts/
+
+Changing Jekyll home page default (why? See above)
+- https://jekyllrb.com/docs/themes/#overriding-theme-defaults
+
+Custom processor / markdown options (for math, see below)
+- https://jekyllrb.com/docs/configuration/#custom-markdown-processors
+- https://jekyllrb.com/docs/configuration/#markdown-options
+
+Pandoc
+- https://github.com/jgm/pandoc/wiki/Pandoc-Extras#static-website-generators
+- https://github.com/skade/yakshav.es -- uses Pandoc and looks great
+
+Math
+- https://github.com/linjer/jekyll-katex -- requires {% katex %} or {% katex display %}
+- https://haixing-hu.github.io/programming/2013/09/20/how-to-use-mathjax-in-jekyll-generated-github-pages/ (says to use maruku; has some tests at the bottom of the page)
+- https://xuc.me/blog/katex-and-jekyll/
+- http://drz.ac/2013/01/03/blogging-with-math/ (has some great tests at the bottom of the page)
+- MathJax output formats: http://docs.mathjax.org/en/latest/output.html (It's clear that CommonHTML is what we want, with HTML+CSS in second place. See also the note about viewport at http://docs.mathjax.org/en/latest/output.html#viewport-meta-tag)
+- MathJax font options: http://docs.mathjax.org/en/latest/font-support.html (Demo: https://www.checkmyworking.com/misc/MathJax-play-area/)
+- Most promising: https://github.com/jgm/pandoc/issues/3153 (they seem to go on the wrong path trying SVG instead of HTML+CSS. Output is ugly! https://ickc.github.io/pandoc-MathJax-node/)
