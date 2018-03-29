@@ -121,3 +121,32 @@ Findfont: https://archive.org/details/findafont00brucrich
 
 * Random links, sort later
 http://petergallagher.com.au/index.php/site/article/the-longevity-of-plain-tex (random person)
+* Multicore
+
+> If so, is there any ongoing effort towards this goal in any of the popular projects?
+
+Unfortunately, no. There are only four TeX engines of any notability at the moment:
+
+* (Knuth) TeX (what you get when you run `tex`): No changes [will be made](http://www.tex.ac.uk/FAQ-TeXfuture.html) (since decades now) except for unambiguous bugs (and even there, some things that would be too radical to change have been rejected). Probably notable only for its historical importance and stability and for the fact that it's the basis (bulk of the code) of all other TeX engines; I imagine not many people other than Knuth use it any more (even users of the plain TeX format, already a minority, tend to use plain pdfTeX or plain XeTeX etc). The LaTeX format isn't even compatible with it anymore; since last year it assumes (eTeX) primitives not present in this engine.
+
+* pdfTeX: Most widely used (what you get when you type `pdflatex`, `pdftex`, `latex`, etc.). As the most important engine, it is still actively maintained but not really under active development; mostly it was built in the 1990s and early 2000s by Hàn Thế Thành and others, as a modification of the plain TeX sources (`tex.web` turned into `pdftex.web`) for supporting PDF as an output format, then integrating the eTeX extensions. So it's stable at the moment.
+
+* XeTeX: Used especially by those who need Unicode and OpenType fonts (and unbeatable for any nontrivial script), this is still under active development or maintenance but most of it has to do with the complexity of Unicode and fonts, and the features being added / changes being made are not of the sort you're asking.
+
+* LuaTeX: The only one under *really* active development (including breaking things :P), adding lots of innovative and much-needed features, though it too has (finally) reached version 1.0 and their (already ambitious) [goals](http://www.luatex.org/roadmap.html) don't seem to extend as far as what you're asking in the question.
+
+There are a bunch of other historical TeX implementations, for example eTeX was pretty important and most of it has been incorporated into the other engines, but it isn't even distributed with TeX Live for example (type `etex` and you get the pdfTeX binary). There's an archive of (some) other implementations [on CTAN](https://ctan.org/tex-archive/systems), all of which (examples: [A](https://tex.stackexchange.com/questions/385645/is-nts-new-typesetting-system-the-java-implementation-of-tex-usable-today/), [B](https://tex.stackexchange.com/questions/385490/how-to-run-cxtex/)) are obscure, and regarded as curiosities if at all. There are also new projects that get started from time to time, but rarely [get](https://tex.stackexchange.com/a/28680/48) [finished](https://tex.stackexchange.com/a/15234/48). (Also see another [recent answer](https://tex.stackexchange.com/a/398372/48) of mine on TeX implementations.) (Oh and there's also [Bakoma TeX](http://www.bakoma-tex.com/) which uses its own modified TeX program, but as it's neither free (~$100 for a year) nor open-source, it's hard to say much about it; we only have [hints](https://tex.stackexchange.com/questions/33615/why-can-bakoma-process-tex-files-so-fast/33642#comment918009_33642).)
+
+-----
+
+> Could (La)TeX processing be made faster by better exploiting the modern multicore processors, such as incorporating multithreading into one of the existing tex-processors?
+
+Not by making changes “into one of the existing tex-processors” (for reasons mentioned above), but in principle yes, (La)TeX processing could certainly be made faster.
+
+Firstly, it is worth noting that this is not straightforward.
+
+(See [this question](https://tex.stackexchange.com/questions/157267/how-does-a-tex-engine-read-and-render-the-input-stream) (be sure to read *all* the answers) for levels even within the input processor, where the macro expansion processor “asks” the tokenizer for tokens, which in turn “asks” the buffered line-reader for characters.)
+
+See also [this answer](https://tex.stackexchange.com/questions/398310/why-in-2017-does-latex-not-use-tree-like-structures/398372#398372) for the state of TeX development.
+
+There's a little [here](https://tex.stackexchange.com/questions/384175/what-are-tokens-used-for/384494#384494) on why TeX is written like a compiler.
