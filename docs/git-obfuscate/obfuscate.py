@@ -33,7 +33,7 @@ if __name__ == '__main__':
             sys.stdout.write(rest)
         else:
             openssl_enc_command = subprocess.Popen(
-                ['openssl', 'enc', '-base64', '-aes-256-ctr', '-S', OPENSSL_SALT, '-k', OPENSSL_PASSPHRASE],
+                ['openssl', 'enc', '-md', 'md5', '-base64', '-aes-256-ctr', '-S', OPENSSL_SALT, '-k', OPENSSL_PASSPHRASE],
                 stdin=subprocess.PIPE,
                 stdout=subprocess.PIPE
                 )
@@ -47,8 +47,9 @@ if __name__ == '__main__':
             sys.stdout.write(s)
             sys.stdout.write(rest)
         else:
+            sys.stderr.write('Running smudge with OPENSSL_PASSPHRASE = %s and OPENSSL_SALT = %s\n' % (OPENSSL_PASSPHRASE, OPENSSL_SALT))
             openssl_dec_command = subprocess.Popen(
-                ['openssl', 'enc', '-d', '-base64', '-aes-256-ctr', '-k', OPENSSL_PASSPHRASE],
+                ['openssl', 'enc', '-md', 'md5', '-d', '-base64', '-aes-256-ctr', '-k', OPENSSL_PASSPHRASE],
                 stdin=subprocess.PIPE,
                 stdout=subprocess.PIPE
                 )
@@ -60,7 +61,7 @@ if __name__ == '__main__':
         # sys.stderr.write('pwd is %s\n' % pwd)
         file_contents = open(filename).read()
         sys.stderr.write('File starts as: %s\n' % file_contents[:10])
-        command = ['openssl', 'enc', '-d', '-base64', '-aes-256-ctr', '-k', OPENSSL_PASSPHRASE, '-in', filename]
+        command = ['openssl', 'enc', '-md', 'md5', '-d', '-base64', '-aes-256-ctr', '-k', OPENSSL_PASSPHRASE, '-in', filename]
         try:
             out = subprocess.check_output(command)
             sys.stdout.write(out)
