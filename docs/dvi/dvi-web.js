@@ -115,54 +115,69 @@ function populateTmpHexdump(message) {
 // TODO: Use Web Workers for this, as it can take quite a while.
 function annotatedDviBytes(/* Uint8Array */ byteArray) {
   const t = document.createElement('pre');
+  let lines = [];
+  let curStr = '';
   let i = 0;
   while (i < byteArray.length) {
     const n = byteArray[i];
     i += 1;
     if (i % 100 === 0) { console.log(`Done reading ${i} bytes.`); }
     const byteHex = (`00${n.toString(16)}`).substr(-2);
-    t.innerHTML += ` <span data-byte="${i}">${byteHex}</span>`;
+    curStr += ` <span data-byte="${i}">${byteHex}</span>`;
     if (i % 16 === 8) {
-      t.innerHTML += ' ';
+      curStr += ' ';
     } else if (i % 16 === 0) {
-      t.innerHTML += '\n';
+      lines.push(curStr);
+      curStr = '';
     }
   }
-  t.innerHTML += '\n    (End of hexdump)';
+  if (i % 16 !== 0) lines.push(curStr);
+  lines.push('    (End of hexdump)');
+  t.innerHTML = lines.join('\n');
   return t;
 }
 
 
 function populateHexdump() {
   console.log('Getting annotation');
-  const byteTable = annotatedDviBytes(bufferBeingUsed); // a DOM element
-  console.log('Got annotation');
   const hexdump = document.getElementById('hexdump');
   hexdump.removeChild(hexdump.lastChild);
-  console.log('Appending child');
-  hexdump.appendChild(byteTable);
-  console.log('Done populating hexdump, do you see it yet?');
+  commandList.commandList = [];
+  window.setTimeout(() => {
+    const byteTable = annotatedDviBytes(bufferBeingUsed); // a DOM element
+    window.setTimeout(() => {
+      console.log('Got annotation');
+      console.log('Appending child');
+      hexdump.appendChild(byteTable);
+      console.log('Done populating hexdump, do you see it yet?');
 
-  const dviBuffer = new DVIBuffer(bufferBeingUsed);
-  while (dviBuffer.more()) {
-    const command = dviBuffer.readCommand();
-    if (command.op[0] === 'pre') {
-      // debugger;
-    }
-    commandList.commandList.push(command);
-    // const commandStr = JSON.stringify(command, null, 0);
-    // const pre = document.createElement('pre');
-    // pre.innerHTML += commandStr;
-    // hexdump.appendChild(pre);
-  }
+      const dviBuffer = new DVIBuffer(bufferBeingUsed);
+      console.log("Got dviBuffer");
+      let seenCommands = 0;
+      while (seenCommands <= 325 && dviBuffer.more()) {
+	seenCommands += 1;
+	const command = dviBuffer.readCommand();
+	if (command.op[0] === 'pre') {
+	  debugger;
+	}
+	if (seenCommands % 1000 == 0) { console.log(`Got command ${seenCommands}`); }
+	// Note: not a good idea for large DVI files... need an alternative.
+	commandList.commandList.push(command);
+	// const commandStr = JSON.stringify(command, null, 0);
+	// const pre = document.createElement('pre');
+	// pre.innerHTML += commandStr;
+	// hexdump.appendChild(pre);
+      }
+    });
+  });
 }
 window.addEventListener('load', populateHexdump);
 
 function updateBuffer(byteArray) {
   populateTmpHexdump('Updating buffer');
   bufferBeingUsed = byteArray;
-  populateTmpHexdump('Updating final hexdump');
-  populateHexdump();
+  window.setTimeout(() => { populateTmpHexdump('Updating final hexdump');});
+  window.setTimeout(() => { populateHexdump(); }, 1000);
 }
 
 function handleFiles() {
@@ -170,13 +185,14 @@ function handleFiles() {
   const f = this.files[0];
   bufferBeingUsedName = f.name;
   bufferBeingUsedSize = f.size;
+  commandList.commandList = [];	// Clear old command table
   populateIntro();
-  populateTmpHexdump('Reading file...');
+  window.setTimeout(() => { populateTmpHexdump('Reading file...'); });
   const reader = new FileReader();
   reader.onload = function setBuffer() {
     populateTmpHexdump('Turning result into array...');
     updateBuffer(new Uint8Array(reader.result)); // reader.result is an ArrayBuffer
   };
-  reader.readAsArrayBuffer(f);
+  window.setTimeout(() => { reader.readAsArrayBuffer(f); }, 1000);
 }
 document.getElementById('inputDviFile').addEventListener('change', handleFiles, false);

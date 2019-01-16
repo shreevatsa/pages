@@ -1,4 +1,23 @@
 <!DOCTYPE html>
+<!-- This HTML file is the "view" or "UI" to the DVI structure explainer. It contains the following parts:
+
+     * A place to upload a file and see its hexdump (<input id="inputDviFile"/> and <output id="hexdump">)
+
+     * The main area (<div id="dvi-commands">), which contains a table with two columns: in the left column we have the operators (the instructions that go to the interpretive routine), and in the right column we have the parameters for those operators.
+
+     Is this the best UI?
+     - Where do we display the local "state" of the DVI interpreter process (its values of (x, y) or whatever)?
+     - What about synchronizing the hexdump and the commands, and what about potentially showing the actual output and synchronizing to that?
+     - What if we want to add options to show or not show simple lines or words of text?
+
+     Hopefully we can change the UI when there are better ideas.
+
+     The following is the local state maintained in the DOM and in the JS runtime (is that the right terminology?):
+
+     DOM ===[user upload + handleFiles()]===> bufferBeingUsed
+
+
+-->
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -17,7 +36,7 @@
           overflow-y: scroll; max-height:30vh;
       }
       #dvi-commands {
-          overflow-y: scroll; max-height:40vh;
+          overflow-y: scroll; max-height:60vh;
       }
       table.opTable {
           border-collapse: collapse;
@@ -43,10 +62,11 @@
          https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API/File_drag_and_drop
       -->
     <h1>Enter a file below</h1>
-    <input type="file" id="inputDviFile"/>
-    <output id="intro">Intro goes here</output>
+    <input type="file" id="inputDviFile"/> <!-- onchange: handleFiles() -->
+    <output id="intro">Intro goes here</output> <!-- on window load: populateIntro() -->
+    <!-- All the above take care of getting the input file and putting into the global bufferBeingUsed etc. -->
     <hr>
-    <output id="hexdump">The hexdump of this file is below. <div></div></output>
+    <output id="hexdump">The hexdump of this file is below. <div></div></output> <!-- populateTmpHexdump() and populateHexdump() called on handleFiles and window.load -->
     <div id="dvi-commands">
       <table class="opTable">
         <thead>
